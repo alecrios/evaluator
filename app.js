@@ -5,7 +5,11 @@ const path = require('path');
 let win = null;
 
 const createWindow = () => {
-	win = new BrowserWindow({show: false});
+	win = new BrowserWindow({
+		show: false,
+		width: 320,
+		height: 480,
+	});
 
 	win.once('ready-to-show', () => {win.show()})
 

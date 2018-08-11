@@ -133,6 +133,7 @@ class Row {
 		this.calculations = document.querySelector('.calculations');
 
 		this.calculation = document.createElement('div');
+		this.calculation.classList.add('calculation');
 		this.calculations.appendChild(this.calculation);
 
 		this.input = document.createElement('textarea');
@@ -145,6 +146,8 @@ class Row {
 		this.output.classList.add('textarea', 'output');
 		this.output.setAttribute('readonly', '');
 		this.calculation.appendChild(this.output);
+
+		this.input.focus();
 
 		this.input.addEventListener('input', this.handleInput.bind(this));
 
@@ -184,6 +187,4 @@ class Row {
 	}
 }
 
-const a = new Row();
-const b = new Row();
-const c = new Row();
+new Row();
