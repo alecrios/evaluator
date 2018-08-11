@@ -1,0 +1,14 @@
+{
+  "name": "eval",
+  "version": "0.1.0",
+  "description": "Simple calculator app",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Alec Rios",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^2.0.7"
+  }
+}
