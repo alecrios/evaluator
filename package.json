@@ -7,8 +7,16 @@
     "start": "electron ."
   },
   "author": "Alec Rios",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alecrios/eval.git"
+  },
   "license": "MIT",
   "dependencies": {
     "electron": "^2.0.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
   }
 }
