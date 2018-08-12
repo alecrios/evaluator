@@ -84,6 +84,14 @@ class Row {
 		this.output.addEventListener('blur', () => {
 			this.updateActiveStatus();
 		});
+
+		this.calculation.addEventListener('keydown', () => {
+			switch (event.key) {
+				case 'Delete':
+					event.shiftKey ? this.destroyAll() : this.destroy();
+					break;
+			}
+		});
 	}
 
 	updateActiveStatus() {
@@ -92,6 +100,10 @@ class Row {
 		} else {
 			this.calculation.classList.remove('active');
 		}
+	}
+
+	isFirstRow() {
+		return this.calculations.firstChild === this.calculation;
 	}
 
 	isLastRow() {
@@ -120,6 +132,18 @@ class Row {
 		}
 
 		this.output.value = result;
+	}
+
+	destroy() {
+		this.calculations.removeChild(this.calculation);
+	}
+
+	destroyAll() {
+		Array.from(this.calculations.childNodes).reverse().forEach((childNode) => {
+			this.calculations.removeChild(childNode);
+		});
+
+		new Row();
 	}
 }
 
