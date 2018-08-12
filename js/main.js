@@ -1,5 +1,5 @@
 const {clipboard} = require('electron');
-const Calculator = require('./js/calculator.js');
+const Calculator = require('./js/calculator');
 
 class Row {
 	constructor() {

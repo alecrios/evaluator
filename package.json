@@ -4,7 +4,8 @@
   "description": "Simple calculator app",
   "main": "app.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+	"test": "mocha"
   },
   "author": "Alec Rios",
   "repository": {
