@@ -2,11 +2,10 @@ html {
 	background-color: rgb(30, 31, 32);
 }
 
-.calculations {}
-
 .calculation {
-	padding: .5rem;
+	background-color: rgb(30, 31, 32);
 	border-bottom: .125rem solid rgb(38, 40, 42);
+	padding: .5rem;
 }
 
 .calculation.active {
