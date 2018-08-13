@@ -1,17 +1,10 @@
 module.exports = class Calculation {
-	constructor(calculationGroup) {
-		this.calculationGroup = calculationGroup;
-		this.createCalculation();
+	constructor(calculation) {
+		this.calculation = calculation;
 		this.createInput();
 		this.createOutput();
 		this.addEventListeners();
 		this.focus();
-	}
-
-	createCalculation() {
-		this.calculation = document.createElement('div');
-		this.calculation.classList.add('calculation');
-		this.calculationGroup.appendChild(this.calculation);
 	}
 
 	createInput() {
@@ -26,7 +19,6 @@ module.exports = class Calculation {
 		this.output.rows = '1';
 		this.output.classList.add('textarea', 'output');
 		this.output.setAttribute('readonly', '');
-		this.output.tabIndex = -1;
 		this.calculation.appendChild(this.output);
 	}
 
@@ -62,22 +54,32 @@ module.exports = class Calculation {
 		this.calculation.addEventListener('keydown', () => {
 			switch (event.key) {
 				case 'Insert':
+					event.preventDefault();
 					EventBus.dispatchEvent(event.shiftKey ? 'insertBefore' : 'insertAfter', this);
 					break;
 				case 'Delete':
+					event.preventDefault();
 					EventBus.dispatchEvent(event.shiftKey ? 'deleteAll' : 'delete', this);
 					break;
 				case 'Home':
+					event.preventDefault();
 					EventBus.dispatchEvent('first', this);
 					break;
 				case 'End':
+					event.preventDefault();
 					EventBus.dispatchEvent('last', this);
 					break;
 				case 'PageUp':
+					event.preventDefault();
 					EventBus.dispatchEvent('previous', this);
 					break;
 				case 'PageDown':
+					event.preventDefault();
 					EventBus.dispatchEvent('next', this);
+					break;
+				case 'Tab':
+					event.preventDefault();
+					EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
 					break;
 				case 'Enter':
 					if (document.activeElement === this.input) {
@@ -89,10 +91,6 @@ module.exports = class Calculation {
 						event.preventDefault();
 						EventBus.dispatchEvent('next', this);
 					}
-					break;
-				case 'Tab':
-					if (event.shiftKey) return;
-					EventBus.dispatchEvent('next', this);
 					break;
 			}
 		});
