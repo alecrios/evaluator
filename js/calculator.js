@@ -1,4 +1,4 @@
-module.exports = class Calculator {
+class Calculator {
 	constructor() {
 		this._symbols = {};
 		this.defineOperator("!", this.factorial, "postfix", 6);
@@ -127,3 +127,5 @@ module.exports = class Calculator {
 				: values.pop()
 	}
 }
+
+module.exports = new Calculator();

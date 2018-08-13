@@ -11,6 +11,6 @@ When focused on an expression:
 
 When focused on a result:
 
-* `Enter` - copies the result to the clipboard
+* `Enter` - moves focus to the next block
 * `Tab` - moves focus to the next block
 * `Shift+Tab` - moves focus to the expression
