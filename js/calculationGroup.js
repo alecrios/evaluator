@@ -28,14 +28,12 @@ class CalculationGroup {
 
 	insertAfter(calculation) {
 		let index = this.calculations.indexOf(calculation);
-		console.log('insertAfter');
-		// this.addCalculation(index + 1);
+		this.addCalculation(index + 1);
 	}
 
 	insertBefore(calculation) {
 		let index = this.calculations.indexOf(calculation);
-		console.log('insertBefore');
-		// this.addCalculation(index);
+		this.addCalculation(index);
 	}
 
 	calculationFocus(calculation) {
@@ -98,21 +96,22 @@ class CalculationGroup {
 		let newCalculationNode = document.createElement('div');
 		newCalculationNode.classList.add('calculation');
 		let newCalculation = new Calculation(newCalculationNode);
+		let referenceNode = null;
 
-		// temp
-		this.calculationGroup.appendChild(newCalculationNode);
-		this.calculations.push(newCalculation);
-		this.calculationsTest.push(Math.random());
-		console.log(this.calculationsTest);
+		if (index !== undefined && index < this.calculations.length) {
+			referenceNode = this.calculations[index].getNode();
+		}
 
-		// if (index === undefined || index === this.calculations.length) {
-		// 	this.calculationGroup.appendChild(newCalculationNode);
-		// 	this.calculations.push(newCalculation);
-		// } else {
-		// 	this.calculationGroup.insertBefore(newCalculationNode, this.calculations[index].getNode());
-		// 	this.calculations.splice(index - 1, 0, newCalculation);
-		// 	this.calculations[index].getNode().value = 'index = ' + (index - 1);
-		// }
+		this.calculationGroup.insertBefore(newCalculationNode, referenceNode)
+
+		let insertLocation = null;
+		if (index === undefined) {
+			insertLocation = this.calculations.length;
+		} else {
+			insertLocation = index;
+		}
+
+		this.calculations.splice(insertLocation, 0, newCalculation);
 
 		return newCalculation;
 	}
