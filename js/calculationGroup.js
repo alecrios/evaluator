@@ -2,7 +2,6 @@ class CalculationGroup {
 	constructor() {
 		this.createCalculationGroup();
 		this.calculations = [];
-		this.calculationsTest = [];
 		this.activeCalculation = this.addCalculation();
 		this.activeCalculation.activate();
 		this.addEventListeners();
@@ -93,24 +92,15 @@ class CalculationGroup {
 	}
 
 	addCalculation(index) {
-		let newCalculationNode = document.createElement('div');
+		const newCalculationNode = document.createElement('div');
 		newCalculationNode.classList.add('calculation');
-		let newCalculation = new Calculation(newCalculationNode);
-		let referenceNode = null;
+		const newCalculation = new Calculation(newCalculationNode);
 
-		if (index !== undefined && index < this.calculations.length) {
-			referenceNode = this.calculations[index].getNode();
-		}
+		const insertLocation = index === undefined ? this.calculations.length : index;
+		const referenceNode = index !== undefined && index < this.calculations.length ?
+			this.calculations[index].getNode() : null;
 
 		this.calculationGroup.insertBefore(newCalculationNode, referenceNode)
-
-		let insertLocation = null;
-		if (index === undefined) {
-			insertLocation = this.calculations.length;
-		} else {
-			insertLocation = index;
-		}
-
 		this.calculations.splice(insertLocation, 0, newCalculation);
 
 		return newCalculation;
@@ -119,7 +109,6 @@ class CalculationGroup {
 	removeCalculation(calculation, index) {
 		this.calculationGroup.removeChild(calculation.getNode());
 		this.calculations.splice(index, 1);
-		this.calculationsTest.splice(index, 1);
 	}
 
 	isOnlyCalculation(index) {
