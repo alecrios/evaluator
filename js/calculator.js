@@ -18,6 +18,12 @@ class Calculator {
 		this.defineOperator("abs", Math.abs);
 		this.defineOperator("ceil", Math.ceil);
 		this.defineOperator("floor", Math.floor);
+		this.defineOperator("sin", Math.sin);
+		this.defineOperator("asin", Math.asin);
+		this.defineOperator("cos", Math.cos);
+		this.defineOperator("acos", Math.acos);
+		this.defineOperator("tan", Math.tan);
+		this.defineOperator("atan", Math.atan);
 	}
 
 	defineOperator(symbol, f, notation = "func", precedence = 0, rightToLeft = false) {
