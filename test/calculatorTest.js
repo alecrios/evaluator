@@ -62,6 +62,22 @@ describe('Calculator', () => {
 		assert.strictEqual(Calculator.calculate('abs(47 - 110)'), 63);
 	});
 
+	it('ceil(4.1) = 5', () => {
+		assert.strictEqual(Calculator.calculate('ceil(4.1)'), 5);
+	});
+
+	it('ceil(-92.1) = -92', () => {
+		assert.strictEqual(Calculator.calculate('ceil(-92.1)'), -92);
+	});
+
+	it('floor(41.3) = 41', () => {
+		assert.strictEqual(Calculator.calculate('floor(41.3)'), 41);
+	});
+
+	it('floor(1.98) = 1', () => {
+		assert.strictEqual(Calculator.calculate('floor(1.98)'), 1);
+	});
+
 	it('8! = 40320', () => {
 		assert.strictEqual(Calculator.calculate('8!'), 40320);
 	});
