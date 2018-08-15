@@ -1,10 +1,5 @@
 const assert = require('chai').assert;
-// const Calculator = require('../js/calculator');
-
-const Operator = require('../js/calculator/Operator');
 const Calculator = require('../js/calculator/ShuntingYard');
-
-// const Calculator = new ShuntingYard();
 
 const tests = [
 	{expression: '8', expected: 8},
