@@ -1,108 +1,39 @@
 const assert = require('chai').assert;
 const Calculator = require('../js/calculator');
 
+const tests = [
+	{expression: '8', expected: 8},
+	{expression: '2 + 4', expected: 6},
+	{expression: '5 - 2', expected: 3},
+	{expression: '45 - 54', expected: -9},
+	{expression: '3 * 3', expected: 9},
+	{expression: '12 / 4', expected: 3},
+	{expression: '24 / 4 + 2', expected: 8},
+	{expression: '24 / (4 + 2)', expected: 4},
+	{expression: '4^3', expected: 64},
+	{expression: '4 + 7 - 6 / 3 * 5', expected: 1},
+	{expression: 'min(32, 17, 91, 11, 49, 77, 56)', expected: 11},
+	{expression: 'max(94, 41, 84, 10, 31, 38)', expected: 94},
+	{expression: 'sqrt(144)', expected: 12},
+	{expression: 'abs(-19)', expected: 19},
+	{expression: 'abs(47 - 110)', expected: 63},
+	{expression: 'ceil(4.1)', expected: 5},
+	{expression: 'ceil(-92.1)', expected: -92},
+	{expression: 'floor(41.3)', expected: 41},
+	{expression: 'floor(1.98)', expected: 1},
+	{expression: '8!', expected: 40320},
+	{expression: 'sqrt(4) + min(3, 8, 7) - max(11, 2, 9, 13)', expected: -8},
+	{expression: '16.125 - 8.0625', expected: 8.0625},
+	{expression: '2^8 + 49 / (4 + sqrt(9))', expected: 263},
+	{expression: '0.5 * 24 / 3', expected: 4},
+	{expression: '7! - sqrt(25) + 0.6 / (18 / 3)', expected: 5035.1},
+	{expression: 'max(sqrt(3 + 10 - 4 * 1), sqrt(3^2 + 7))', expected: 4},
+];
+
 describe('Calculator', () => {
-	it('8 = 8', () => {
-		assert.strictEqual(Calculator.calculate('8'), 8);
-	});
-
-	it('2 + 4', () => {
-		assert.strictEqual(Calculator.calculate('2 + 4'), 6);
-	});
-
-	it('5 - 2 = 3', () => {
-		assert.strictEqual(Calculator.calculate('5 - 2'), 3);
-	});
-
-	it('45 - 54 = -9', () => {
-		assert.strictEqual(Calculator.calculate('45 - 54'), -9);
-	});
-
-	it('3 * 3 = 9', () => {
-		assert.strictEqual(Calculator.calculate('3 * 3'), 9);
-	});
-
-	it('12 / 4 = 3', () => {
-		assert.strictEqual(Calculator.calculate('12 / 4'), 3);
-	});
-
-	it('24 / 4 + 2 = 8', () => {
-		assert.strictEqual(Calculator.calculate('24 / 4 + 2'), 8);
-	});
-
-	it('24 / (4 + 2) = 4', () => {
-		assert.strictEqual(Calculator.calculate('24 / (4 + 2)'), 4);
-	});
-
-	it('4^3 = 64', () => {
-		assert.strictEqual(Calculator.calculate('4^3'), 64);
-	});
-
-	it('4 + 7 - 6 / 3 * 5 = 1', () => {
-		assert.strictEqual(Calculator.calculate('4+7-6/3*5'), 1);
-	});
-
-	it('min(32, 17, 91, 11, 49, 77, 56) = 11', () => {
-		assert.strictEqual(Calculator.calculate('min(32,17,91,11,49,77,56)'), 11);
-	});
-
-	it('max(94, 41, 84, 10, 31, 38) = 94', () => {
-		assert.strictEqual(Calculator.calculate('max(94, 41, 84, 10, 31, 38)'), 94);
-	});
-
-	it('sqrt(144) = 12', () => {
-		assert.strictEqual(Calculator.calculate('sqrt(144)'), 12);
-	});
-
-	it('abs(-19) = 19', () => {
-		assert.strictEqual(Calculator.calculate('abs(-19)'), 19);
-	});
-
-	it('abs(47 - 110) = 63', () => {
-		assert.strictEqual(Calculator.calculate('abs(47 - 110)'), 63);
-	});
-
-	it('ceil(4.1) = 5', () => {
-		assert.strictEqual(Calculator.calculate('ceil(4.1)'), 5);
-	});
-
-	it('ceil(-92.1) = -92', () => {
-		assert.strictEqual(Calculator.calculate('ceil(-92.1)'), -92);
-	});
-
-	it('floor(41.3) = 41', () => {
-		assert.strictEqual(Calculator.calculate('floor(41.3)'), 41);
-	});
-
-	it('floor(1.98) = 1', () => {
-		assert.strictEqual(Calculator.calculate('floor(1.98)'), 1);
-	});
-
-	it('8! = 40320', () => {
-		assert.strictEqual(Calculator.calculate('8!'), 40320);
-	});
-
-	it('sqrt(4) + min(3, 8, 7) - max(11, 2, 9, 13) = -8', () => {
-		assert.strictEqual(Calculator.calculate('sqrt(4) + min(3, 8, 7) - max(11, 2, 9, 13)'), -8);
-	});
-
-	it('16.125 - 8.0625 = 8.0625', () => {
-		assert.strictEqual(Calculator.calculate('16.125 - 8.0625'), 8.0625);
-	});
-
-	it('2^8 + 49 / (4 + sqrt(9)) = 263', () => {
-		assert.strictEqual(Calculator.calculate('2^8 + 49 / (4 + sqrt(9))'), 263);
-	});
-
-	it('0.5 * 24 / 3 = 4', () => {
-		assert.strictEqual(Calculator.calculate('0.5 * 24 / 3'), 4);
-	});
-
-	it('7! - sqrt(25) + 0.6 / (18 / 3) = 5035.1', () => {
-		assert.strictEqual(Calculator.calculate('7! - sqrt(25) + 0.6 / (18 / 3)'), 5035.1);
-	});
-
-	it('max(sqrt(3 + 10 - 4 * 1), sqrt(3^2 + 7)) = 4', () => {
-		assert.strictEqual(Calculator.calculate('max(sqrt(3 + 10 - 4 * 1), sqrt(3^2 + 7))'), 4);
+	tests.forEach((test) => {
+		it(`${test.expression} = ${test.expected}`, () => {
+			assert.strictEqual(Calculator.calculate(test.expression), test.expected);
+		});
 	});
 });
