@@ -15,6 +15,7 @@ class Calculator {
 		this.defineOperator("min", Math.min);
 		this.defineOperator("max", Math.max);
 		this.defineOperator("sqrt", Math.sqrt);
+		this.defineOperator("abs", Math.abs);
 	}
 
 	defineOperator(symbol, f, notation = "func", precedence = 0, rightToLeft = false) {
