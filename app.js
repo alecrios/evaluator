@@ -6,6 +6,7 @@ let win = null;
 
 const createWindow = () => {
 	win = new BrowserWindow({
+		backgroundColor: 'rgb(30, 31, 32)',
 		show: false,
 		width: 320,
 		height: 480,
