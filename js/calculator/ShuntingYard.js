@@ -5,31 +5,26 @@ class ShuntingYard {
 			'^': {
 				associativity: 'right',
 				precedence: 4,
-				parameters: 2,
 				method: (a, b) => Math.pow(a, b),
 			},
 			'*': {
 				associativity: 'left',
 				precedence: 3,
-				parameters: 2,
 				method: (a, b) => a * b,
 			},
 			'/': {
 				associativity: 'left',
 				precedence: 3,
-				parameters: 2,
 				method: (a, b) => a / b,
 			},
 			'+': {
 				associativity: 'left',
 				precedence: 2,
-				parameters: 2,
 				method: (a, b) => a + b,
 			},
 			'-': {
 				associativity: 'left',
 				precedence: 2,
-				parameters: 2,
 				method: (a, b) => a - b,
 			},
 		}
@@ -142,7 +137,7 @@ class ShuntingYard {
 			const operator = this.operators[token];
 
 			if (operator) {
-				stack.push(operator.method.apply(this, stack.splice(-operator.parameters)));
+				stack.push(operator.method.apply(this, stack.splice(-operator.method.length)));
 			} else {
 				stack.push(parseFloat(token));
 			}
