@@ -137,19 +137,15 @@ class ShuntingYard {
 
 	resolveRpn(rpnArray) {
 		const stack = [];
-		console.log('rpn:', rpnArray);
+
 		for (let token of rpnArray) {
 			const operator = this.operators[token];
 
 			if (operator) {
-				console.log('a');
 				stack.push(operator.method.apply(this, stack.splice(-operator.parameters)));
 			} else {
-				console.log('b');
 				stack.push(parseFloat(token));
 			}
-
-			console.log('stack:', stack);
 		}
 
 		return stack[0];
