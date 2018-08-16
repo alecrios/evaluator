@@ -2,8 +2,17 @@ const assert = require('chai').assert;
 const Calculator = require('../js/calculator/ShuntingYard');
 
 const tests = [
+	{expression: '3', expected: [3]},
 	{expression: '2 + 3', expected: [2,3,'+']},
-	{expression: '3 + 4 * 2 / (1 - 5)^2^3', expected: [3,4,2,'*',1,5,'-',2,3,'^','^','/','+']},
+	{expression: '9 * 5 + 7', expected: [9, 5, '*', 7, '+']},
+	{expression: '4 + 1 * 8', expected: [4, 1, 8, '*', '+']},
+	{expression: '8 * (2 + 1)', expected: [8, 2, 1, '+', '*']},
+	{expression: '7 - 1 + 6', expected: [7, 1, '-', 6, '+']},
+	{expression: '3 * 8 ^ 9 + 3', expected: [3, 8, 9, '^', '*', 3, '+']},
+	{expression: '1 * (7 + 8 * 4) + 8', expected: [1, 7, 8, 4, '*', '+', '*', 8, '+']},
+	{expression: '3 + 4 * (2 - 1)', expected: [3, 4, 2, 1, '-', '*', '+']},
+	{expression: '3 + 4 * 2 / (1 - 5) ^ 2 ^ 3', expected: [3, 4, 2, '*', 1, 5, '-', 2, 3, '^', '^', '/', '+']},
+	{expression: '4 + 8 / (9 - 33)', expected: [4, 8, 9, 33, '-', '/', '+']},
 	// {expression: '8', expected: 8},
 	// {expression: '2 + 4', expected: 6},
 	// {expression: '5 - 2', expected: 3},
