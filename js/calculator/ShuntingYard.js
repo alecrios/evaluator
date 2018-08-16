@@ -5,22 +5,27 @@ class ShuntingYard {
 			'^': {
 				associativity: 'right',
 				precedence: 4,
+				method: (a, b) => Math.pow(a, b),
 			},
 			'*': {
 				associativity: 'left',
 				precedence: 3,
+				method: (a, b) => a * b,
 			},
 			'/': {
 				associativity: 'left',
 				precedence: 3,
+				method: (a, b) => a / b,
 			},
 			'+': {
 				associativity: 'left',
 				precedence: 2,
+				method: (a, b) => a + b,
 			},
 			'-': {
 				associativity: 'left',
 				precedence: 2,
+				method: (a, b) => a - b,
 			},
 		}
 	}
@@ -119,6 +124,25 @@ class ShuntingYard {
 		return outputQueue;
 	}
 
+	resolveRpn(rpnArray) {
+		const stack = [];
+
+		for (let token of rpnArray) {
+			const operator = this.operators[token];
+
+			if (operator) {
+				stack.push(operator.method.apply(this, stack.splice(-operator.params)));
+			} else {
+				stack.push(parseFloat(token));
+			}
+		}
+
+		return stack[0];
+	}
+
+	calculate(expression) {
+		return this.resolveRpn(this.parseExpression(expression));
+	}
 }
 
 module.exports = new ShuntingYard();
