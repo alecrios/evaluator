@@ -68,15 +68,21 @@ class ShuntingYard {
 	}
 
 	parseExpression(expression) {
-		const tokens = expression.replace(/\s/g, '');
 		const operatorStack = [];
 		const outputQueue = [];
 
+		const tokens = expression.replace(/\s/g, '');
+		let previousTokenIsNumber = false;
+
 		for (let token of tokens) {
 			if (this.isNumber(Number(token))) {
-				outputQueue.push(Number(token));
+				const number = previousTokenIsNumber ? Number(String(outputQueue.pop()) + token) : Number(token);
+				outputQueue.push(number);
+				previousTokenIsNumber = true;
 				continue;
 			}
+
+			previousTokenIsNumber = false;
 
 			if (this.isOperator(token)) {
 				while (!this.isOpenParenthesis(this.getTopToken(operatorStack)) &&
