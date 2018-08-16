@@ -2,16 +2,18 @@ const assert = require('chai').assert;
 const Calculator = require('../js/calculator/ShuntingYard');
 
 const tests = [
-	{expression: '8', expected: 8},
-	{expression: '2 + 4', expected: 6},
-	{expression: '5 - 2', expected: 3},
-	{expression: '45 - 54', expected: -9},
-	{expression: '3 * 3', expected: 9},
-	{expression: '12 / 4', expected: 3},
-	{expression: '24 / 4 + 2', expected: 8},
-	{expression: '24 / (4 + 2)', expected: 4},
-	{expression: '4^3', expected: 64},
-	{expression: '4 + 7 - 6 / 3 * 5', expected: 1},
+	{expression: '2 + 3', expected: [2,3,'+']},
+	{expression: '3 + 4 * 2 / (1 - 5)^2^3', expected: [3,4,2,'*',1,5,'-',2,3,'^','^','/','+']},
+	// {expression: '8', expected: 8},
+	// {expression: '2 + 4', expected: 6},
+	// {expression: '5 - 2', expected: 3},
+	// {expression: '45 - 54', expected: -9},
+	// {expression: '3 * 3', expected: 9},
+	// {expression: '12 / 4', expected: 3},
+	// {expression: '24 / 4 + 2', expected: 8},
+	// {expression: '24 / (4 + 2)', expected: 4},
+	// {expression: '4^3', expected: 64},
+	// {expression: '4 + 7 - 6 / 3 * 5', expected: 1},
 	// {expression: '-4 + 7 - 6 / 3 * -5', expected: 3},
 	// {expression: 'sqrt(144)', expected: 12},
 	// {expression: 'min(32, 17, 91, 11, 49, 77, 56)', expected: 11},
@@ -40,7 +42,7 @@ const tests = [
 describe('Calculator', () => {
 	tests.forEach((test) => {
 		it(`${test.expression} = ${test.expected}`, () => {
-			assert.strictEqual(Calculator.calculate(test.expression), test.expected);
+			assert.deepEqual(Calculator.parseExpression(test.expression), test.expected);
 		});
 	});
 });
