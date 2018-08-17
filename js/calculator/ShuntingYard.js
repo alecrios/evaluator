@@ -12,7 +12,8 @@ class ShuntingYard {
 	}
 
 	isNumber(token) {
-		return RegExp('[0-9]').test(token);
+		// TODO: change this
+		return !isNaN(Number(token));
 	}
 
 	isOperator(token) {
@@ -48,18 +49,14 @@ class ShuntingYard {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const tokens = expression.replace(/\s/g, '');
-		let previousTokenIsNumber = false;
+		const pattern = /[\+\-\*\/\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
+		const tokens = expression.match(pattern);
 
 		for (let token of tokens) {
 			if (this.isNumber(token)) {
-				const number = previousTokenIsNumber ? Number(String(outputQueue.pop()) + token) : Number(token);
-				outputQueue.push(number);
-				previousTokenIsNumber = true;
+				outputQueue.push(Number(token));
 				continue;
 			}
-
-			previousTokenIsNumber = false;
 
 			if (this.isOperator(token)) {
 				while (this.topOperatorHasPrecedence(operatorStack, token)) {
