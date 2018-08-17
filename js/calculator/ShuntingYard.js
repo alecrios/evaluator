@@ -12,8 +12,7 @@ class ShuntingYard {
 	}
 
 	isNumber(token) {
-		// TODO: change this
-		return !isNaN(Number(token));
+		return !isNaN(parseFloat(token)) && isFinite(token);
 	}
 
 	isOperator(token) {
