@@ -11,33 +11,6 @@ class ShuntingYard {
 		};
 
 		this.numbers = [0,1,2,3,4,5,6,7,8,9]; // temp
-		// this.operators = {
-		// 	'^': {
-		// 		associativity: 'right',
-		// 		precedence: 4,
-		// 		method: (a, b) => Math.pow(a, b),
-		// 	},
-		// 	'*': {
-		// 		associativity: 'left',
-		// 		precedence: 3,
-		// 		method: (a, b) => a * b,
-		// 	},
-		// 	'/': {
-		// 		associativity: 'left',
-		// 		precedence: 3,
-		// 		method: (a, b) => a / b,
-		// 	},
-		// 	'+': {
-		// 		associativity: 'left',
-		// 		precedence: 2,
-		// 		method: (a, b) => a + b,
-		// 	},
-		// 	'-': {
-		// 		associativity: 'left',
-		// 		precedence: 2,
-		// 		method: (a, b) => a - b,
-		// 	},
-		// }
 	}
 
 	isNumber(token) {
