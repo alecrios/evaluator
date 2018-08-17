@@ -9,12 +9,10 @@ class ShuntingYard {
 			'+': new Operator('+', 2, 'left', (a, b) => a + b),
 			'-': new Operator('-', 2, 'left', (a, b) => a - b),
 		};
-
-		this.numbers = [0,1,2,3,4,5,6,7,8,9]; // temp
 	}
 
 	isNumber(token) {
-		return this.numbers.includes(token);
+		return RegExp('[0-9]').test(token);
 	}
 
 	isOperator(token) {
@@ -54,7 +52,7 @@ class ShuntingYard {
 		let previousTokenIsNumber = false;
 
 		for (let token of tokens) {
-			if (this.isNumber(Number(token))) {
+			if (this.isNumber(token)) {
 				const number = previousTokenIsNumber ? Number(String(outputQueue.pop()) + token) : Number(token);
 				outputQueue.push(number);
 				previousTokenIsNumber = true;
