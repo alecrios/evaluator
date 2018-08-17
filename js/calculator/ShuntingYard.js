@@ -1,33 +1,43 @@
+const Operator = require('./Operator');
+
 class ShuntingYard {
 	constructor() {
-		this.numbers = [0,1,2,3,4,5,6,7,8,9]; // temp
 		this.operators = {
-			'^': {
-				associativity: 'right',
-				precedence: 4,
-				method: (a, b) => Math.pow(a, b),
-			},
-			'*': {
-				associativity: 'left',
-				precedence: 3,
-				method: (a, b) => a * b,
-			},
-			'/': {
-				associativity: 'left',
-				precedence: 3,
-				method: (a, b) => a / b,
-			},
-			'+': {
-				associativity: 'left',
-				precedence: 2,
-				method: (a, b) => a + b,
-			},
-			'-': {
-				associativity: 'left',
-				precedence: 2,
-				method: (a, b) => a - b,
-			},
-		}
+			'^': new Operator('^', 4, 'right', (a, b) => Math.pow(a, b)),
+			'*': new Operator('*', 3, 'left', (a, b) => a * b),
+			'/': new Operator('/', 3, 'left', (a, b) => a / b),
+			'+': new Operator('+', 2, 'left', (a, b) => a + b),
+			'-': new Operator('-', 2, 'left', (a, b) => a - b),
+		};
+
+		this.numbers = [0,1,2,3,4,5,6,7,8,9]; // temp
+		// this.operators = {
+		// 	'^': {
+		// 		associativity: 'right',
+		// 		precedence: 4,
+		// 		method: (a, b) => Math.pow(a, b),
+		// 	},
+		// 	'*': {
+		// 		associativity: 'left',
+		// 		precedence: 3,
+		// 		method: (a, b) => a * b,
+		// 	},
+		// 	'/': {
+		// 		associativity: 'left',
+		// 		precedence: 3,
+		// 		method: (a, b) => a / b,
+		// 	},
+		// 	'+': {
+		// 		associativity: 'left',
+		// 		precedence: 2,
+		// 		method: (a, b) => a + b,
+		// 	},
+		// 	'-': {
+		// 		associativity: 'left',
+		// 		precedence: 2,
+		// 		method: (a, b) => a - b,
+		// 	},
+		// }
 	}
 
 	isNumber(token) {
@@ -46,25 +56,21 @@ class ShuntingYard {
 		return token === ')';
 	}
 
-	hasGreaterPrecedence(operatorA, operatorB) {
-		// Change this to a method within the Operator class
-		if (!operatorA) return false;
-		return this.operators[operatorA].precedence > this.operators[operatorB].precedence;
-	}
-
-	hasEqualPrecedence(operatorA, operatorB) {
-		// Change this to a method within the Operator class
-		if (!operatorA) return false;
-		return this.operators[operatorA].precedence === this.operators[operatorB].precedence;
-	}
-
-	isLeftAssociative(operator) {
-		// Change this to a method within the Operator class
-		return this.operators[operator].associativity === 'left';
-	}
-
 	getTopToken(stack) {
 		return stack[stack.length - 1];
+	}
+
+	topOperatorHasPrecedence(operatorStack, currentToken) {
+		if (!operatorStack.length) return;
+
+		const topToken = this.getTopToken(operatorStack);
+
+		if (!this.isOperator(topToken)) return;
+
+		const topOperator = this.operators[topToken];
+		const currentOperator = this.operators[currentToken];
+
+		return topOperator.hasGreaterPrecedence(currentOperator) || (topOperator.hasEqualPrecedence(currentOperator) && topOperator.isLeftAssociative());
 	}
 
 	parseExpression(expression) {
@@ -85,10 +91,7 @@ class ShuntingYard {
 			previousTokenIsNumber = false;
 
 			if (this.isOperator(token)) {
-				while (!this.isOpenParenthesis(this.getTopToken(operatorStack)) &&
-					(this.hasGreaterPrecedence(this.getTopToken(operatorStack), token) ||
-					(this.hasEqualPrecedence(this.getTopToken(operatorStack), token) &&
-					this.isLeftAssociative(this.getTopToken(operatorStack))))) {
+				while (this.topOperatorHasPrecedence(operatorStack, token)) {
 					outputQueue.push(operatorStack.pop());
 				}
 
