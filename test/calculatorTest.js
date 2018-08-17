@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Calculator = require('../js/calculator/ShuntingYard');
+const Calculator = require('../js/calculator/Calculator');
 
 const tests = [
 	{expression: '3', expected: [3]},
@@ -9,12 +9,12 @@ const tests = [
 	{expression: '492 + 117', expected: [492, 117, '+']},
 	{expression: '9 * 5 + 7', expected: [9, 5, '*', 7, '+']},
 	{expression: '4 + 1 * 8', expected: [4, 1, 8, '*', '+']},
-	{expression: '6096 + 12 * 11', expected: [6096, 12, 11, '*', '+']},
+	{expression: '6 0 9 6 + 1 2 * 1 1', expected: [6096, 12, 11, '*', '+']},
 	{expression: '8 * (2 + 1)', expected: [8, 2, 1, '+', '*']},
 	{expression: '7 - 1 + 6', expected: [7, 1, '-', 6, '+']},
 	{expression: '83 - 0 + 8', expected: [83, 0, '-', 8, '+']},
 	{expression: '3 * 8 ^ 9 + 3', expected: [3, 8, 9, '^', '*', 3, '+']},
-	{expression: '14 * 6 ^ 2 + 331', expected: [14, 6, 2, '^', '*', 331, '+']},
+	{expression: '1 4 * 6 ^ 2 + 3 3 1', expected: [14, 6, 2, '^', '*', 331, '+']},
 	{expression: '712 * 2 ^ 33 + 40', expected: [712, 2, 33, '^', '*', 40, '+']},
 	{expression: '1 * (7 + 8 * 4) + 8', expected: [1, 7, 8, 4, '*', '+', '*', 8, '+']},
 	{expression: '655 * (1 + 3 * 53) + 4', expected: [655, 1, 3, 53, '*', '+', '*', 4, '+']},

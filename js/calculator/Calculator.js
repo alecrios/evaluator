@@ -1,6 +1,6 @@
 const Operator = require('./Operator');
 
-class ShuntingYard {
+class Calculator {
 	constructor() {
 		this.operators = {
 			'^': new Operator('^', 4, 'right', (a, b) => Math.pow(a, b)),
@@ -49,7 +49,7 @@ class ShuntingYard {
 		const outputQueue = [];
 
 		const pattern = /[\+\-\*\/\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
-		const tokens = expression.match(pattern);
+		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
 		for (let token of tokens) {
 			if (this.isNumber(token)) {
@@ -121,4 +121,4 @@ class ShuntingYard {
 	}
 }
 
-module.exports = new ShuntingYard();
+module.exports = new Calculator();
