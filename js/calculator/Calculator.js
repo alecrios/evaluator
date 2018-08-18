@@ -117,7 +117,11 @@ class Calculator {
 	}
 
 	calculate(expression) {
-		return this.resolveRpn(this.parseExpression(expression));
+		const rpnArray = this.parseExpression(expression);
+
+		if (rpnArray === undefined) return;
+
+		return this.resolveRpn(rpnArray);
 	}
 }
 
