@@ -34,14 +34,14 @@ const createWindow = () => {
 	win.on('closed', () => win = null);
 
 	win.loadFile('index.html');
-};
-
-app.on('ready', () => {
-	createWindow();
 
 	globalShortcut.register('CommandOrControl+X', () => {
 		win.focus();
 	});
+};
+
+app.on('ready', () => {
+	createWindow();
 });
 
 app.on('will-quit', () => {
