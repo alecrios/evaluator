@@ -18,7 +18,7 @@ class Store {
 	}
 
 	get(key) {
-		return this.data[key];
+		return key ? this.data[key] : this.data;
 	}
 
 	set(key, value) {

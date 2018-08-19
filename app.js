@@ -2,42 +2,33 @@ const {app, BrowserWindow, globalShortcut} = require('electron');
 const Store = require('./js/Store.js');
 let win = null;
 
-const settings = new Store({
-	fileName: 'settings',
+const windowSettings = new Store({
+	fileName: 'windowSettings',
 	defaults: {
-		windowBounds: {
-			width: 800,
-			height: 600,
-		},
-		windowPosition: {
-			x: null,
-			y: null,
-		},
+		width: 320,
+		height: 640,
+		x: null,
+		y: null,
 	},
 });
 
 const createWindow = () => {
-	const windowBounds = settings.get('windowBounds');
-	const windowPosition = settings.get('windowPosition');
+	const {width, height, x, y} = windowSettings.get();
 
-	win = new BrowserWindow({
-		width: windowBounds.width,
-		height: windowBounds.height,
-		x: windowPosition.x,
-		y: windowPosition.y,
-		show: false,
-	});
+	win = new BrowserWindow({width, height, x, y, show: false});
 
 	win.once('ready-to-show', () => win.show());
 
 	win.on('resize', () => {
 		let bounds = win.getBounds();
-		settings.set('windowBounds', {width: bounds.width, height: bounds.height});
+		windowSettings.set('width', bounds.width);
+		windowSettings.set('height', bounds.height);
 	});
 
 	win.on('move', () => {
 		let position = win.getPosition();
-		settings.set('windowPosition', {x: position[0], y: position[1]});
+		windowSettings.set('x', position[0]);
+		windowSettings.set('y', position[1]);
 	});
 
 	win.on('closed', () => win = null);
