@@ -15,7 +15,7 @@ const windowSettings = new Store({
 const createWindow = () => {
 	const {width, height, x, y} = windowSettings.get();
 
-	win = new BrowserWindow({width, height, x, y, show: false});
+	win = new BrowserWindow({show: false, width, height, x, y});
 
 	win.once('ready-to-show', () => win.show());
 
