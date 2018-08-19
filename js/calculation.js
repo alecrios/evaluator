@@ -1,4 +1,4 @@
-module.exports = class Calculation {
+class Calculation {
 	constructor(calculation) {
 		this.calculation = calculation;
 		this.createInput();
@@ -124,3 +124,5 @@ module.exports = class Calculation {
 		return this.calculation;
 	}
 }
+
+module.exports = Calculation;

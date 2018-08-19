@@ -1,4 +1,4 @@
-module.exports = class Operator {
+class Operator {
 	constructor(symbol, precedence, associativity, method) {
 		this.symbol = symbol;
 		this.precedence = precedence;
@@ -18,3 +18,5 @@ module.exports = class Operator {
 		return this.associativity === 'left';
 	}
 }
+
+module.exports = Operator;
