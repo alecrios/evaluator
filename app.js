@@ -31,13 +31,13 @@ const createWindow = () => {
 	win.once('ready-to-show', () => win.show());
 
 	win.on('resize', () => {
-		let {width, height} = win.getBounds();
-		settings.set('windowBounds', {width, height})
+		let bounds = win.getBounds();
+		settings.set('windowBounds', {width: bounds.width, height: bounds.height});
 	});
 
 	win.on('move', () => {
 		let position = win.getPosition();
-		settings.set('windowPosition', {x: position[0], y: position[1]})
+		settings.set('windowPosition', {x: position[0], y: position[1]});
 	});
 
 	win.on('closed', () => win = null);
