@@ -73,10 +73,7 @@ class Calculator {
 
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(this.getTopToken(operatorStack))) {
-					if (!operatorStack.length) {
-						console.error('Mismatched parentheses');
-						return;
-					}
+					if (!operatorStack.length) return;
 
 					outputQueue.push(operatorStack.pop());
 				}
@@ -89,10 +86,7 @@ class Calculator {
 		while (operatorStack.length) {
 			let operator = this.getTopToken(operatorStack);
 
-			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
-				console.error('Mismatched parentheses');
-				return;
-			}
+			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) return;
 
 			outputQueue.push(operatorStack.pop());
 		}
