@@ -3,11 +3,12 @@ const Operator = require('./Operator');
 class Calculator {
 	constructor() {
 		this.operators = {
-			'^': new Operator('^', 4, 'right', (a, b) => Math.pow(a, b)),
+			'^': new Operator('^', 5, 'right', (a, b) => Math.pow(a, b)),
+			'&': new Operator('&', 4, 'right', (a) => -a),
 			'*': new Operator('*', 3, 'left', (a, b) => a * b),
 			'/': new Operator('/', 3, 'left', (a, b) => a / b),
-			'+': new Operator('+', 2, 'left', (a, b) => a + b),
-			'-': new Operator('-', 2, 'left', (a, b) => a - b),
+			'+': new Operator('+', 1, 'left', (a, b) => a + b),
+			'-': new Operator('-', 1, 'left', (a, b) => a - b),
 		};
 	}
 
@@ -41,19 +42,21 @@ class Calculator {
 		const topOperator = this.operators[topToken];
 		const currentOperator = this.operators[currentToken];
 
+		if (currentOperator.method.length === 1 && topOperator.method.length > 1) return;
+
 		return topOperator.hasGreaterPrecedence(currentOperator) || (topOperator.hasEqualPrecedence(currentOperator) && topOperator.isLeftAssociative());
 	}
 
-	parseExpression(expression) {
+	convert(expression) {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const pattern = /[\+\-\*\/\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
+		const pattern = /[\+\-\*\/\^\(\)\&]|(\d*\.\d+|\d+\.\d*|\d+)/g; // & is temporary
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
 		for (let token of tokens) {
 			if (this.isNumber(token)) {
-				outputQueue.push(Number(token));
+				outputQueue.push(parseFloat(token));
 				continue;
 			}
 
@@ -94,28 +97,31 @@ class Calculator {
 		return outputQueue;
 	}
 
-	resolveRpn(rpnArray) {
-		const stack = [];
+	resolve(outputQueue) {
+		const evaluationStack = [];
 
-		for (let token of rpnArray) {
-			const operator = this.operators[token];
+		for (let token of outputQueue) {
+			if (this.isNumber(token)) {
+				evaluationStack.push(token);
+				continue;
+			}
 
-			if (operator) {
-				stack.push(operator.method.apply(this, stack.splice(-operator.method.length)));
-			} else {
-				stack.push(parseFloat(token));
+			if (this.isOperator(token)) {
+				let operator = this.operators[token];
+				evaluationStack.push(operator.method.apply(this, evaluationStack.splice(-operator.method.length)));
+				continue;
 			}
 		}
 
-		return stack[0];
+		return evaluationStack[0];
 	}
 
-	calculate(expression) {
-		const rpnArray = this.parseExpression(expression);
+	evaluate(expression) {
+		const outputQueue = this.convert(expression);
 
-		if (rpnArray === undefined) return;
+		if (outputQueue === undefined) return;
 
-		return this.resolveRpn(rpnArray);
+		return this.resolve(outputQueue);
 	}
 }
 

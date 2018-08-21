@@ -110,7 +110,7 @@ class Calculation {
 			return;
 		}
 
-		const result = Calculator.calculate(this.input.value);
+		const result = Calculator.evaluate(this.input.value);
 
 		if (isNaN(result)) {
 			this.output.value = '';

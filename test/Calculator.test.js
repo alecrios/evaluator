@@ -13,6 +13,7 @@ const tests = [
 	{expression: '4 + 1 * 8', rpn: [4, 1, 8, '*', '+'], result: 12},
 	{expression: '6 0 9 6 + 1 2 * 1 1', rpn: [6096, 12, 11, '*', '+'], result: 6228},
 	{expression: '8 * (2 + 1)', rpn: [8, 2, 1, '+', '*'], result: 24},
+	{expression: '2 + (3 * 6) - 4', rpn: [2, 3, 6, '*', '+', 4, '-'], result: 16},
 	{expression: '7 - 1 + 6', rpn: [7, 1, '-', 6, '+'], result: 12},
 	{expression: '83 - 0 + 8', rpn: [83, 0, '-', 8, '+'], result: 91},
 	{expression: '3 * 8 ^ 9 + 3', rpn: [3, 8, 9, '^', '*', 3, '+'], result: 402653187},
@@ -34,20 +35,26 @@ const tests = [
 	{expression: '.125 - .0625 + .500', rpn: [.125, .0625, '-', .500, '+'], result: 0.5625},
 	{expression: '0.419 - 0.001', rpn: [0.419, 0.001, '-'], result: 0.418},
 	{expression: '12.5 * (21.1154 + 1.0)', rpn: [12.5, 21.1154, 1.0, '+', '*'], result: 276.4425},
+	{expression: '&12', rpn: [12, '&'], result: -12},
+	{expression: '3 + &6', rpn: [3, 6, '&', '+'], result: -3},
+	{expression: '&5 - &7', rpn: [5, '&', 7, '&', '-'], result: 2},
+	{expression: '4 ^ & 2', rpn: [4, 2, '&', '^'], result: .0625},
+	{expression: '&4 ^ 2', rpn: [4, 2, '^', '&'], result: -16},
+	{expression: '1 ^ &2 - &7 - 9 + &2', rpn: [1, 2, '&', '^', 7, '&', '-', 9, '-', 2, '&', '+'], result: -3},
 ];
 
 describe('Calculator', () => {
-	describe('parseExpression()', () => {
+	describe('convert()', () => {
 		tests.forEach((test) => {
 			it(`${test.expression} = ${test.rpn}`, () => {
-				assert.deepEqual(Calculator.parseExpression(test.expression), test.rpn);
+				assert.deepEqual(Calculator.convert(test.expression), test.rpn);
 			});
 		});
 	});
-	describe('resolveRpn()', () => {
+	describe('resolve()', () => {
 		tests.forEach((test) => {
 			it(`${test.rpn} = ${test.result}`, () => {
-				assert.deepEqual(Calculator.resolveRpn(test.rpn), test.result);
+				assert.deepEqual(Calculator.resolve(test.rpn), test.result);
 			});
 		});
 	});
