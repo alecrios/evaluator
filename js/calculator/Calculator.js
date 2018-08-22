@@ -32,7 +32,7 @@ class Calculator {
 		return stack[stack.length - 1];
 	}
 
-	topOperatorHasPrecedence(operatorStack, currentToken) {
+	topOperatorHasPrecedence(operatorStack, currentOperator) {
 		if (!operatorStack.length) return;
 
 		const topToken = this.getTopToken(operatorStack);
@@ -40,11 +40,18 @@ class Calculator {
 		if (!this.isOperator(topToken)) return;
 
 		const topOperator = this.operators[topToken];
-		const currentOperator = this.operators[currentToken];
 
 		if (currentOperator.method.length === 1 && topOperator.method.length > 1) return;
 
 		return topOperator.hasGreaterPrecedence(currentOperator) || (topOperator.hasEqualPrecedence(currentOperator) && topOperator.isLeftAssociative());
+	}
+
+	determineOperator(token, previousToken) {
+		// if (previousToken === undefined || this.isOpenParenthesis(previousToken) || this.isOperator(previousToken)) {}
+
+		// if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {}
+
+		return this.operators[token];
 	}
 
 	convert(expression) {
@@ -54,26 +61,28 @@ class Calculator {
 		const pattern = /[\+\-\*\/\^\(\)\&]|(\d*\.\d+|\d+\.\d*|\d+)/g; // & is temporary
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
-		for (let token of tokens) {
+		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
 				outputQueue.push(parseFloat(token));
 				continue;
 			}
-
+			
 			if (this.isOperator(token)) {
-				while (this.topOperatorHasPrecedence(operatorStack, token)) {
+				const operator = this.determineOperator(token, tokens[index - 1]);
+
+				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
 					outputQueue.push(operatorStack.pop());
 				}
 
-				operatorStack.push(token);
+				operatorStack.push(operator.symbol);
 				continue;
 			}
-
+			
 			if (this.isOpenParenthesis(token)) {
 				operatorStack.push(token);
 				continue;
 			}
-
+			
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(this.getTopToken(operatorStack))) {
 					if (!operatorStack.length) return;
