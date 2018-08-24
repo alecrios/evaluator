@@ -3,7 +3,7 @@ const Operator = require('./Operator');
 class Calculator {
 	constructor() {
 		this.symbols = {
-			'^': {infix: 'POW'},
+			'^': {infix: 'EXP'},
 			'*': {infix: 'MUL'},
 			'/': {infix: 'DIV'},
 			'+': {infix: 'ADD'},
@@ -11,7 +11,7 @@ class Calculator {
 		};
 
 		this.operators = {
-			'POW': new Operator('POW', 5, 'right', (a, b) => Math.pow(a, b)),
+			'EXP': new Operator('EXP', 5, 'right', (a, b) => Math.pow(a, b)),
 			'NEG': new Operator('NEG', 4, 'right', (a) => -a),
 			'MUL': new Operator('MUL', 3, 'left', (a, b) => a * b),
 			'DIV': new Operator('DIV', 3, 'left', (a, b) => a / b),
