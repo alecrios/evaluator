@@ -47,6 +47,8 @@ const tests = [
 	{expression: '92 % 5 + 12', rpn: [92, 5, 'MOD', 12, 'ADD'], result: 14},
 	{expression: '2 + 12 % (9 - 4)', rpn: [2, 12, 9, 4, 'SUB', 'MOD', 'ADD'], result: 4},
 	{expression: '12 % 20 ^ 3 + 50', rpn: [12, 20, 3, 'EXP', 'MOD', 50, 'ADD'], result: 62},
+	{expression: '23 - - - - - 60', rpn: [23, 60, 'NEG', 'NEG', 'NEG', 'NEG', 'SUB'], result: -37},
+	{expression: '-1 + -2 ^ 3 + 1', rpn: [1, 'NEG', 2, 3, 'EXP', 'NEG', 'ADD', 1, 'ADD'], result: -8},
 ];
 
 describe('Calculator', () => {
