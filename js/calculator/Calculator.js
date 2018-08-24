@@ -76,7 +76,7 @@ class Calculator {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const pattern = /[\+\-\*\/\^\(\)\&]|(\d*\.\d+|\d+\.\d*|\d+)/g; // & is temporary
+		const pattern = /[\+\-\*\/\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
 		for (let [index, token] of tokens.entries()) {
