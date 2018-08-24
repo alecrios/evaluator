@@ -58,7 +58,9 @@ class Calculator {
 
 		if (currentOperator.method.length === 1 && topOperator.method.length > 1) return;
 
-		return topOperator.hasGreaterPrecedence(currentOperator) || (topOperator.hasEqualPrecedence(currentOperator) && topOperator.isLeftAssociative());
+		return topOperator.hasGreaterPrecedence(currentOperator)
+			|| (topOperator.hasEqualPrecedence(currentOperator)
+			&& topOperator.isLeftAssociative());
 	}
 
 	determineOperator(token, previousToken) {
