@@ -12,7 +12,7 @@ class Calculator {
 		};
 
 		this.operators = {
-			'EXP': new Operator('EXP', 4, 'right', (a, b) => Math.pow(a, b)),
+			'EXP': new Operator('EXP', 4, 'right', (a, b) => a ** b),
 			'NEG': new Operator('NEG', 3, 'right', (a) => -a),
 			'MUL': new Operator('MUL', 2, 'left', (a, b) => a * b),
 			'DIV': new Operator('DIV', 2, 'left', (a, b) => a / b),
