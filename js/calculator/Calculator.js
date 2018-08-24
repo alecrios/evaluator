@@ -2,18 +2,30 @@ const Operator = require('./Operator');
 
 class Calculator {
 	constructor() {
+		this.symbols = {
+			'^': {infix: 'POW'},
+			'*': {infix: 'MUL'},
+			'/': {infix: 'DIV'},
+			'+': {infix: 'ADD'},
+			'-': {infix: 'SUB', prefix: 'NEG'},
+		};
+
 		this.operators = {
-			'^': new Operator('^', 5, 'right', (a, b) => Math.pow(a, b)),
-			'&': new Operator('&', 4, 'right', (a) => -a),
-			'*': new Operator('*', 3, 'left', (a, b) => a * b),
-			'/': new Operator('/', 3, 'left', (a, b) => a / b),
-			'+': new Operator('+', 1, 'left', (a, b) => a + b),
-			'-': new Operator('-', 1, 'left', (a, b) => a - b),
+			'POW': new Operator('POW', 5, 'right', (a, b) => Math.pow(a, b)),
+			'NEG': new Operator('NEG', 4, 'right', (a) => -a),
+			'MUL': new Operator('MUL', 3, 'left', (a, b) => a * b),
+			'DIV': new Operator('DIV', 3, 'left', (a, b) => a / b),
+			'ADD': new Operator('ADD', 1, 'left', (a, b) => a + b),
+			'SUB': new Operator('SUB', 1, 'left', (a, b) => a - b),
 		};
 	}
 
 	isNumber(token) {
 		return !isNaN(parseFloat(token)) && isFinite(token);
+	}
+
+	isSymbol(token) {
+		return this.symbols.hasOwnProperty(token);
 	}
 
 	isOperator(token) {
@@ -47,11 +59,17 @@ class Calculator {
 	}
 
 	determineOperator(token, previousToken) {
-		// if (previousToken === undefined || this.isOpenParenthesis(previousToken) || this.isOperator(previousToken)) {}
+		let notation;
 
-		// if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {}
+		if (previousToken === undefined || this.isOpenParenthesis(previousToken) || this.isSymbol(previousToken)) {
+			notation = 'prefix';
+		}
 
-		return this.operators[token];
+		if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {
+			notation = 'infix';
+		}
+
+		return this.operators[this.symbols[token][notation]];
 	}
 
 	convert(expression) {
@@ -67,14 +85,14 @@ class Calculator {
 				continue;
 			}
 			
-			if (this.isOperator(token)) {
+			if (this.isSymbol(token)) {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
 					outputQueue.push(operatorStack.pop());
 				}
 
-				operatorStack.push(operator.symbol);
+				operatorStack.push(operator.name);
 				continue;
 			}
 			
@@ -115,11 +133,9 @@ class Calculator {
 				continue;
 			}
 
-			if (this.isOperator(token)) {
-				let operator = this.operators[token];
-				evaluationStack.push(operator.method.apply(this, evaluationStack.splice(-operator.method.length)));
-				continue;
-			}
+			let operator = this.operators[token];
+			let result = operator.method.apply(this, evaluationStack.splice(-operator.method.length))
+			evaluationStack.push(result);
 		}
 
 		return evaluationStack[0];

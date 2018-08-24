@@ -1,6 +1,6 @@
 class Operator {
-	constructor(symbol, precedence, associativity, method) {
-		this.symbol = symbol;
+	constructor(name, precedence, associativity, method) {
+		this.name = name;
 		this.precedence = precedence;
 		this.associativity = associativity;
 		this.method = method;
