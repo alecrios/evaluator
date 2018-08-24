@@ -6,6 +6,7 @@ class Calculator {
 			'^': {infix: 'EXP'},
 			'*': {infix: 'MUL'},
 			'/': {infix: 'DIV'},
+			'%': {infix: 'MOD'},
 			'+': {infix: 'ADD'},
 			'-': {infix: 'SUB', prefix: 'NEG'},
 		};
@@ -15,6 +16,7 @@ class Calculator {
 			'NEG': new Operator('NEG', 4, 'right', (a) => -a),
 			'MUL': new Operator('MUL', 3, 'left', (a, b) => a * b),
 			'DIV': new Operator('DIV', 3, 'left', (a, b) => a / b),
+			'MOD': new Operator('MOD', 3, 'left', (a, b) => a % b),
 			'ADD': new Operator('ADD', 1, 'left', (a, b) => a + b),
 			'SUB': new Operator('SUB', 1, 'left', (a, b) => a - b),
 		};
@@ -74,7 +76,7 @@ class Calculator {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const pattern = /[\+\-\*\/\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
+		const pattern = /[\+\-\*\/\%\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
 		for (let [index, token] of tokens.entries()) {
