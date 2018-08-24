@@ -63,9 +63,7 @@ class Calculator {
 
 		if (previousToken === undefined || this.isOpenParenthesis(previousToken) || this.isSymbol(previousToken)) {
 			notation = 'prefix';
-		}
-
-		if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {
+		} else if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {
 			notation = 'infix';
 		}
 
