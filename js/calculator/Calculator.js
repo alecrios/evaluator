@@ -114,7 +114,7 @@ class Calculator {
 		}
 
 		while (operatorStack.length) {
-			let operator = this.getTopToken(operatorStack);
+			const operator = this.getTopToken(operatorStack);
 
 			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) return;
 
@@ -133,8 +133,8 @@ class Calculator {
 				continue;
 			}
 
-			let operator = this.operators[token];
-			let result = operator.method.apply(this, evaluationStack.splice(-operator.method.length))
+			const operator = this.operators[token];
+			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length))
 			evaluationStack.push(result);
 		}
 
