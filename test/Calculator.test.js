@@ -52,6 +52,10 @@ const tests = [
 	{expression: '12 % 20 ^ 3 + 50', rpn: [12, 20, 3, 'EXP', 'MOD', 50, 'ADD'], result: 62},
 	{expression: '23 - - - - - 60', rpn: [23, 60, 'NEG', 'NEG', 'NEG', 'NEG', 'SUB'], result: -37},
 	{expression: '-1 + -2 ^ 3 + 1', rpn: [1, 'NEG', 2, 3, 'EXP', 'NEG', 'ADD', 1, 'ADD'], result: -8},
+	{expression: '+12', rpn: [12, 'POS'], result: 12},
+	{expression: '3 + +10', rpn: [3, 10, 'POS', 'ADD'], result: 13},
+	{expression: '-17 + + + + 10', rpn: [17, 'NEG', 10, 'POS', 'POS', 'POS', 'ADD'], result: -7},
+	{expression: '10 - +4', rpn: [10, 4, 'POS', 'SUB'], result: 6},
 ];
 
 describe('Calculator', () => {

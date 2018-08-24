@@ -7,12 +7,13 @@ class Calculator {
 			'*': {infix: 'MUL'},
 			'/': {infix: 'DIV'},
 			'%': {infix: 'MOD'},
-			'+': {infix: 'ADD'},
+			'+': {infix: 'ADD', prefix: 'POS'},
 			'-': {infix: 'SUB', prefix: 'NEG'},
 		};
 
 		this.operators = {
 			'EXP': new Operator('EXP', 4, 'right', (a, b) => a ** b),
+			'POS': new Operator('POS', 3, 'right', (a) => a),
 			'NEG': new Operator('NEG', 3, 'right', (a) => -a),
 			'MUL': new Operator('MUL', 2, 'left', (a, b) => a * b),
 			'DIV': new Operator('DIV', 2, 'left', (a, b) => a / b),
