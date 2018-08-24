@@ -80,6 +80,8 @@ class Calculator {
 		const pattern = /[\+\-\*\/\%\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
+		if (!tokens) return;
+
 		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
 				outputQueue.push(parseFloat(token));
