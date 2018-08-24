@@ -41,6 +41,8 @@ const tests = [
 	{expression: '4 ^ - 2', rpn: [4, 2, 'NEG', 'POW'], result: .0625},
 	{expression: '-4 ^ 2', rpn: [4, 2, 'POW', 'NEG'], result: -16},
 	{expression: '1 ^ -2 - -7 - 9 + -2', rpn: [1, 2, 'NEG', 'POW', 7, 'NEG', 'SUB', 9, 'SUB', 2, 'NEG', 'ADD'], result: -3},
+	{expression: '2 / (30 / 3) * 4 / 1', rpn: [2, 30, 3, 'DIV', 'DIV', 4, 'MUL', 1, 'DIV'], result: 0.8},
+	{expression: '7---15+3-9', rpn: [7, 15, 'NEG', 'NEG', 'SUB', 3, 'ADD', 9, 'SUB'], result: -14},
 ];
 
 describe('Calculator', () => {
