@@ -89,7 +89,7 @@ class Calculator {
 				outputQueue.push(parseFloat(token));
 				continue;
 			}
-			
+
 			if (this.isSymbol(token)) {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
@@ -100,12 +100,12 @@ class Calculator {
 				operatorStack.push(operator.name);
 				continue;
 			}
-			
+
 			if (this.isOpenParenthesis(token)) {
 				operatorStack.push(token);
 				continue;
 			}
-			
+
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(this.getTopToken(operatorStack))) {
 					if (!operatorStack.length) return;
