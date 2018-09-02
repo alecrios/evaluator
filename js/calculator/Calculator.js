@@ -139,7 +139,7 @@ class Calculator {
 			}
 
 			const operator = this.operators[token];
-			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length))
+			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
 			evaluationStack.push(result);
 		}
 
