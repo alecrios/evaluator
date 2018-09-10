@@ -115,7 +115,7 @@ class Calculator {
 
 				operatorStack.pop();
 				continue;
-			} 
+			}
 		}
 
 		while (operatorStack.length) {
