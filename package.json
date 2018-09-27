@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "test": "mocha",
-    "publish": "build --mac --win -p always"
+    "build": "build --win",
+    "ship": "build --win -p always"
   },
   "author": "Alec Rios",
   "repository": {
@@ -16,7 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^2.0.7",
-    "electron-log": "^2.2.17",
     "electron-updater": "^3.1.2"
   },
   "devDependencies": {

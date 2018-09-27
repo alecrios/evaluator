@@ -1,4 +1,5 @@
-const {app, BrowserWindow, globalShortcut} = require('electron');
+const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
+const {autoUpdater} = require('electron-updater');
 const Store = require('./js/Store.js');
 let win = null;
 
@@ -42,6 +43,15 @@ const createWindow = () => {
 
 app.on('ready', () => {
 	createWindow();
+	autoUpdater.checkForUpdates();
+});
+
+autoUpdater.on('update-downloaded', () => {
+	win.webContents.send('updateReady');
+});
+
+ipcMain.on('quitAndInstall', () => {
+	autoUpdater.quitAndInstall();
 });
 
 app.on('will-quit', () => {
