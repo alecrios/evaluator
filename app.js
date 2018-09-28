@@ -21,7 +21,9 @@ const createWindow = () => {
 
 	win.once('ready-to-show', () => win.show());
 
-	globalShortcut.register('CommandOrControl+Y', () => win.focus());
+	globalShortcut.register('CommandOrControl+Space', () => {
+		win.isFocused() ? win.blur() : win.focus();
+	});
 
 	win.on('resize', () => {
 		let bounds = win.getBounds();
