@@ -1,8 +1,8 @@
-version: 0.3.1
+version: 0.3.2
 files:
-  - url: eval-setup-0.3.1.exe
-    sha512: YtkpEesRFOgr7DvYhpcVvx1aK2EOrtlyWB4tCMigUP4Ey0bu/VcHdXXhbYcdVgIkjoCHwCVqpaKcK+/d2fG7eA==
-    size: 36428272
-path: eval-setup-0.3.1.exe
-sha512: YtkpEesRFOgr7DvYhpcVvx1aK2EOrtlyWB4tCMigUP4Ey0bu/VcHdXXhbYcdVgIkjoCHwCVqpaKcK+/d2fG7eA==
-releaseDate: '2018-09-27T07:18:19.931Z'
+  - url: evaluator-setup-0.3.2.exe
+    sha512: 5cyRheUhVo+th2uNcsFyosaJSYuWvpC+Duu5ZCNim/RQhxsfZpuWzgJ6xEMmsQ1+uKCpnl/bUkck6M34aTUFFQ==
+    size: 36428344
+path: evaluator-setup-0.3.2.exe
+sha512: 5cyRheUhVo+th2uNcsFyosaJSYuWvpC+Duu5ZCNim/RQhxsfZpuWzgJ6xEMmsQ1+uKCpnl/bUkck6M34aTUFFQ==
+releaseDate: '2018-09-28T02:10:23.612Z'

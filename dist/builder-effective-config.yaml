@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-appId: com.electron.eval
+appId: com.electron.evaluator
 publish:
   provider: github
   token: <stripped sensitive data>
