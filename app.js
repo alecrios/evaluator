@@ -21,6 +21,8 @@ const createWindow = () => {
 
 	win.once('ready-to-show', () => win.show());
 
+	globalShortcut.register('CommandOrControl+Y', () => win.focus());
+
 	win.on('resize', () => {
 		let bounds = win.getBounds();
 		windowSettings.set('width', bounds.width);
@@ -36,10 +38,6 @@ const createWindow = () => {
 	win.on('closed', () => win = null);
 
 	win.loadFile('index.html');
-
-	globalShortcut.register('CommandOrControl+X', () => {
-		win.focus();
-	});
 };
 
 app.on('ready', () => {
