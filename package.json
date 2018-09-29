@@ -1,6 +1,6 @@
 {
   "name": "evaluator",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Simple calculator app",
   "main": "app.js",
   "scripts": {

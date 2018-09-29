@@ -1,0 +1,7 @@
+{
+	"appId": "com.electron.evaluator",
+	"publish": {
+		"provider": "github",
+		"token": "226a5350df26680730433d9fe2c5c3a3e2390456"
+	}
+}
