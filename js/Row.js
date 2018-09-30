@@ -1,6 +1,6 @@
-class Calculation {
-	constructor(calculation) {
-		this.calculation = calculation;
+class Row {
+	constructor(row) {
+		this.row = row;
 		this.createInput();
 		this.createOutput();
 		this.addEventListeners();
@@ -11,7 +11,7 @@ class Calculation {
 		this.input = document.createElement('textarea');
 		this.input.rows = '1';
 		this.input.classList.add('textarea', 'input');
-		this.calculation.appendChild(this.input);
+		this.row.appendChild(this.input);
 	}
 
 	createOutput() {
@@ -19,7 +19,7 @@ class Calculation {
 		this.output.rows = '1';
 		this.output.classList.add('textarea', 'output');
 		this.output.setAttribute('readonly', '');
-		this.calculation.appendChild(this.output);
+		this.row.appendChild(this.output);
 	}
 
 	focus() {
@@ -43,15 +43,15 @@ class Calculation {
 		});
 
 		this.input.addEventListener('focus', () => {
-			EventBus.dispatchEvent('calculationFocus', this);
+			EventBus.dispatchEvent('rowFocus', this);
 		});
 
 		this.output.addEventListener('focus', () => {
-			EventBus.dispatchEvent('calculationFocus', this);
+			EventBus.dispatchEvent('rowFocus', this);
 			this.output.select();
 		});
 
-		this.calculation.addEventListener('keydown', () => {
+		this.row.addEventListener('keydown', () => {
 			switch (event.key) {
 				case 'Insert':
 					event.preventDefault();
@@ -97,11 +97,11 @@ class Calculation {
 	}
 
 	activate() {
-		this.calculation.classList.add('active');
+		this.row.classList.add('active');
 	}
 
 	deactivate() {
-		this.calculation.classList.remove('active');
+		this.row.classList.remove('active');
 	}
 
 	evaluate() {
@@ -121,8 +121,8 @@ class Calculation {
 	}
 
 	getNode() {
-		return this.calculation;
+		return this.row;
 	}
 }
 
-module.exports = Calculation;
+module.exports = Row;

@@ -2,13 +2,13 @@ html {
 	background-color: rgb(30, 31, 32);
 }
 
-.calculation {
+.row {
 	background-color: rgb(30, 31, 32);
 	border-bottom: .125rem solid rgb(38, 40, 42);
 	padding: .75rem 1rem;
 }
 
-.calculation.active {
+.row.active {
 	background-color: rgb(26, 27, 28);
 }
 
