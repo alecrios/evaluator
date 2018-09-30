@@ -11,15 +11,15 @@ Evaluator is a calculator application built for a rapid and efficient workflow. 
 ## Shortcuts
 
 | Shortcut | Function |
-| --- | --- |
-| Tab | Go to next row |
-| Shift + Tab | Go to previous row |
-| Enter | Go to result |
-| Insert | Add new row below |
-| Shift + Insert | Add new row above |
-| Delete | Delete current row |
-| Shift + Delete | Delete all rows |
-| Home | Go to first row |
-| End | Go to last row |
-| Page Up | Go to previous row |
-| Page Down | Go to next row |
+|:--- |:--- |
+| `Tab` | Go to next row |
+| `Shift + Tab` | Go to previous row |
+| `Enter` | Go to result |
+| `Insert` | Add new row below |
+| `Shift + Insert` | Add new row above |
+| `Delete` | Delete current row |
+| `Shift + Delete` | Delete all rows |
+| `Home` | Go to first row |
+| `End` | Go to last row |
+| `PageUp` | Go to previous row |
+| `PageDown` | Go to next row |
