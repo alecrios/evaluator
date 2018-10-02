@@ -56,6 +56,7 @@ const tests = [
 	{expression: '3 + +10', rpn: [3, 10, 'POS', 'ADD'], result: 13},
 	{expression: '-17 + + + + 10', rpn: [17, 'NEG', 10, 'POS', 'POS', 'POS', 'ADD'], result: -7},
 	{expression: '10 - +4', rpn: [10, 4, 'POS', 'SUB'], result: 6},
+	{expression: '', rpn: undefined, result: undefined}
 ];
 
 describe('Calculator', () => {

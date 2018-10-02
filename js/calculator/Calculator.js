@@ -130,6 +130,8 @@ class Calculator {
 	}
 
 	resolve(outputQueue) {
+		if (outputQueue === undefined) return;
+
 		const evaluationStack = [];
 
 		for (let token of outputQueue) {
