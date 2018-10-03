@@ -93,6 +93,8 @@ class Calculator {
 			if (this.isSymbol(token)) {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
+				if (operator === undefined) return;
+
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
 					outputQueue.push(operatorStack.pop());
 				}
@@ -141,6 +143,9 @@ class Calculator {
 			}
 
 			const operator = this.operators[token];
+
+			if (evaluationStack.length < operator.method.length) return;
+
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
 			evaluationStack.push(result);
 		}

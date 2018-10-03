@@ -112,7 +112,7 @@ class Row {
 
 		const result = Calculator.evaluate(this.input.value);
 
-		if (isNaN(result)) {
+		if (result === undefined) {
 			this.output.value = '';
 			return;
 		}

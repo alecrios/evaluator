@@ -2,6 +2,33 @@ const assert = require('chai').assert;
 const Calculator = require('../js/calculator/Calculator');
 
 const tests = [
+	{expression: '', rpn: undefined, result: undefined},
+	{expression: ' ', rpn: undefined, result: undefined},
+	{expression: 'a', rpn: undefined, result: undefined},
+	{expression: '^', rpn: undefined, result: undefined},
+	{expression: '*', rpn: undefined, result: undefined},
+	{expression: '/', rpn: undefined, result: undefined},
+	{expression: '%', rpn: undefined, result: undefined},
+	{expression: '+', rpn: ['POS'], result: undefined},
+	{expression: '-', rpn: ['NEG'], result: undefined},
+	{expression: '^2', rpn: undefined, result: undefined},
+	{expression: '*2', rpn: undefined, result: undefined},
+	{expression: '/2', rpn: undefined, result: undefined},
+	{expression: '%2', rpn: undefined, result: undefined},
+	{expression: '+2', rpn: [2,'POS'], result: 2},
+	{expression: '-2', rpn: [2, 'NEG'], result: -2},
+	{expression: '2^', rpn: [2, 'EXP'], result: undefined},
+	{expression: '2*', rpn: [2, 'MUL'], result: undefined},
+	{expression: '2/', rpn: [2, 'DIV'], result: undefined},
+	{expression: '2%', rpn: [2, 'MOD'], result: undefined},
+	{expression: '2+', rpn: [2, 'ADD'], result: undefined},
+	{expression: '2-', rpn: [2, 'SUB'], result: undefined},
+	{expression: '2^2', rpn: [2, 2, 'EXP'], result: 4},
+	{expression: '2*2', rpn: [2, 2, 'MUL'], result: 4},
+	{expression: '2/2', rpn: [2, 2, 'DIV'], result: 1},
+	{expression: '2%2', rpn: [2, 2, 'MOD'], result: 0},
+	{expression: '2+2', rpn: [2, 2, 'ADD'], result: 4},
+	{expression: '2-2', rpn: [2, 2, 'SUB'], result: 0},
 	{expression: '3', rpn: [3], result: 3},
 	{expression: '562370', rpn: [562370], result: 562370},
 	{expression: '. 3 9 721', rpn: [.39721], result: .39721},
@@ -56,7 +83,6 @@ const tests = [
 	{expression: '3 + +10', rpn: [3, 10, 'POS', 'ADD'], result: 13},
 	{expression: '-17 + + + + 10', rpn: [17, 'NEG', 10, 'POS', 'POS', 'POS', 'ADD'], result: -7},
 	{expression: '10 - +4', rpn: [10, 4, 'POS', 'SUB'], result: 6},
-	{expression: '', rpn: undefined, result: undefined}
 ];
 
 describe('Calculator', () => {
