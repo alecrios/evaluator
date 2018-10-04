@@ -8,6 +8,18 @@ Evaluator is a calculator application built for a rapid and efficient workflow. 
 * **Infinite Workspace** - Add as many calculation rows as necessary
 * **Intuitive Shortcuts** - Navigate effortlessly through your workspace
 
+## Operations
+
+| Symbol | Operation |
+|:--- |:--- |
+| `+` | Addition |
+| `-` | Subtraction |
+| `*` | Multiplication |
+| `/` | Division |
+| `^` | Exponentiation |
+| `%` | Modulo |
+| `(`, `)` | Grouping |
+
 ## Shortcuts
 
 | Shortcut | Function |
