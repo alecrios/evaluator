@@ -85,7 +85,7 @@ class Calculator {
 		if (!tokens) {
 			console.error(`Input does not have any valid tokens to process`);
 			return;
-		};
+		}
 
 		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
@@ -99,7 +99,7 @@ class Calculator {
 				if (operator === undefined) {
 					console.error(`"${token}" symbol does not represent a valid operator in the given context`);
 					return;
-				};
+				}
 
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
 					outputQueue.push(operatorStack.pop());
@@ -119,7 +119,7 @@ class Calculator {
 					if (!operatorStack.length) {
 						console.error(`Parentheses are not matched properly`);
 						return;
-					};
+					}
 
 					outputQueue.push(operatorStack.pop());
 				}
@@ -135,7 +135,7 @@ class Calculator {
 			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
 				console.error(`Parentheses are not matched properly`);
 				return;
-			};
+			}
 
 			outputQueue.push(operatorStack.pop());
 		}
@@ -159,7 +159,7 @@ class Calculator {
 			if (evaluationStack.length < operator.method.length) {
 				console.error(`"${token}" operator does not have a sufficient number of arguments`);
 				return;
-			};
+			}
 
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
 			evaluationStack.push(result);
