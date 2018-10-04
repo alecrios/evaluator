@@ -82,7 +82,10 @@ class Calculator {
 		const pattern = /[\+\-\*\/\%\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
 		const tokens = expression.replace(/\s+/g, '').match(pattern);
 
-		if (!tokens) return;
+		if (!tokens) {
+			console.error(`Input does not have any valid tokens to process`);
+			return;
+		};
 
 		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
@@ -93,7 +96,10 @@ class Calculator {
 			if (this.isSymbol(token)) {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
-				if (operator === undefined) return;
+				if (operator === undefined) {
+					console.error(`"${token}" symbol does not represent a valid operator in the given context`);
+					return;
+				};
 
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
 					outputQueue.push(operatorStack.pop());
@@ -110,7 +116,10 @@ class Calculator {
 
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(this.getTopToken(operatorStack))) {
-					if (!operatorStack.length) return;
+					if (!operatorStack.length) {
+						console.error(`Parentheses are not matched properly`);
+						return;
+					};
 
 					outputQueue.push(operatorStack.pop());
 				}
@@ -123,7 +132,10 @@ class Calculator {
 		while (operatorStack.length) {
 			const operator = this.getTopToken(operatorStack);
 
-			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) return;
+			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
+				console.error(`Parentheses are not matched properly`);
+				return;
+			};
 
 			outputQueue.push(operatorStack.pop());
 		}
@@ -144,7 +156,10 @@ class Calculator {
 
 			const operator = this.operators[token];
 
-			if (evaluationStack.length < operator.method.length) return;
+			if (evaluationStack.length < operator.method.length) {
+				console.error(`"${token}" operator does not have a sufficient number of arguments`);
+				return;
+			};
 
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
 			evaluationStack.push(result);
@@ -155,8 +170,6 @@ class Calculator {
 
 	evaluate(expression) {
 		const outputQueue = this.convert(expression);
-
-		if (outputQueue === undefined) return;
 
 		return this.resolve(outputQueue);
 	}
