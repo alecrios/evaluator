@@ -109,6 +109,8 @@ const tests = [
 	{expression: '3 + +10', rpn: [3, 10, 'POS', 'ADD'], result: 13},
 	{expression: '-17 + + + + 10', rpn: [17, 'NEG', 10, 'POS', 'POS', 'POS', 'ADD'], result: -7},
 	{expression: '10 - +4', rpn: [10, 4, 'POS', 'SUB'], result: 6},
+	{expression: '4 + 8 / (16 * (2 + 2))', rpn: [4, 8, 16, 2, 2, 'ADD', 'MUL', 'DIV', 'ADD'], result: 4.125},
+	{expression: '(100 / (4 - 2) * ((6) + 2))', rpn: [100, 4, 2, 'SUB', 'DIV', 6, 2, 'ADD', 'MUL'], result: 400},
 ];
 
 describe('Calculator', () => {
