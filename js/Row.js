@@ -85,21 +85,23 @@ class Row {
 					break;
 				case 'Tab':
 					event.preventDefault();
-					EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
+					this.outputActive() && event.shiftKey ? this.input.focus() : EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
 					break;
 				case 'Enter':
-					if (document.activeElement === this.input) {
-						if (event.shiftKey) return;
-						event.preventDefault();
-						if (!this.output.value) return;
-						this.output.focus();
-					} else if (document.activeElement === this.output) {
-						event.preventDefault();
-						EventBus.dispatchEvent('next', this);
-					}
+					event.preventDefault();
+					if (!this.output.value) break;
+					this.inputActive() ? this.output.focus() : EventBus.dispatchEvent('next', this);
 					break;
 			}
 		});
+	}
+
+	inputActive() {
+		return document.activeElement === this.input;
+	}
+
+	outputActive() {
+		return document.activeElement == this.output;
 	}
 
 	activate() {
