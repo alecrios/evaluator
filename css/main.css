@@ -6,6 +6,7 @@ html {
 	background-color: rgb(30, 31, 32);
 	border-bottom: .125rem solid rgb(38, 40, 42);
 	padding: .75rem 1rem;
+	cursor: text;
 }
 
 .row.active {
@@ -20,6 +21,7 @@ html {
 	overflow: hidden;
 	font-size: 1rem;
 	line-height: 1.5rem;
+	cursor: text;
 }
 
 .textarea:focus {

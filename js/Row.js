@@ -36,6 +36,10 @@ class Row {
 	}
 
 	addEventListeners() {
+		this.row.addEventListener('click', () => {
+			this.input.focus();
+		});
+
 		this.input.addEventListener('input', () => {
 			this.updateHeight(this.input);
 			this.updateHeight(this.output);
