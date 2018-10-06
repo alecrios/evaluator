@@ -14,30 +14,30 @@ class Workspace {
 	}
 
 	subscribeToCommands() {
-		CommandBus.subscribe('insertAfter', this.insertAfter.bind(this));
-		CommandBus.subscribe('insertBefore', this.insertBefore.bind(this));
-		CommandBus.subscribe('delete', this.delete.bind(this));
-		CommandBus.subscribe('deleteAll', this.deleteAll.bind(this));
-		CommandBus.subscribe('first', this.first.bind(this));
-		CommandBus.subscribe('last', this.last.bind(this));
-		CommandBus.subscribe('previous', this.previous.bind(this));
-		CommandBus.subscribe('next', this.next.bind(this));
-		CommandBus.subscribe('rowFocus', this.rowFocus.bind(this));
-		CommandBus.subscribe('inputFocus', this.inputFocus.bind(this));
-		CommandBus.subscribe('outputFocus', this.outputFocus.bind(this));
+		CommandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
+		CommandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
+		CommandBus.subscribe('deleteRow', this.deleteRow.bind(this));
+		CommandBus.subscribe('deleteAllRows', this.deleteAllRows.bind(this));
+		CommandBus.subscribe('goToFirstRow', this.goToFirstRow.bind(this));
+		CommandBus.subscribe('goToLastRow', this.goToLastRow.bind(this));
+		CommandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
+		CommandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
+		CommandBus.subscribe('activateRow', this.activateRow.bind(this));
+		CommandBus.subscribe('focusInput', this.focusInput.bind(this));
+		CommandBus.subscribe('focusOutput', this.focusOutput.bind(this));
 	}
 
-	insertAfter(row) {
+	insertRowAfter(row) {
 		const index = this.rows.indexOf(row);
 		this.addRow(index + 1);
 	}
 
-	insertBefore(row) {
+	insertRowBefore(row) {
 		const index = this.rows.indexOf(row);
 		this.addRow(index);
 	}
 
-	rowFocus(row) {
+	activateRow(row) {
 		if (this.activeRow === row) return;
 		if (this.activeRow !== undefined) this.activeRow.deactivate();
 
@@ -45,15 +45,15 @@ class Workspace {
 		this.activeRow.activate();
 	}
 
-	inputFocus(row) {
+	focusInput(row) {
 		row.input.focus();
 	}
 
-	outputFocus(row) {
+	focusOutput(row) {
 		row.output.focus();
 	}
 
-	previous(row) {
+	goToPreviousRow(row) {
 		const index = this.rows.indexOf(row);
 
 		if (this.isFirstRow(index)) return;
@@ -61,7 +61,7 @@ class Workspace {
 		this.rows[index - 1].focus();
 	}
 
-	next(row) {
+	goToNextRow(row) {
 		const index = this.rows.indexOf(row);
 
 		if (this.isLastRow(index)) {
@@ -74,15 +74,15 @@ class Workspace {
 		this.rows[index + 1].focus();
 	}
 
-	first() {
+	goToFirstRow() {
 		this.rows[0].focus();
 	}
 
-	last() {
+	goToLastRow() {
 		this.rows[this.rows.length - 1].focus();
 	}
 
-	delete(row) {
+	deleteRow(row) {
 		const index = this.rows.indexOf(row);
 
 		if (this.isOnlyRow(index)) {
@@ -96,7 +96,7 @@ class Workspace {
 		this.removeRow(row, index);
 	}
 
-	deleteAll() {
+	deleteAllRows() {
 		for (let index = this.rows.length - 1; index >= 0; index--) {
 			this.removeRow(this.rows[index], index);
 		}

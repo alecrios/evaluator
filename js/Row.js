@@ -49,11 +49,11 @@ class Row {
 		});
 
 		this.input.addEventListener('focus', (event) => {
-			CommandBus.publish('rowFocus', this);
+			CommandBus.publish('activateRow', this);
 		});
 
 		this.output.addEventListener('focus', (event) => {
-			CommandBus.publish('rowFocus', this);
+			CommandBus.publish('activateRow', this);
 			this.output.select();
 		});
 
@@ -61,35 +61,35 @@ class Row {
 			switch (event.key) {
 				case 'Insert':
 					event.preventDefault();
-					CommandBus.publish(event.shiftKey ? 'insertBefore' : 'insertAfter', this);
+					CommandBus.publish(event.shiftKey ? 'insertRowBefore' : 'insertRowAfter', this);
 					break;
 				case 'Delete':
 					event.preventDefault();
-					CommandBus.publish(event.shiftKey ? 'deleteAll' : 'delete', this);
+					CommandBus.publish(event.shiftKey ? 'deleteAllRows' : 'deleteRow', this);
 					break;
 				case 'Home':
 					event.preventDefault();
-					CommandBus.publish('first', this);
+					CommandBus.publish('goToFirstRow', this);
 					break;
 				case 'End':
 					event.preventDefault();
-					CommandBus.publish('last', this);
+					CommandBus.publish('goToLastRow', this);
 					break;
 				case 'PageUp':
 					event.preventDefault();
-					CommandBus.publish('previous', this);
+					CommandBus.publish('goToPreviousRow', this);
 					break;
 				case 'PageDown':
 					event.preventDefault();
-					CommandBus.publish('next', this);
+					CommandBus.publish('goToNextRow', this);
 					break;
 				case 'Tab':
 					event.preventDefault();
 
 					if (this.outputActive() && event.shiftKey) {
-						CommandBus.publish('inputFocus', this);
+						CommandBus.publish('focusInput', this);
 					} else {
-						CommandBus.publish(event.shiftKey ? 'previous' : 'next', this);
+						CommandBus.publish(event.shiftKey ? 'goToPreviousRow' : 'goToNextRow', this);
 					}
 
 					break;
@@ -99,9 +99,9 @@ class Row {
 					if (!this.output.value) break;
 
 					if (this.inputActive()) {
-						CommandBus.publish('outputFocus', this);
+						CommandBus.publish('focusOutput', this);
 					} else {
-						CommandBus.publish('next', this);
+						CommandBus.publish('goToNextRow', this);
 					}
 
 					break;
