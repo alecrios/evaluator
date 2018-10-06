@@ -18,9 +18,9 @@ class Workspace {
 		const row = new Row();
 
 		const currentRow = index !== undefined && index < this.rows.length ? this.rows[index].el : null;
-		this.el.insertBefore(row.el, currentRow)
+		this.el.insertBefore(row.el, currentRow);
 
-		const insertLocation = index === undefined ? this.rows.length : index;
+		const insertLocation = index !== undefined ? index : this.rows.length;
 		this.rows.splice(insertLocation, 0, row);
 
 		return row;
