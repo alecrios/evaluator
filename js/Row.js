@@ -45,8 +45,6 @@ class Row {
 		});
 
 		this.input.addEventListener('input', (event) => {
-			this.updateHeight(this.input);
-			this.updateHeight(this.output);
 			this.evaluate();
 		});
 
@@ -126,6 +124,8 @@ class Row {
 		}
 
 		this.output.value = result;
+		this.updateHeight(this.input);
+		this.updateHeight(this.output);
 	}
 
 	getNode() {
