@@ -23,6 +23,8 @@ class Workspace {
 		EventBus.addEventListener('previous', this.previous.bind(this));
 		EventBus.addEventListener('next', this.next.bind(this));
 		EventBus.addEventListener('rowFocus', this.rowFocus.bind(this));
+		EventBus.addEventListener('inputFocus', this.inputFocus.bind(this));
+		EventBus.addEventListener('outputFocus', this.outputFocus.bind(this));
 	}
 
 	insertAfter(row) {
@@ -41,6 +43,14 @@ class Workspace {
 
 		this.activeRow = row;
 		this.activeRow.activate();
+	}
+
+	inputFocus(row) {
+		row.input.focus();
+	}
+
+	outputFocus(row) {
+		row.output.focus();
 	}
 
 	previous(row) {

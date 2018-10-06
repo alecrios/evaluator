@@ -85,12 +85,25 @@ class Row {
 					break;
 				case 'Tab':
 					event.preventDefault();
-					this.outputActive() && event.shiftKey ? this.input.focus() : EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
+
+					if (this.outputActive() && event.shiftKey) {
+						EventBus.dispatchEvent('inputFocus', this);
+					} else {
+						EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
+					}
+
 					break;
 				case 'Enter':
 					event.preventDefault();
+
 					if (!this.output.value) break;
-					this.inputActive() ? this.output.focus() : EventBus.dispatchEvent('next', this);
+
+					if (this.inputActive()) {
+						EventBus.dispatchEvent('outputFocus', this);
+					} else {
+						EventBus.dispatchEvent('next', this);
+					}
+
 					break;
 			}
 		});
@@ -101,7 +114,7 @@ class Row {
 	}
 
 	outputActive() {
-		return document.activeElement == this.output;
+		return document.activeElement === this.output;
 	}
 
 	activate() {
