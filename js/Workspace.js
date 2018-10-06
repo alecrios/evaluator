@@ -15,16 +15,15 @@ class Workspace {
 	}
 
 	addRow(index) {
-		const newRow = new Row();
+		const row = new Row();
+
+		const currentRow = index !== undefined && index < this.rows.length ? this.rows[index].el : null;
+		this.el.insertBefore(row.el, currentRow)
 
 		const insertLocation = index === undefined ? this.rows.length : index;
-		const referenceNode = index !== undefined && index < this.rows.length ?
-			this.rows[index].el : null;
+		this.rows.splice(insertLocation, 0, row);
 
-		this.el.insertBefore(newRow.el, referenceNode)
-		this.rows.splice(insertLocation, 0, newRow);
-
-		return newRow;
+		return row;
 	}
 
 	removeRow(row, index) {
