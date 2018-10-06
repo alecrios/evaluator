@@ -13,6 +13,38 @@ class Workspace {
 		document.body.appendChild(this.workspace);
 	}
 
+	addRow(index) {
+		const newRowNode = document.createElement('div');
+		newRowNode.classList.add('row');
+		const newRow = new Row(newRowNode);
+
+		const insertLocation = index === undefined ? this.rows.length : index;
+		const referenceNode = index !== undefined && index < this.rows.length ?
+			this.rows[index].getNode() : null;
+
+		this.workspace.insertBefore(newRowNode, referenceNode)
+		this.rows.splice(insertLocation, 0, newRow);
+
+		return newRow;
+	}
+
+	removeRow(row, index) {
+		this.workspace.removeChild(row.getNode());
+		this.rows.splice(index, 1);
+	}
+
+	isFirstRow(index) {
+		return index === 0;
+	}
+
+	isLastRow(index) {
+		return index === this.rows.length - 1;
+	}
+
+	isOnlyRow(index) {
+		return index === 0 && this.rows.length === 1;
+	}
+
 	subscribeToCommands() {
 		CommandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
 		CommandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
@@ -37,20 +69,34 @@ class Workspace {
 		this.addRow(index);
 	}
 
-	activateRow(row) {
-		if (this.activeRow === row) return;
-		if (this.activeRow !== undefined) this.activeRow.deactivate();
+	deleteRow(row) {
+		const index = this.rows.indexOf(row);
 
-		this.activeRow = row;
-		this.activeRow.activate();
+		if (this.isOnlyRow(index)) {
+			this.addRow();
+		} else if (this.isFirstRow(index)) {
+			this.rows[index + 1].focus();
+		} else {
+			this.rows[index - 1].focus();
+		}
+
+		this.removeRow(row, index);
 	}
 
-	focusInput(row) {
-		row.input.focus();
+	deleteAllRows() {
+		for (let index = this.rows.length - 1; index >= 0; index--) {
+			this.removeRow(this.rows[index], index);
+		}
+
+		this.addRow();
 	}
 
-	focusOutput(row) {
-		row.output.focus();
+	goToFirstRow() {
+		this.rows[0].focus();
+	}
+
+	goToLastRow() {
+		this.rows[this.rows.length - 1].focus();
 	}
 
 	goToPreviousRow(row) {
@@ -74,66 +120,20 @@ class Workspace {
 		this.rows[index + 1].focus();
 	}
 
-	goToFirstRow() {
-		this.rows[0].focus();
+	activateRow(row) {
+		if (this.activeRow === row) return;
+		if (this.activeRow !== undefined) this.activeRow.deactivate();
+
+		this.activeRow = row;
+		this.activeRow.activate();
 	}
 
-	goToLastRow() {
-		this.rows[this.rows.length - 1].focus();
+	focusInput(row) {
+		row.input.focus();
 	}
 
-	deleteRow(row) {
-		const index = this.rows.indexOf(row);
-
-		if (this.isOnlyRow(index)) {
-			this.addRow();
-		} else if (this.isFirstRow(index)) {
-			this.rows[index + 1].focus();
-		} else {
-			this.rows[index - 1].focus();
-		}
-
-		this.removeRow(row, index);
-	}
-
-	deleteAllRows() {
-		for (let index = this.rows.length - 1; index >= 0; index--) {
-			this.removeRow(this.rows[index], index);
-		}
-
-		this.addRow();
-	}
-
-	addRow(index) {
-		const newRowNode = document.createElement('div');
-		newRowNode.classList.add('row');
-		const newRow = new Row(newRowNode);
-
-		const insertLocation = index === undefined ? this.rows.length : index;
-		const referenceNode = index !== undefined && index < this.rows.length ?
-			this.rows[index].getNode() : null;
-
-		this.workspace.insertBefore(newRowNode, referenceNode)
-		this.rows.splice(insertLocation, 0, newRow);
-
-		return newRow;
-	}
-
-	removeRow(row, index) {
-		this.workspace.removeChild(row.getNode());
-		this.rows.splice(index, 1);
-	}
-
-	isOnlyRow(index) {
-		return index === 0 && this.rows.length === 1;
-	}
-
-	isFirstRow(index) {
-		return index === 0;
-	}
-
-	isLastRow(index) {
-		return index === this.rows.length - 1;
+	focusOutput(row) {
+		row.output.focus();
 	}
 }
 
