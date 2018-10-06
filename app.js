@@ -42,14 +42,14 @@ const createWindow = () => {
 	win.on('closed', () => win = null);
 
 	win.loadFile('index.html');
+
+	if (isDev) win.toggleDevTools();
 };
 
 app.on('ready', () => {
 	createWindow();
 
-	if (!isDev) {
-		autoUpdater.checkForUpdates();
-	}
+	if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {
