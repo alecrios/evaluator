@@ -35,9 +35,38 @@ class Row {
 		textarea.style.height = textarea.scrollHeight + 'px';
 	}
 
+	inputActive() {
+		return document.activeElement === this.input;
+	}
+
+	outputActive() {
+		return document.activeElement === this.output;
+	}
+
+	activate() {
+		this.row.classList.add('active');
+	}
+
+	deactivate() {
+		this.row.classList.remove('active');
+	}
+
+	evaluate() {
+		const result = Calculator.evaluate(this.input.value);
+
+		this.output.value = result === undefined ? '' : result;
+
+		this.updateHeight(this.input);
+		this.updateHeight(this.output);
+	}
+
+	getNode() {
+		return this.row;
+	}
+
 	addEventListeners() {
 		this.row.addEventListener('click', (event) => {
-			this.input.focus();
+			CommandBus.publish('focusInput', this);
 		});
 
 		this.output.addEventListener('click', (event) => {
@@ -107,35 +136,6 @@ class Row {
 					break;
 			}
 		});
-	}
-
-	inputActive() {
-		return document.activeElement === this.input;
-	}
-
-	outputActive() {
-		return document.activeElement === this.output;
-	}
-
-	activate() {
-		this.row.classList.add('active');
-	}
-
-	deactivate() {
-		this.row.classList.remove('active');
-	}
-
-	evaluate() {
-		const result = Calculator.evaluate(this.input.value);
-
-		this.output.value = result === undefined ? '' : result;
-
-		this.updateHeight(this.input);
-		this.updateHeight(this.output);
-	}
-
-	getNode() {
-		return this.row;
 	}
 }
 
