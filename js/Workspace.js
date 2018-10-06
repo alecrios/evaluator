@@ -26,24 +26,25 @@ class Workspace {
 	}
 
 	insertAfter(row) {
-		let index = this.rows.indexOf(row);
+		const index = this.rows.indexOf(row);
 		this.addRow(index + 1);
 	}
 
 	insertBefore(row) {
-		let index = this.rows.indexOf(row);
+		const index = this.rows.indexOf(row);
 		this.addRow(index);
 	}
 
 	rowFocus(row) {
 		if (this.activeRow === row) return;
 		if (this.activeRow !== undefined) this.activeRow.deactivate();
+
 		this.activeRow = row;
 		this.activeRow.activate();
 	}
 
 	previous(row) {
-		let index = this.rows.indexOf(row);
+		const index = this.rows.indexOf(row);
 
 		if (this.isFirstRow(index)) return;
 
@@ -51,10 +52,11 @@ class Workspace {
 	}
 
 	next(row) {
-		let index = this.rows.indexOf(row);
+		const index = this.rows.indexOf(row);
 
 		if (this.isLastRow(index)) {
 			if (!row.hasValue()) return;
+
 			this.addRow();
 			return;
 		}
@@ -71,7 +73,7 @@ class Workspace {
 	}
 
 	delete(row) {
-		let index = this.rows.indexOf(row);
+		const index = this.rows.indexOf(row);
 
 		if (this.isOnlyRow(index)) {
 			this.addRow();
@@ -88,6 +90,7 @@ class Workspace {
 		for (let index = this.rows.length - 1; index >= 0; index--) {
 			this.removeRow(this.rows[index], index);
 		}
+
 		this.addRow();
 	}
 
