@@ -1,25 +1,25 @@
 class Row {
 	constructor(row) {
 		this.el = row;
-		this.createInput();
-		this.createOutput();
+		this.input = this.createInput();
+		this.output = this.createOutput();
 		this.addEventListeners();
 		this.focus();
 	}
 
 	createInput() {
-		this.input = document.createElement('textarea');
-		this.input.rows = '1';
-		this.input.classList.add('textarea', 'input');
-		this.el.appendChild(this.input);
+		const input = document.createElement('textarea');
+		input.classList.add('textarea', 'input');
+		this.el.appendChild(input);
+		return input;
 	}
 
 	createOutput() {
-		this.output = document.createElement('textarea');
-		this.output.rows = '1';
-		this.output.classList.add('textarea', 'output');
-		this.output.setAttribute('readonly', '');
-		this.el.appendChild(this.output);
+		const output = document.createElement('textarea');
+		output.classList.add('textarea', 'output');
+		output.setAttribute('readonly', '');
+		this.el.appendChild(output);
+		return output;
 	}
 
 	focus() {
