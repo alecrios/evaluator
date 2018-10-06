@@ -1,21 +1,17 @@
 class Row {
 	constructor(row) {
-		this.row = row;
+		this.el = row;
 		this.createInput();
 		this.createOutput();
 		this.addEventListeners();
 		this.focus();
 	}
 
-	getNode() {
-		return this.row;
-	}
-
 	createInput() {
 		this.input = document.createElement('textarea');
 		this.input.rows = '1';
 		this.input.classList.add('textarea', 'input');
-		this.row.appendChild(this.input);
+		this.el.appendChild(this.input);
 	}
 
 	createOutput() {
@@ -23,7 +19,7 @@ class Row {
 		this.output.rows = '1';
 		this.output.classList.add('textarea', 'output');
 		this.output.setAttribute('readonly', '');
-		this.row.appendChild(this.output);
+		this.el.appendChild(this.output);
 	}
 
 	focus() {
@@ -39,11 +35,11 @@ class Row {
 	}
 
 	activate() {
-		this.row.classList.add('active');
+		this.el.classList.add('active');
 	}
 
 	deactivate() {
-		this.row.classList.remove('active');
+		this.el.classList.remove('active');
 	}
 
 	hasValue() {
@@ -65,7 +61,7 @@ class Row {
 	}
 
 	addEventListeners() {
-		this.row.addEventListener('click', (event) => {
+		this.el.addEventListener('click', (event) => {
 			CommandBus.publish('focusInput', this);
 		});
 
@@ -86,7 +82,7 @@ class Row {
 			this.output.select();
 		});
 
-		this.row.addEventListener('keydown', (event) => {
+		this.el.addEventListener('keydown', (event) => {
 			switch (event.key) {
 				case 'Insert':
 					event.preventDefault();

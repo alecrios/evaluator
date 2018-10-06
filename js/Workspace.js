@@ -1,6 +1,6 @@
 class Workspace {
 	constructor() {
-		this.createWorkspace();
+		this.el = this.createWorkspace();
 		this.rows = [];
 		this.activeRow = this.addRow();
 		this.activeRow.activate();
@@ -8,9 +8,10 @@ class Workspace {
 	}
 
 	createWorkspace() {
-		this.workspace = document.createElement('div');
-		this.workspace.classList.add('workspace');
-		document.body.appendChild(this.workspace);
+		const workspace = document.createElement('div');
+		workspace.classList.add('workspace');
+		document.body.appendChild(workspace);
+		return workspace;
 	}
 
 	addRow(index) {
@@ -20,16 +21,16 @@ class Workspace {
 
 		const insertLocation = index === undefined ? this.rows.length : index;
 		const referenceNode = index !== undefined && index < this.rows.length ?
-			this.rows[index].getNode() : null;
+			this.rows[index].el : null;
 
-		this.workspace.insertBefore(newRowNode, referenceNode)
+		this.el.insertBefore(newRowNode, referenceNode)
 		this.rows.splice(insertLocation, 0, newRow);
 
 		return newRow;
 	}
 
 	removeRow(row, index) {
-		this.workspace.removeChild(row.getNode());
+		this.el.removeChild(row.el);
 		this.rows.splice(index, 1);
 	}
 
