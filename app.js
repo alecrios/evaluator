@@ -19,6 +19,8 @@ const createWindow = () => {
 
 	win = new BrowserWindow({show: false, width, height, x, y});
 
+	win.setMenu(null);
+
 	win.once('ready-to-show', () => win.show());
 
 	globalShortcut.register('CommandOrControl+Space', () => {
