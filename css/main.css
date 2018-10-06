@@ -4,13 +4,13 @@ html {
 
 .row {
 	background-color: rgb(30, 31, 32);
-	border-bottom: 2px solid rgb(38, 40, 42);
+	border-bottom: 1px solid rgb(38, 40, 42);
 	padding: 12px 16px;
 	cursor: text;
 }
 
 .row.active {
-	background-color: rgb(26, 27, 28);
+	background-color: rgb(24, 25, 26);
 }
 
 .textarea {
@@ -33,7 +33,17 @@ html {
 	color: rgb(223, 223, 223);
 }
 
+.textarea.input::selection {
+	background-color: rgb(223, 223, 223);
+	color: rgb(24, 25, 26);
+}
+
 .textarea.output {
 	text-align: right;
 	color: rgb(55, 175, 95);
+}
+
+.textarea.output::selection {
+	background-color: rgb(55, 175, 95);
+	color: rgb(24, 25, 26);
 }
