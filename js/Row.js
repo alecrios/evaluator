@@ -1,10 +1,16 @@
 class Row {
-	constructor(row) {
-		this.el = row;
+	constructor() {
+		this.el = this.createRow();
 		this.input = this.createInput();
 		this.output = this.createOutput();
 		this.addEventListeners();
 		this.focus();
+	}
+
+	createRow() {
+		const row = document.createElement('div');
+		row.classList.add('row');
+		return row;
 	}
 
 	createInput() {
