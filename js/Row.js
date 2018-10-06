@@ -111,11 +111,6 @@ class Row {
 	}
 
 	evaluate() {
-		if (!this.input.value) {
-			this.output.value = '';
-			return;
-		}
-
 		const result = Calculator.evaluate(this.input.value);
 
 		if (result === undefined) {
@@ -124,6 +119,7 @@ class Row {
 		}
 
 		this.output.value = result;
+
 		this.updateHeight(this.input);
 		this.updateHeight(this.output);
 	}
