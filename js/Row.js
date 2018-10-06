@@ -49,11 +49,11 @@ class Row {
 		});
 
 		this.input.addEventListener('focus', (event) => {
-			EventBus.dispatchEvent('rowFocus', this);
+			CommandBus.publish('rowFocus', this);
 		});
 
 		this.output.addEventListener('focus', (event) => {
-			EventBus.dispatchEvent('rowFocus', this);
+			CommandBus.publish('rowFocus', this);
 			this.output.select();
 		});
 
@@ -61,35 +61,35 @@ class Row {
 			switch (event.key) {
 				case 'Insert':
 					event.preventDefault();
-					EventBus.dispatchEvent(event.shiftKey ? 'insertBefore' : 'insertAfter', this);
+					CommandBus.publish(event.shiftKey ? 'insertBefore' : 'insertAfter', this);
 					break;
 				case 'Delete':
 					event.preventDefault();
-					EventBus.dispatchEvent(event.shiftKey ? 'deleteAll' : 'delete', this);
+					CommandBus.publish(event.shiftKey ? 'deleteAll' : 'delete', this);
 					break;
 				case 'Home':
 					event.preventDefault();
-					EventBus.dispatchEvent('first', this);
+					CommandBus.publish('first', this);
 					break;
 				case 'End':
 					event.preventDefault();
-					EventBus.dispatchEvent('last', this);
+					CommandBus.publish('last', this);
 					break;
 				case 'PageUp':
 					event.preventDefault();
-					EventBus.dispatchEvent('previous', this);
+					CommandBus.publish('previous', this);
 					break;
 				case 'PageDown':
 					event.preventDefault();
-					EventBus.dispatchEvent('next', this);
+					CommandBus.publish('next', this);
 					break;
 				case 'Tab':
 					event.preventDefault();
 
 					if (this.outputActive() && event.shiftKey) {
-						EventBus.dispatchEvent('inputFocus', this);
+						CommandBus.publish('inputFocus', this);
 					} else {
-						EventBus.dispatchEvent(event.shiftKey ? 'previous' : 'next', this);
+						CommandBus.publish(event.shiftKey ? 'previous' : 'next', this);
 					}
 
 					break;
@@ -99,9 +99,9 @@ class Row {
 					if (!this.output.value) break;
 
 					if (this.inputActive()) {
-						EventBus.dispatchEvent('outputFocus', this);
+						CommandBus.publish('outputFocus', this);
 					} else {
-						EventBus.dispatchEvent('next', this);
+						CommandBus.publish('next', this);
 					}
 
 					break;

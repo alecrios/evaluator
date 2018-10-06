@@ -4,7 +4,7 @@ class Workspace {
 		this.rows = [];
 		this.activeRow = this.addRow();
 		this.activeRow.activate();
-		this.addEventListeners();
+		this.subscribeToCommands();
 	}
 
 	createWorkspace() {
@@ -13,18 +13,18 @@ class Workspace {
 		document.body.appendChild(this.workspace);
 	}
 
-	addEventListeners() {
-		EventBus.addEventListener('insertAfter', this.insertAfter.bind(this));
-		EventBus.addEventListener('insertBefore', this.insertBefore.bind(this));
-		EventBus.addEventListener('delete', this.delete.bind(this));
-		EventBus.addEventListener('deleteAll', this.deleteAll.bind(this));
-		EventBus.addEventListener('first', this.first.bind(this));
-		EventBus.addEventListener('last', this.last.bind(this));
-		EventBus.addEventListener('previous', this.previous.bind(this));
-		EventBus.addEventListener('next', this.next.bind(this));
-		EventBus.addEventListener('rowFocus', this.rowFocus.bind(this));
-		EventBus.addEventListener('inputFocus', this.inputFocus.bind(this));
-		EventBus.addEventListener('outputFocus', this.outputFocus.bind(this));
+	subscribeToCommands() {
+		CommandBus.subscribe('insertAfter', this.insertAfter.bind(this));
+		CommandBus.subscribe('insertBefore', this.insertBefore.bind(this));
+		CommandBus.subscribe('delete', this.delete.bind(this));
+		CommandBus.subscribe('deleteAll', this.deleteAll.bind(this));
+		CommandBus.subscribe('first', this.first.bind(this));
+		CommandBus.subscribe('last', this.last.bind(this));
+		CommandBus.subscribe('previous', this.previous.bind(this));
+		CommandBus.subscribe('next', this.next.bind(this));
+		CommandBus.subscribe('rowFocus', this.rowFocus.bind(this));
+		CommandBus.subscribe('inputFocus', this.inputFocus.bind(this));
+		CommandBus.subscribe('outputFocus', this.outputFocus.bind(this));
 	}
 
 	insertAfter(row) {
