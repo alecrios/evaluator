@@ -113,7 +113,7 @@ class Row {
 	evaluate() {
 		const result = Calculator.evaluate(this.input.value);
 
-		result === undefined ? this.output.value = '' : this.output.value = result;
+		this.output.value = result === undefined ? '' : result;
 
 		this.updateHeight(this.input);
 		this.updateHeight(this.output);
