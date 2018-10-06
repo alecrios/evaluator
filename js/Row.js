@@ -7,6 +7,10 @@ class Row {
 		this.focus();
 	}
 
+	getNode() {
+		return this.row;
+	}
+
 	createInput() {
 		this.input = document.createElement('textarea');
 		this.input.rows = '1';
@@ -26,20 +30,11 @@ class Row {
 		window.requestAnimationFrame(() => this.input.focus());
 	}
 
-	hasValue() {
-		return this.input.value.length > 0;
-	}
-
-	updateHeight(textarea) {
-		textarea.style.height = '0px';
-		textarea.style.height = textarea.scrollHeight + 'px';
-	}
-
-	inputActive() {
+	inputFocused() {
 		return document.activeElement === this.input;
 	}
 
-	outputActive() {
+	outputFocused() {
 		return document.activeElement === this.output;
 	}
 
@@ -51,6 +46,15 @@ class Row {
 		this.row.classList.remove('active');
 	}
 
+	hasValue() {
+		return this.input.value.length > 0;
+	}
+
+	updateHeight(textarea) {
+		textarea.style.height = '0px';
+		textarea.style.height = textarea.scrollHeight + 'px';
+	}
+
 	evaluate() {
 		const result = Calculator.evaluate(this.input.value);
 
@@ -58,10 +62,6 @@ class Row {
 
 		this.updateHeight(this.input);
 		this.updateHeight(this.output);
-	}
-
-	getNode() {
-		return this.row;
 	}
 
 	addEventListeners() {
@@ -115,7 +115,7 @@ class Row {
 				case 'Tab':
 					event.preventDefault();
 
-					if (this.outputActive() && event.shiftKey) {
+					if (this.outputFocused() && event.shiftKey) {
 						CommandBus.publish('focusInput', this);
 					} else {
 						CommandBus.publish(event.shiftKey ? 'goToPreviousRow' : 'goToNextRow', this);
@@ -127,7 +127,7 @@ class Row {
 
 					if (!this.output.value) break;
 
-					if (this.inputActive()) {
+					if (this.inputFocused()) {
 						CommandBus.publish('focusOutput', this);
 					} else {
 						CommandBus.publish('goToNextRow', this);
