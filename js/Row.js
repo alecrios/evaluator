@@ -36,26 +36,30 @@ class Row {
 	}
 
 	addEventListeners() {
-		this.row.addEventListener('click', () => {
+		this.row.addEventListener('click', (event) => {
 			this.input.focus();
 		});
 
-		this.input.addEventListener('input', () => {
+		this.output.addEventListener('click', (event) => {
+			event.stopPropagation();
+		});
+
+		this.input.addEventListener('input', (event) => {
 			this.updateHeight(this.input);
 			this.updateHeight(this.output);
 			this.evaluate();
 		});
 
-		this.input.addEventListener('focus', () => {
+		this.input.addEventListener('focus', (event) => {
 			EventBus.dispatchEvent('rowFocus', this);
 		});
 
-		this.output.addEventListener('focus', () => {
+		this.output.addEventListener('focus', (event) => {
 			EventBus.dispatchEvent('rowFocus', this);
 			this.output.select();
 		});
 
-		this.row.addEventListener('keydown', () => {
+		this.row.addEventListener('keydown', (event) => {
 			switch (event.key) {
 				case 'Insert':
 					event.preventDefault();
