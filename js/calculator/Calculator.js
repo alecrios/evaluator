@@ -75,21 +75,24 @@ class Calculator {
 		return this.operators[this.symbols[token][notation]];
 	}
 
-	getTokens(expression) {
-		const pattern = /(\d*\.\d+)|(\d+)|([-+*/%^()])|([a-zA-Z]+)|\s+|./g;
-		return (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
+	parse(expression) {
+		if (!expression.length) {
+			throw new Error(`Input is empty`);
+		}
+
+		const pattern = /(\d*\.\d*)|(\d+)|([a-zA-Z]+)|.|\s+/g;
+		const tokens = (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
+
+		return tokens;
 	}
 
-	convert(expression) {
+	convert(tokens) {
+		if (!tokens.length) {
+			throw new Error(`Input does not have any valid tokens to process`);
+		}
+
 		const operatorStack = [];
 		const outputQueue = [];
-
-		const tokens = this.getTokens(expression);
-
-		if (!tokens.length) {
-			console.error(`Input does not have any valid tokens to process`);
-			return;
-		}
 
 		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
@@ -101,8 +104,7 @@ class Calculator {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
 				if (operator === undefined) {
-					console.error(`"${token}" symbol does not represent a valid operator in the given context`);
-					return;
+					throw new Error(`"${token}" symbol does not represent a valid operator in the given context`);
 				}
 
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
@@ -121,8 +123,7 @@ class Calculator {
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(operatorStack[operatorStack.length - 1])) {
 					if (!operatorStack.length) {
-						console.error(`Parentheses are not matched properly`);
-						return;
+						throw new Error(`Parentheses are not matched properly`);
 					}
 
 					outputQueue.push(operatorStack.pop());
@@ -132,16 +133,14 @@ class Calculator {
 				continue;
 			}
 
-			console.error(`"${token}" is not a valid token`);
-			return;
+			throw new Error(`"${token}" is not a valid token`);
 		}
 
 		while (operatorStack.length) {
 			const operator = operatorStack[operatorStack.length - 1];
 
 			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
-				console.error(`Parentheses are not matched properly`);
-				return;
+				throw new Error(`Parentheses are not matched properly`);
 			}
 
 			outputQueue.push(operatorStack.pop());
@@ -154,8 +153,7 @@ class Calculator {
 		if (outputQueue === undefined) return;
 
 		if (!outputQueue.length) {
-			console.error(`Input does not indicate any operations to perform`);
-			return;
+			throw new Error(`Input does not indicate any operations to perform`);
 		}
 
 		const evaluationStack = [];
@@ -169,8 +167,7 @@ class Calculator {
 			const operator = this.operators[token];
 
 			if (evaluationStack.length < operator.method.length) {
-				console.error(`"${token}" operator does not have a sufficient number of arguments`);
-				return;
+				throw new Error(`"${token}" operator does not have a sufficient number of arguments`);
 			}
 
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
@@ -178,17 +175,21 @@ class Calculator {
 		}
 
 		if (evaluationStack.length > 1) {
-			console.error(`Operators and operands are not matched properly`);
-			return;
+			throw new Error(`Operators and operands are not matched properly`);
 		}
 
-		return evaluationStack[0];
+		return Number(Math.round(`${evaluationStack[0]}e8`) + 'e-8');
 	}
 
 	evaluate(expression) {
-		const outputQueue = this.convert(expression);
-
-		return this.resolve(outputQueue);
+		try {
+			const tokens = this.parse(expression);
+			const rpn = this.convert(tokens);
+			const result = this.resolve(rpn);
+			return result;
+		} catch(error) {
+			console.error(error);
+		}
 	}
 }
 
