@@ -23,6 +23,10 @@ class Calculator {
 		};
 	}
 
+	isWhitespace(token) {
+		return /\s/.test(token);
+	}
+
 	isNumber(token) {
 		return !isNaN(parseFloat(token)) && isFinite(token);
 	}
@@ -43,6 +47,7 @@ class Calculator {
 		return token === ')';
 	}
 
+	// TODO: rename to getTopOperator
 	getTopToken(stack) {
 		return stack[stack.length - 1];
 	}
@@ -79,10 +84,10 @@ class Calculator {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const pattern = /[\+\-\*\/\%\^\(\)]|(\d*\.\d+|\d+\.\d*|\d+)/g;
-		const tokens = expression.replace(/\s+/g, '').match(pattern);
+		const pattern = /(\d*\.\d+)|(\d+)|([-+*/%^()])|([a-zA-Z]+)|\s+|./g;
+		const tokens = (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
 
-		if (!tokens) {
+		if (!tokens.length) {
 			console.error(`Input does not have any valid tokens to process`);
 			return;
 		}
@@ -127,6 +132,9 @@ class Calculator {
 				operatorStack.pop();
 				continue;
 			}
+
+			console.error(`"${token}" is not a valid token`);
+			return;
 		}
 
 		while (operatorStack.length) {
@@ -168,6 +176,11 @@ class Calculator {
 
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
 			evaluationStack.push(result);
+		}
+
+		if (evaluationStack.length > 1) {
+			console.error(`Operators and operands are not matched properly`);
+			return;
 		}
 
 		return evaluationStack[0];
