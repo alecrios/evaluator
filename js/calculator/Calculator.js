@@ -75,12 +75,16 @@ class Calculator {
 		return this.operators[this.symbols[token][notation]];
 	}
 
+	getTokens(expression) {
+		const pattern = /(\d*\.\d+)|(\d+)|([-+*/%^()])|([a-zA-Z]+)|\s+|./g;
+		return (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
+	}
+
 	convert(expression) {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		const pattern = /(\d*\.\d+)|(\d+)|([-+*/%^()])|([a-zA-Z]+)|\s+|./g;
-		const tokens = (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
+		const tokens = this.getTokens(expression);
 
 		if (!tokens.length) {
 			console.error(`Input does not have any valid tokens to process`);
