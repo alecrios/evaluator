@@ -77,7 +77,7 @@ class Calculator {
 
 	parse(expression) {
 		if (!expression.length) {
-			throw new Error(`Input is empty`);
+			throw new Error(`No input`);
 		}
 
 		const pattern = /(\d*\.\d*)|(\d+)|([a-zA-Z]+)|.|\s+/g;
@@ -88,7 +88,7 @@ class Calculator {
 
 	convert(tokens) {
 		if (!tokens.length) {
-			throw new Error(`Input does not have any valid tokens to process`);
+			throw new Error(`No valid tokens`);
 		}
 
 		const operatorStack = [];
@@ -104,7 +104,7 @@ class Calculator {
 				const operator = this.determineOperator(token, tokens[index - 1]);
 
 				if (operator === undefined) {
-					throw new Error(`"${token}" symbol does not represent a valid operator in the given context`);
+					throw new Error(`Misused operator: "${token}"`);
 				}
 
 				while (this.topOperatorHasPrecedence(operatorStack, operator)) {
@@ -123,7 +123,7 @@ class Calculator {
 			if (this.isCloseParenthesis(token)) {
 				while (!this.isOpenParenthesis(operatorStack[operatorStack.length - 1])) {
 					if (!operatorStack.length) {
-						throw new Error(`Parentheses are not matched properly`);
+						throw new Error(`Invalid grouping`);
 					}
 
 					outputQueue.push(operatorStack.pop());
@@ -133,14 +133,14 @@ class Calculator {
 				continue;
 			}
 
-			throw new Error(`"${token}" is not a valid token`);
+			throw new Error(`Invalid token: "${token}"`);
 		}
 
 		while (operatorStack.length) {
 			const operator = operatorStack[operatorStack.length - 1];
 
 			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
-				throw new Error(`Parentheses are not matched properly`);
+				throw new Error(`Invalid grouping`);
 			}
 
 			outputQueue.push(operatorStack.pop());
@@ -150,10 +150,8 @@ class Calculator {
 	}
 
 	resolve(outputQueue) {
-		if (outputQueue === undefined) return;
-
 		if (!outputQueue.length) {
-			throw new Error(`Input does not indicate any operations to perform`);
+			throw new Error(`No operations`);
 		}
 
 		const evaluationStack = [];
@@ -167,7 +165,7 @@ class Calculator {
 			const operator = this.operators[token];
 
 			if (evaluationStack.length < operator.method.length) {
-				throw new Error(`"${token}" operator does not have a sufficient number of arguments`);
+				throw new Error(`Missing argument(s) for: "${token}"`);
 			}
 
 			const result = operator.method.apply(this, evaluationStack.splice(-operator.method.length));
@@ -175,7 +173,7 @@ class Calculator {
 		}
 
 		if (evaluationStack.length > 1) {
-			throw new Error(`Operators and operands are not matched properly`);
+			throw new Error(`Mismatched operators and operands`);
 		}
 
 		return Number(Math.round(`${evaluationStack[0]}e8`) + 'e-8');

@@ -3,7 +3,7 @@ const Calculator = require('../js/calculator/Calculator');
 
 describe('Calculator.parse()', () => {
 	it('throw error for empty expression string', () => {
-		expect(() => Calculator.parse('')).to.throw(Error, 'Input is empty');
+		expect(() => Calculator.parse('')).to.throw(Error, 'No input');
 	});
 	it('return empty array for expression string with only whitespace', () => {
 		expect(Calculator.parse(' 	')).to.eql([]);
@@ -48,7 +48,7 @@ describe('Calculator.parse()', () => {
 
 describe('Calculator.convert()', () => {
 	it('throw error for empty tokens array', () => {
-		expect(() => Calculator.convert([])).to.throw(Error, 'Input does not have any valid tokens to process');
+		expect(() => Calculator.convert([])).to.throw(Error, 'No valid tokens');
 	});
 	it('process numbers', () => {
 		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
