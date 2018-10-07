@@ -47,15 +47,10 @@ class Calculator {
 		return token === ')';
 	}
 
-	// TODO: rename to getTopOperator
-	getTopToken(stack) {
-		return stack[stack.length - 1];
-	}
-
 	topOperatorHasPrecedence(operatorStack, currentOperator) {
 		if (!operatorStack.length) return;
 
-		const topToken = this.getTopToken(operatorStack);
+		const topToken = operatorStack[operatorStack.length - 1];
 
 		if (!this.isOperator(topToken)) return;
 
@@ -120,7 +115,7 @@ class Calculator {
 			}
 
 			if (this.isCloseParenthesis(token)) {
-				while (!this.isOpenParenthesis(this.getTopToken(operatorStack))) {
+				while (!this.isOpenParenthesis(operatorStack[operatorStack.length - 1])) {
 					if (!operatorStack.length) {
 						console.error(`Parentheses are not matched properly`);
 						return;
@@ -138,7 +133,7 @@ class Calculator {
 		}
 
 		while (operatorStack.length) {
-			const operator = this.getTopToken(operatorStack);
+			const operator = operatorStack[operatorStack.length - 1];
 
 			if (this.isOpenParenthesis(operator) || this.isCloseParenthesis(operator)) {
 				console.error(`Parentheses are not matched properly`);
