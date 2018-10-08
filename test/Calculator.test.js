@@ -53,12 +53,40 @@ describe('Calculator.convert()', () => {
 	it('process numbers', () => {
 		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
 	});
-	it('', () => {
+	it('throw error for a single "^"', () => {
+		expect(() => Calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
+	});
+	it('throw error for a single "*"', () => {
+		expect(() => Calculator.convert(['*'])).to.throw(Error, 'Misused operator: "*"');
+	});
+	it('throw error for a single "/"', () => {
+		expect(() => Calculator.convert(['/'])).to.throw(Error, 'Misused operator: "/"');
+	});
+	it('throw error for a single "%"', () => {
+		expect(() => Calculator.convert(['%'])).to.throw(Error, 'Misused operator: "%"');
+	});
+	it('identity a single "+" as a unary plus', () => {
 		expect(Calculator.convert(['+'])).to.eql(['POS']);
+	});
+	it('indentify a single "-" as a unary minus', () => {
+		expect(Calculator.convert(['-'])).to.eql(['NEG']);
+	});
+	it('throw error for a single "("', () => {
+		expect(() => Calculator.convert(['('])).to.throw(Error, 'Invalid grouping');
+	});
+	it('throw error for a single ")"', () => {
+		expect(() => Calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
+	});
+	it('throw error for a single word', () => {
+		expect(() => Calculator.convert(['abc'])).to.throw(Error, 'Invalid token: "abc"');
 	});
 });
 
-describe('Calculator.resolve()', () => {});
+describe('Calculator.resolve()', () => {
+	it('throw error for empty rpn array', () => {
+		expect(() => Calculator.resolve([])).to.throw(Error, 'No operations');
+	});
+});
 
 describe('Calculator.evaluate()', () => {
 	const tests = [
@@ -129,7 +157,7 @@ describe('Calculator.evaluate()', () => {
 		{expression: '401.2 + 108.1', result: 509.3},
 		{expression: '2 / 4 % 8 * 3', result: 1.5},
 		{expression: '4.1 * 18.2 + (12.8 / 16.3)', result: 75.40527607},
-		{expression: '18.7 * 33.3', result: 622.71},
+		{expression: '.211 * 0.343 * 00.984 * 4.', result: 0.28486013},
 	];
 
 	tests.forEach((test) => {
