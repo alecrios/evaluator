@@ -1,4 +1,5 @@
 const Operator = require('./Operator');
+const Constant = require('./Constant');
 
 class Calculator {
 	constructor() {
@@ -21,6 +22,11 @@ class Calculator {
 			'ADD': new Operator('ADD', 1, 'left', (a, b) => a + b),
 			'SUB': new Operator('SUB', 1, 'left', (a, b) => a - b),
 		};
+
+		this.constants = {
+			'E': new Constant('E', Math.E),
+			'PI': new Constant('PI', Math.PI),
+		};
 	}
 
 	isWhitespace(token) {
@@ -37,6 +43,10 @@ class Calculator {
 
 	isOperator(token) {
 		return this.operators.hasOwnProperty(token);
+	}
+
+	isConstant(token) {
+		return this.constants.hasOwnProperty(token);
 	}
 
 	isOpenParenthesis(token) {
@@ -68,7 +78,7 @@ class Calculator {
 
 		if (previousToken === undefined || this.isOpenParenthesis(previousToken) || this.isSymbol(previousToken)) {
 			notation = 'prefix';
-		} else if (this.isCloseParenthesis(previousToken) || this.isNumber(previousToken)) {
+		} else if (this.isCloseParenthesis(previousToken) || (this.isNumber(previousToken) || this.isConstant(previousToken))) {
 			notation = 'infix';
 		}
 
@@ -97,6 +107,11 @@ class Calculator {
 		for (let [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
 				outputQueue.push(parseFloat(token));
+				continue;
+			}
+
+			if (this.isConstant(token)) {
+				outputQueue.push(this.constants[token].name);
 				continue;
 			}
 
@@ -159,6 +174,11 @@ class Calculator {
 		for (let token of outputQueue) {
 			if (this.isNumber(token)) {
 				evaluationStack.push(token);
+				continue;
+			}
+
+			if (this.isConstant(token)) {
+				evaluationStack.push(this.constants[token].value);
 				continue;
 			}
 

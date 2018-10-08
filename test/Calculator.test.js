@@ -53,6 +53,9 @@ describe('Calculator.convert()', () => {
 	it('process numbers', () => {
 		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
 	});
+	it('process constants', () => {
+		expect(Calculator.convert(['PI', 'E'])).to.eql(['PI', 'E']);
+	});
 	it('throw error for a single "^"', () => {
 		expect(() => Calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
 	});
@@ -158,6 +161,12 @@ describe('Calculator.evaluate()', () => {
 		{expression: '2 / 4 % 8 * 3', result: 1.5},
 		{expression: '4.1 * 18.2 + (12.8 / 16.3)', result: 75.40527607},
 		{expression: '.211 * 0.343 * 00.984 * 4.', result: 0.28486013},
+		{expression: 'PI', result: 3.14159265},
+		{expression: '2 * PI * 10', result: 62.83185307},
+		{expression: 'PI * 10 ^ 2', result: 314.15926536},
+		{expression: 'E', result: 2.71828183},
+		{expression: 'E * 4.31 / 1.2', result: 9.76316223},
+		{expression: '(9.121 - E) * 1.981', result: 12.6837847},
 	];
 
 	tests.forEach((test) => {
