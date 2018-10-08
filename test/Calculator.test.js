@@ -24,7 +24,7 @@ describe('Calculator.parse()', () => {
 		expect(Calculator.parse('`~!@#$%^&*()-=_+[]{};\':\",.<>/?\\|')).to.eql(['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '_', '+', '[', ']', '{', '}', ';', '\'', ':', '\"', ',', '.', '<', '>', '/', '?', '\\', '|']);
 	});
 	it('identify words', () => {
-		expect(Calculator.parse('a A aa AA aA Aa')).to.eql(['a', 'A', 'aa', 'AA', 'aA', 'Aa']);
+		expect(Calculator.parse('a A aa AA aA Aa')).to.eql(['A', 'A', 'AA', 'AA', 'AA', 'AA']);
 	});
 	it('distinguish numbers from symbols with whitespace', () => {
 		expect(Calculator.parse('0 + 12 - .3 * 4. / 5.6 % 7.89 ^ 01.2 + ( 34.56 )')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
@@ -33,16 +33,16 @@ describe('Calculator.parse()', () => {
 		expect(Calculator.parse('0+12-.3*4./5.6%7.89^01.2+(34.56)')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
 	});
 	it('distinguish symbols from words with whitespace', () => {
-		expect(Calculator.parse('a + Bc - DeF * gHiJ / kLmNo % PqRsTu ^ VwXyZaB + ( cDeFgHiJ )')).to.eql(['a', '+', 'Bc', '-', 'DeF', '*', 'gHiJ', '/', 'kLmNo', '%', 'PqRsTu', '^', 'VwXyZaB', '+', '(', 'cDeFgHiJ', ')']);
+		expect(Calculator.parse('a + Bc - DeF * gHiJ / kLmNo % PqRsTu ^ VwXyZaB + ( cDeFgHiJ )')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
 	});
 	it('distinguish symbols from words without whitespace', () => {
-		expect(Calculator.parse('a+Bc-DeF*gHiJ/kLmNo%PqRsTu^VwXyZaB+(cDeFgHiJ)')).to.eql(['a', '+', 'Bc', '-', 'DeF', '*', 'gHiJ', '/', 'kLmNo', '%', 'PqRsTu', '^', 'VwXyZaB', '+', '(', 'cDeFgHiJ', ')']);
+		expect(Calculator.parse('a+Bc-DeF*gHiJ/kLmNo%PqRsTu^VwXyZaB+(cDeFgHiJ)')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
 	});
 	it('distinguish words from numbers with whitespace', () => {
-		expect(Calculator.parse('a 0 Bc 12 DeF .3 gHiJ 4. kLmNo 5.6 PqRsTu 7.89 VwXyZaB 01.2 cDeFgHiJ 45.67')).to.eql(['a', '0', 'Bc', '12', 'DeF', '.3', 'gHiJ', '4.', 'kLmNo', '5.6', 'PqRsTu', '7.89', 'VwXyZaB', '01.2', 'cDeFgHiJ', '45.67']);
+		expect(Calculator.parse('a 0 Bc 12 DeF .3 gHiJ 4. kLmNo 5.6 PqRsTu 7.89 VwXyZaB 01.2 cDeFgHiJ 45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
 	});
 	it('distinguish words from numbers without whitespace', () => {
-		expect(Calculator.parse('a0Bc12DeF.3gHiJ4.kLmNo5.6PqRsTu7.89VwXyZaB01.2cDeFgHiJ45.67')).to.eql(['a', '0', 'Bc', '12', 'DeF', '.3', 'gHiJ', '4.', 'kLmNo', '5.6', 'PqRsTu', '7.89', 'VwXyZaB', '01.2', 'cDeFgHiJ', '45.67']);
+		expect(Calculator.parse('a0Bc12DeF.3gHiJ4.kLmNo5.6PqRsTu7.89VwXyZaB01.2cDeFgHiJ45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
 	});
 });
 
@@ -81,7 +81,7 @@ describe('Calculator.convert()', () => {
 		expect(() => Calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
 	});
 	it('throw error for a single word', () => {
-		expect(() => Calculator.convert(['abc'])).to.throw(Error, 'Invalid token: "abc"');
+		expect(() => Calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
 	});
 });
 
@@ -161,10 +161,10 @@ describe('Calculator.evaluate()', () => {
 		{expression: '2 / 4 % 8 * 3', result: 1.5},
 		{expression: '4.1 * 18.2 + (12.8 / 16.3)', result: 75.40527607},
 		{expression: '.211 * 0.343 * 00.984 * 4.', result: 0.28486013},
-		{expression: 'PI', result: 3.14159265},
+		{expression: 'pi', result: 3.14159265},
 		{expression: '2 * PI * 10', result: 62.83185307},
 		{expression: 'PI * 10 ^ 2', result: 314.15926536},
-		{expression: 'E', result: 2.71828183},
+		{expression: 'e', result: 2.71828183},
 		{expression: 'E * 4.31 / 1.2', result: 9.76316223},
 		{expression: '(9.121 - E) * 1.981', result: 12.6837847},
 	];

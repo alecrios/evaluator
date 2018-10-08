@@ -91,7 +91,9 @@ class Calculator {
 		}
 
 		const pattern = /(\d*\.\d*)|(\d+)|([a-zA-Z]+)|.|\s+/g;
-		const tokens = (expression.match(pattern) || []).filter((token) => !this.isWhitespace(token));
+		const tokens = (expression.match(pattern) || [])
+			.filter((token) => !this.isWhitespace(token))
+			.map((token) => token.toUpperCase());
 
 		return tokens;
 	}
