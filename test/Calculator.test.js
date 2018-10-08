@@ -50,38 +50,68 @@ describe('Calculator.convert()', () => {
 	it('throw error for empty tokens array', () => {
 		expect(() => Calculator.convert([])).to.throw(Error, 'No valid tokens');
 	});
+	it('throw error for a misused operator', () => {
+		expect(() => Calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
+		expect(() => Calculator.convert(['*'])).to.throw(Error, 'Misused operator: "*"');
+		expect(() => Calculator.convert(['/'])).to.throw(Error, 'Misused operator: "/"');
+		expect(() => Calculator.convert(['%'])).to.throw(Error, 'Misused operator: "%"');
+		expect(() => Calculator.convert(['2', '-', '^'])).to.throw(Error, 'Misused operator: "^"');
+		expect(() => Calculator.convert(['2', '-', '*'])).to.throw(Error, 'Misused operator: "*"');
+		expect(() => Calculator.convert(['2', '-', '/'])).to.throw(Error, 'Misused operator: "/"');
+		expect(() => Calculator.convert(['2', '-', '%'])).to.throw(Error, 'Misused operator: "%"');
+	});
+	it('throw error for an invalid token', () => {
+		expect(() => Calculator.convert(['~'])).to.throw(Error, 'Invalid token: "~"');
+		expect(() => Calculator.convert(['.'])).to.throw(Error, 'Invalid token: "."');
+		expect(() => Calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
+		expect(() => Calculator.convert(['191', '3', '&'])).to.throw(Error, 'Invalid token: "&"');
+		expect(() => Calculator.convert(['33', '#', '-', '12'])).to.throw(Error, 'Invalid token: "#"');
+		expect(() => Calculator.convert(['41', '+', ' '])).to.throw(Error, 'Invalid token: " "');
+		expect(() => Calculator.convert(['19.12', '-', '2', '_', '11'])).to.throw(Error, 'Invalid token: "_"');
+		expect(() => Calculator.convert(['2', '+', 'XYZ'])).to.throw(Error, 'Invalid token: "XYZ"');
+	});
+	it('throw error for invalid grouping', () => {
+		expect(() => Calculator.convert(['('])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert(['(', '('])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert([')', ')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert(['4', '+', '(', '3'])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert(['4', '+', '(', '3', ')', ')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert(['2', '*', '3', '('])).to.throw(Error, 'Invalid grouping');
+		expect(() => Calculator.convert(['(', '4', '-', '1', ')', ')'])).to.throw(Error, 'Invalid grouping');
+	});
 	it('process numbers', () => {
+		expect(Calculator.convert(['3'])).to.eql([3]);
+		expect(Calculator.convert(['42', '144.90', '8'])).to.eql([42, 144.9, 8]);
+		expect(Calculator.convert(['10', '1', '01', '001', '0.01', '0.001'])).to.eql([10, 1, 1, 1, 0.01, 0.001]);
+		expect(Calculator.convert(['01.', '0.2', '3.4', '.01', '.003', '0.01', '.223', '0001'])).to.eql([1, 0.2, 3.4, 0.01, 0.003, 0.01, 0.223, 1]);
 		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
 	});
 	it('process constants', () => {
+		expect(Calculator.convert(['PI'])).to.eql(['PI']);
+		expect(Calculator.convert(['E'])).to.eql(['E']);
 		expect(Calculator.convert(['PI', 'E'])).to.eql(['PI', 'E']);
+		expect(Calculator.convert(['E', 'PI'])).to.eql(['E', 'PI']);
 	});
-	it('throw error for a single "^"', () => {
-		expect(() => Calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
+	it('process infix operators', () => {
+		expect(Calculator.convert(['32', '^', '10'])).to.eql([32, 10, 'EXP']);
+		expect(Calculator.convert(['21', '*', '7'])).to.eql([21, 7, 'MUL']);
+		expect(Calculator.convert(['8', '/', '2'])).to.eql([8, 2, 'DIV']);
+		expect(Calculator.convert(['903', '%', '7'])).to.eql([903, 7, 'MOD']);
+		expect(Calculator.convert(['5', '+', '54'])).to.eql([5, 54, 'ADD']);
+		expect(Calculator.convert(['40', '-', '0'])).to.eql([40, 0, 'SUB']);
+		expect(Calculator.convert(['1', '+', '15', '/', '2'])).to.eql([1, 15, 2, 'DIV', 'ADD']);
+		expect(Calculator.convert(['23', '*', '3', '-', '212'])).to.eql([23, 3, 'MUL', 212, 'SUB']);
 	});
-	it('throw error for a single "*"', () => {
-		expect(() => Calculator.convert(['*'])).to.throw(Error, 'Misused operator: "*"');
-	});
-	it('throw error for a single "/"', () => {
-		expect(() => Calculator.convert(['/'])).to.throw(Error, 'Misused operator: "/"');
-	});
-	it('throw error for a single "%"', () => {
-		expect(() => Calculator.convert(['%'])).to.throw(Error, 'Misused operator: "%"');
-	});
-	it('identity a single "+" as a unary plus', () => {
+	it('process prefix operators', () => {
 		expect(Calculator.convert(['+'])).to.eql(['POS']);
-	});
-	it('indentify a single "-" as a unary minus', () => {
+		expect(Calculator.convert(['+', '2'])).to.eql([2, 'POS']);
+		expect(Calculator.convert(['3', '-', '+', '2'])).to.eql([3, 2, 'POS', 'SUB']);
+		expect(Calculator.convert(['2', '-', '+', '+', '2'])).to.eql([2, 2, 'POS', 'POS', 'SUB']);
 		expect(Calculator.convert(['-'])).to.eql(['NEG']);
-	});
-	it('throw error for a single "("', () => {
-		expect(() => Calculator.convert(['('])).to.throw(Error, 'Invalid grouping');
-	});
-	it('throw error for a single ")"', () => {
-		expect(() => Calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
-	});
-	it('throw error for a single word', () => {
-		expect(() => Calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
+		expect(Calculator.convert(['-', '4'])).to.eql([4, 'NEG']);
+		expect(Calculator.convert(['1', '+', '-', '7'])).to.eql([1, 7, 'NEG', 'ADD']);
+		expect(Calculator.convert(['5', '+', '-', '-', '0'])).to.eql([5, 0, 'NEG', 'NEG', 'ADD']);
 	});
 });
 
