@@ -142,6 +142,25 @@ describe('Calculator.resolve()', () => {
 		expect(() => Calculator.resolve([1, 2, 2, 'DIV'])).to.throw(Error, 'Missing operation(s)');
 		expect(() => Calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
 	});
+	it('return result for rpn with single operation', () => {
+		expect(Calculator.resolve([2, 3, 'EXP'])).to.eql(8);
+		expect(Calculator.resolve([7, 6, 'MUL'])).to.eql(42);
+		expect(Calculator.resolve([16, 4, 'DIV'])).to.eql(4);
+		expect(Calculator.resolve([4, 5, 'ADD'])).to.eql(9);
+		expect(Calculator.resolve([1, 5, 'SUB'])).to.eql(-4);
+		expect(Calculator.resolve([7, 'NEG'])).to.eql(-7);
+		expect(Calculator.resolve([6, 'POS'])).to.eql(6);
+	});
+	it('return result for rpn with multiple operations', () => {
+		expect(Calculator.resolve([7, 3, 2, 'ADD', 'MUL'])).to.eql(35);
+		expect(Calculator.resolve([3, 'NEG', 9, 'NEG', 'SUB'])).to.eql(6);
+		expect(Calculator.resolve([5, 8, 'MUL', 6, 'ADD'])).to.eql(46);
+		expect(Calculator.resolve([3, 3, 'EXP', 'NEG'])).to.eql(-27);
+		expect(Calculator.resolve([16, 'NEG', 9, 'POS', 'POS', 'POS', 'ADD'])).to.eql(-7);
+		expect(Calculator.resolve([2, 4, 5, 'EXP', 'MUL', 3, 'ADD'])).to.eql(2051);
+		expect(Calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
+		expect(Calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
+	});
 });
 
 describe('Calculator.evaluate()', () => {
