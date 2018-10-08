@@ -90,7 +90,7 @@ class Calculator {
 			throw new Error(`No input`);
 		}
 
-		const pattern = /(\d*\.\d*)|(\d+)|([a-zA-Z]+)|.|\s+/g;
+		const pattern = /(\d+\.\d*)|(\d*\.\d+)|(\d+)|([a-zA-Z]+)|(.)/g;
 		const tokens = (expression.match(pattern) || [])
 			.filter((token) => !this.isWhitespace(token))
 			.map((token) => token.toUpperCase());
