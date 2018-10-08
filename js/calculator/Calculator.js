@@ -195,7 +195,7 @@ class Calculator {
 		}
 
 		if (evaluationStack.length > 1) {
-			throw new Error(`Mismatched operators and operands`);
+			throw new Error(`Missing operation(s)`);
 		}
 
 		return Number(Math.round(`${evaluationStack[0]}e8`) + 'e-8');

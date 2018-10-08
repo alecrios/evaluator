@@ -122,6 +122,26 @@ describe('Calculator.resolve()', () => {
 	it('throw error for empty rpn array', () => {
 		expect(() => Calculator.resolve([])).to.throw(Error, 'No operations');
 	});
+	it('throw error for missing arguments', () => {
+		expect(() => Calculator.resolve([2, 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
+		expect(() => Calculator.resolve([41, 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
+		expect(() => Calculator.resolve([1.7, 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
+		expect(() => Calculator.resolve([7, 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
+		expect(() => Calculator.resolve([3, 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
+		expect(() => Calculator.resolve([13, 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
+		expect(() => Calculator.resolve([3, 4, 'SUB', 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
+		expect(() => Calculator.resolve([13, 76, 'EXP', 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
+		expect(() => Calculator.resolve([0, 215, 'ADD', 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
+		expect(() => Calculator.resolve([43, 4, 'ADD', 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
+		expect(() => Calculator.resolve([67, 1, 'MOD', 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
+		expect(() => Calculator.resolve([7, 79, 'MUL', 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
+	});
+	it('throw error for missing operation(s)', () => {
+		expect(() => Calculator.resolve([2, 4])).to.throw(Error, 'Missing operation(s)');
+		expect(() => Calculator.resolve([5, 87, 12])).to.throw(Error, 'Missing operation(s)');
+		expect(() => Calculator.resolve([1, 2, 2, 'DIV'])).to.throw(Error, 'Missing operation(s)');
+		expect(() => Calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
+	});
 });
 
 describe('Calculator.evaluate()', () => {
@@ -200,6 +220,7 @@ describe('Calculator.evaluate()', () => {
 		{expression: 'e', result: 2.71828183},
 		{expression: 'E * 4.31 / 1.2', result: 9.76316223},
 		{expression: '(9.121 - E) * 1.981', result: 12.6837847},
+		{expression: 'pi * 4 / e + 2', result: 6.6229094},
 	];
 
 	tests.forEach((test) => {
