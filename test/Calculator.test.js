@@ -66,7 +66,7 @@ describe('Calculator.convert()', () => {
 		expect(() => Calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
 		expect(() => Calculator.convert(['191', '3', '&'])).to.throw(Error, 'Invalid token: "&"');
 		expect(() => Calculator.convert(['33', '#', '-', '12'])).to.throw(Error, 'Invalid token: "#"');
-		expect(() => Calculator.convert(['41', '+', ' '])).to.throw(Error, 'Invalid token: " "');
+		expect(() => Calculator.convert(['41', ',', '000'])).to.throw(Error, 'Invalid token: ","');
 		expect(() => Calculator.convert(['19.12', '-', '2', '_', '11'])).to.throw(Error, 'Invalid token: "_"');
 		expect(() => Calculator.convert(['2', '+', 'XYZ'])).to.throw(Error, 'Invalid token: "XYZ"');
 	});
@@ -86,6 +86,9 @@ describe('Calculator.convert()', () => {
 		expect(Calculator.convert(['10', '1', '01', '001', '0.01', '0.001'])).to.eql([10, 1, 1, 1, 0.01, 0.001]);
 		expect(Calculator.convert(['01.', '0.2', '3.4', '.01', '.003', '0.01', '.223', '0001'])).to.eql([1, 0.2, 3.4, 0.01, 0.003, 0.01, 0.223, 1]);
 		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
+		expect(Calculator.convert(['0', '00', '000', '1', '11', '111'])).to.eql([0, 0, 0, 1, 11, 111]);
+		expect(Calculator.convert(['.01', '.001', '.0001'])).to.eql([0.01, 0.001, 0.0001]);
+		expect(Calculator.convert(['1000', '10000'])).to.eql([1000, 10000]);
 	});
 	it('process constants', () => {
 		expect(Calculator.convert(['PI'])).to.eql(['PI']);
