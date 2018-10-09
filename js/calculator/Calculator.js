@@ -106,7 +106,7 @@ class Calculator {
 		const operatorStack = [];
 		const outputQueue = [];
 
-		for (let [index, token] of tokens.entries()) {
+		for (const [index, token] of tokens.entries()) {
 			if (this.isNumber(token)) {
 				outputQueue.push(parseFloat(token));
 				continue;
@@ -173,7 +173,7 @@ class Calculator {
 
 		const evaluationStack = [];
 
-		for (let token of outputQueue) {
+		for (const token of outputQueue) {
 			if (this.isNumber(token)) {
 				evaluationStack.push(token);
 				continue;
