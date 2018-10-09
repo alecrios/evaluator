@@ -1,8 +1,0 @@
-directories:
-  output: dist
-  buildResources: build
-appId: com.electron.evaluator
-publish:
-  provider: github
-  token: <stripped sensitive data>
-electronVersion: 2.0.7
