@@ -240,6 +240,7 @@ describe('Calculator.evaluate()', () => {
 		{expression: 'E * 4.31 / 1.2', result: 9.76316223},
 		{expression: '(9.121 - E) * 1.981', result: 12.6837847},
 		{expression: 'pi * 4 / e + 2', result: 6.6229094},
+		{expression: '41 * pi / (18 ^ 2) - 11.213', result: -10.81545278},
 	];
 
 	tests.forEach((test) => {
