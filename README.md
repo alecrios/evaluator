@@ -20,6 +20,13 @@ Evaluator is a calculator application built for a rapid and efficient workflow. 
 | `%` | Modulo |
 | `(`, `)` | Grouping |
 
+## Constants
+
+| Constant | Value |
+|:--- |:--- |
+| `e` | 2.71828183... |
+| `pi` | 3.14159265... |
+
 ## Shortcuts
 
 | Shortcut | Function |
