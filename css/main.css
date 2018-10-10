@@ -1,5 +1,21 @@
+/* Global
+============================================================= */
+
 html {
 	background-color: rgb(30, 31, 32);
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/* Workspace
+============================================================= */
+
+.workspace {
+	flex: 1 0 auto;
 }
 
 .row {
@@ -46,4 +62,32 @@ html {
 .textarea.output::selection {
 	background-color: rgb(55, 175, 95);
 	color: rgb(24, 25, 26);
+}
+
+/* Footer
+============================================================= */
+
+.footer {
+	flex: none;
+	padding: 16px;
+}
+
+.update-ready {
+	font-size: 12px;
+	line-height: 12px;
+	font-weight: 500;
+	letter-spacing: .25px;
+	background-color: rgb(191, 191, 191);
+	color: rgb(30, 31, 32);
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 6px 8px;
+}
+
+.update-ready:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+.update-ready:focus {
+	outline: 0;
 }

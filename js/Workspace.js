@@ -1,17 +1,10 @@
 class Workspace {
 	constructor() {
-		this.el = this.createWorkspace();
+		this.el = document.querySelector('.workspace');
 		this.rows = [];
 		this.activeRow = this.addRow();
 		this.activeRow.activate();
 		this.subscribeToCommands();
-	}
-
-	createWorkspace() {
-		const workspace = document.createElement('div');
-		workspace.classList.add('workspace');
-		document.body.appendChild(workspace);
-		return workspace;
 	}
 
 	addRow(index) {
