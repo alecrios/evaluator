@@ -161,17 +161,24 @@ describe('Calculator.resolve()', () => {
 		expect(Calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
 		expect(Calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
 	});
+	it('return NaN for division by zero', () => {
+		expect(Calculator.resolve([1, 0, 'DIV'])).to.eql(NaN);
+		expect(Calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(NaN);
+	});
 });
 
 describe('Calculator.evaluate()', () => {
 	const tests = [
 		{expression: '3', result: 3},
+		{expression: '1 * 1', result: 1},
 		{expression: '562370', result: 562370},
 		{expression: '2 + 3', result: 5},
 		{expression: '937 - 264', result: 673},
 		{expression: '492 + 117', result: 609},
 		{expression: '9 * 5 + 7', result: 52},
 		{expression: '4 + 1 * 8', result: 12},
+		{expression: '2 / 3', result: 0.66666667},
+		{expression: '0 / 5', result: 0},
 		{expression: '8 * (2 + 1)', result: 24},
 		{expression: '2 + (3 * 6) - 4', result: 16},
 		{expression: '7 - 1 + 6', result: 12},
@@ -180,6 +187,8 @@ describe('Calculator.evaluate()', () => {
 		{expression: '4 ^ 0', result: 1},
 		{expression: '0 ^ 32', result: 0},
 		{expression: '3 * 8 ^ 9 + 3', result: 402653187},
+		{expression: '2 ^ 2 ^ 2 ^ 2', result: 65536},
+		{expression: '1 + 2 ^ -3 * 4 / 5', result: 1.1},
 		{expression: '712 * 2 ^ 3 + 40', result: 5736},
 		{expression: '1 * (7 + 8 * 4) + 8', result: 47},
 		{expression: '655 * (1 + 3 * 53) + 4', result: 104804},
@@ -189,6 +198,7 @@ describe('Calculator.evaluate()', () => {
 		{expression: '3 + 4 * 2 / (1 - 0) ^ 2 ^ 2', result: 11},
 		{expression: '4 + 8 / (9 - 32)', result: 3.65217391},
 		{expression: '0 + 241 / (643 - 501)', result: 1.6971831},
+		{expression: '3.3 ^ (1.7 / 2.3) / 12.1 * 105.6', result: 21.09249631},
 		{expression: '128.4383', result: 128.4383},
 		{expression: '11.10 + 17.50', result: 28.6},
 		{expression: '34.1 + 12.98 * 8.003', result: 137.97894},
@@ -200,6 +210,7 @@ describe('Calculator.evaluate()', () => {
 		{expression: '3 + -6', result: -3},
 		{expression: '-5 - -7', result: 2},
 		{expression: '4 ^ - 2', result: 0.0625},
+		{expression: '-4 ^ -3', result: -0.015625},
 		{expression: '-4 ^ 2', result: -16},
 		{expression: '1 ^ -2 - -7 - 9 + -2', result: -3},
 		{expression: '2 / (30 / 3) * 4 / 1', result: 0.8},
@@ -224,15 +235,18 @@ describe('Calculator.evaluate()', () => {
 		{expression: '3 + +4 - +2 + 3 + +1', result: 9},
 		{expression: '- 4 + 6', result: 2},
 		{expression: '+ 4 - 6', result: -2},
+		{expression: '7 * (-4)', result: -28},
 		{expression: '.1 + .2', result: 0.3},
 		{expression: '24.1 * 510.51 / 4.29 * (18.3 / 16.98)', result: 3090.84628975},
 		{expression: '1.43 / 566.32 * (232.1 / 10.98)', result: 0.05337611},
 		{expression: '3.34 ^ (18.221 / 2.9551)', result: 1695.87848994},
 		{expression: '(1.89 + 0.13 * 17.44) / (3 ^ 2)', result: 0.46191111},
+		{expression: '-15.4 / (4.99) * 1 ^ 3', result: -3.08617234},
 		{expression: '401.2 + 108.1', result: 509.3},
 		{expression: '2 / 4 % 8 * 3', result: 1.5},
 		{expression: '4.1 * 18.2 + (12.8 / 16.3)', result: 75.40527607},
 		{expression: '.211 * 0.343 * 00.984 * 4.', result: 0.28486013},
+		{expression: '(4 ^ 4) / 3 % 2', result: 1.33333333},
 		{expression: 'pi', result: 3.14159265},
 		{expression: '2 * PI * 10', result: 62.83185307},
 		{expression: 'PI * 10 ^ 2', result: 314.15926536},
