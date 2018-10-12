@@ -1,7 +1,15 @@
 /* Global
 ============================================================= */
 
+@font-face {
+	font-family: 'Roboto';
+	src: url('../assets/fonts/Roboto-Regular-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 html {
+	font-family: 'Roboto';
 	background-color: rgb(30, 31, 32);
 }
 
