@@ -1,169 +1,171 @@
 const expect = require('chai').expect;
 const Calculator = require('../lib/calculator/Calculator');
 
+const calculator = new Calculator();
+
 describe('Calculator.parse()', () => {
 	it('throw error for empty expression string', () => {
-		expect(() => Calculator.parse('')).to.throw(Error, 'No input');
+		expect(() => calculator.parse('')).to.throw(Error, 'No input');
 	});
 	it('return empty array for expression string with only whitespace', () => {
-		expect(Calculator.parse(' 	')).to.eql([]);
+		expect(calculator.parse(' 	')).to.eql([]);
 	});
 	it('ignore whitespace characters', () => {
-		expect(Calculator.parse('0 0	0  0		0')).to.eql(['0', '0', '0', '0', '0']);
+		expect(calculator.parse('0 0	0  0		0')).to.eql(['0', '0', '0', '0', '0']);
 	});
 	it('identify single-digit numbers', () => {
-		expect(Calculator.parse('0 1 2 3 4 5 6 7 8 9')).to.eql(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
+		expect(calculator.parse('0 1 2 3 4 5 6 7 8 9')).to.eql(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
 	});
 	it('identify multiple-digit numbers', () => {
-		expect(Calculator.parse('10 100 1000 10000')).to.eql(['10', '100', '1000', '10000']);
+		expect(calculator.parse('10 100 1000 10000')).to.eql(['10', '100', '1000', '10000']);
 	});
 	it('identify decimal numbers', () => {
-		expect(Calculator.parse('.0 0. 0.0 0.00 00.0 00.00')).to.eql(['.0', '0.', '0.0', '0.00', '00.0', '00.00']);
+		expect(calculator.parse('.0 0. 0.0 0.00 00.0 00.00')).to.eql(['.0', '0.', '0.0', '0.00', '00.0', '00.00']);
 	});
 	it('identify symbols', () => {
-		expect(Calculator.parse('`~!@#$%^&*()-=_+[]{};\':\",.<>/?\\|')).to.eql(['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '_', '+', '[', ']', '{', '}', ';', '\'', ':', '\"', ',', '.', '<', '>', '/', '?', '\\', '|']);
+		expect(calculator.parse('`~!@#$%^&*()-=_+[]{};\':\",.<>/?\\|')).to.eql(['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '_', '+', '[', ']', '{', '}', ';', '\'', ':', '\"', ',', '.', '<', '>', '/', '?', '\\', '|']);
 	});
 	it('identify words', () => {
-		expect(Calculator.parse('a A aa AA aA Aa')).to.eql(['A', 'A', 'AA', 'AA', 'AA', 'AA']);
+		expect(calculator.parse('a A aa AA aA Aa')).to.eql(['A', 'A', 'AA', 'AA', 'AA', 'AA']);
 	});
 	it('distinguish numbers from symbols with whitespace', () => {
-		expect(Calculator.parse('0 + 12 - .3 * 4. / 5.6 % 7.89 ^ 01.2 + ( 34.56 )')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
+		expect(calculator.parse('0 + 12 - .3 * 4. / 5.6 % 7.89 ^ 01.2 + ( 34.56 )')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
 	});
 	it('distinguish numbers from symbols without whitespace', () => {
-		expect(Calculator.parse('0+12-.3*4./5.6%7.89^01.2+(34.56)')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
+		expect(calculator.parse('0+12-.3*4./5.6%7.89^01.2+(34.56)')).to.eql(['0', '+', '12', '-', '.3', '*', '4.', '/', '5.6', '%', '7.89', '^', '01.2', '+', '(', '34.56', ')']);
 	});
 	it('distinguish symbols from words with whitespace', () => {
-		expect(Calculator.parse('a + Bc - DeF * gHiJ / kLmNo % PqRsTu ^ VwXyZaB + ( cDeFgHiJ )')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
+		expect(calculator.parse('a + Bc - DeF * gHiJ / kLmNo % PqRsTu ^ VwXyZaB + ( cDeFgHiJ )')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
 	});
 	it('distinguish symbols from words without whitespace', () => {
-		expect(Calculator.parse('a+Bc-DeF*gHiJ/kLmNo%PqRsTu^VwXyZaB+(cDeFgHiJ)')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
+		expect(calculator.parse('a+Bc-DeF*gHiJ/kLmNo%PqRsTu^VwXyZaB+(cDeFgHiJ)')).to.eql(['A', '+', 'BC', '-', 'DEF', '*', 'GHIJ', '/', 'KLMNO', '%', 'PQRSTU', '^', 'VWXYZAB', '+', '(', 'CDEFGHIJ', ')']);
 	});
 	it('distinguish words from numbers with whitespace', () => {
-		expect(Calculator.parse('a 0 Bc 12 DeF .3 gHiJ 4. kLmNo 5.6 PqRsTu 7.89 VwXyZaB 01.2 cDeFgHiJ 45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
+		expect(calculator.parse('a 0 Bc 12 DeF .3 gHiJ 4. kLmNo 5.6 PqRsTu 7.89 VwXyZaB 01.2 cDeFgHiJ 45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
 	});
 	it('distinguish words from numbers without whitespace', () => {
-		expect(Calculator.parse('a0Bc12DeF.3gHiJ4.kLmNo5.6PqRsTu7.89VwXyZaB01.2cDeFgHiJ45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
+		expect(calculator.parse('a0Bc12DeF.3gHiJ4.kLmNo5.6PqRsTu7.89VwXyZaB01.2cDeFgHiJ45.67')).to.eql(['A', '0', 'BC', '12', 'DEF', '.3', 'GHIJ', '4.', 'KLMNO', '5.6', 'PQRSTU', '7.89', 'VWXYZAB', '01.2', 'CDEFGHIJ', '45.67']);
 	});
 });
 
 describe('Calculator.convert()', () => {
 	it('throw error for empty tokens array', () => {
-		expect(() => Calculator.convert([])).to.throw(Error, 'No valid tokens');
+		expect(() => calculator.convert([])).to.throw(Error, 'No valid tokens');
 	});
 	it('throw error for a misused operator', () => {
-		expect(() => Calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
-		expect(() => Calculator.convert(['*'])).to.throw(Error, 'Misused operator: "*"');
-		expect(() => Calculator.convert(['/'])).to.throw(Error, 'Misused operator: "/"');
-		expect(() => Calculator.convert(['%'])).to.throw(Error, 'Misused operator: "%"');
-		expect(() => Calculator.convert(['2', '-', '^'])).to.throw(Error, 'Misused operator: "^"');
-		expect(() => Calculator.convert(['2', '-', '*'])).to.throw(Error, 'Misused operator: "*"');
-		expect(() => Calculator.convert(['2', '-', '/'])).to.throw(Error, 'Misused operator: "/"');
-		expect(() => Calculator.convert(['2', '-', '%'])).to.throw(Error, 'Misused operator: "%"');
+		expect(() => calculator.convert(['^'])).to.throw(Error, 'Misused operator: "^"');
+		expect(() => calculator.convert(['*'])).to.throw(Error, 'Misused operator: "*"');
+		expect(() => calculator.convert(['/'])).to.throw(Error, 'Misused operator: "/"');
+		expect(() => calculator.convert(['%'])).to.throw(Error, 'Misused operator: "%"');
+		expect(() => calculator.convert(['2', '-', '^'])).to.throw(Error, 'Misused operator: "^"');
+		expect(() => calculator.convert(['2', '-', '*'])).to.throw(Error, 'Misused operator: "*"');
+		expect(() => calculator.convert(['2', '-', '/'])).to.throw(Error, 'Misused operator: "/"');
+		expect(() => calculator.convert(['2', '-', '%'])).to.throw(Error, 'Misused operator: "%"');
 	});
 	it('throw error for an invalid token', () => {
-		expect(() => Calculator.convert(['~'])).to.throw(Error, 'Invalid token: "~"');
-		expect(() => Calculator.convert(['.'])).to.throw(Error, 'Invalid token: "."');
-		expect(() => Calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
-		expect(() => Calculator.convert(['191', '3', '&'])).to.throw(Error, 'Invalid token: "&"');
-		expect(() => Calculator.convert(['33', '#', '-', '12'])).to.throw(Error, 'Invalid token: "#"');
-		expect(() => Calculator.convert(['41', ',', '000'])).to.throw(Error, 'Invalid token: ","');
-		expect(() => Calculator.convert(['19.12', '-', '2', '_', '11'])).to.throw(Error, 'Invalid token: "_"');
-		expect(() => Calculator.convert(['2', '+', 'XYZ'])).to.throw(Error, 'Invalid token: "XYZ"');
+		expect(() => calculator.convert(['~'])).to.throw(Error, 'Invalid token: "~"');
+		expect(() => calculator.convert(['.'])).to.throw(Error, 'Invalid token: "."');
+		expect(() => calculator.convert(['ABC'])).to.throw(Error, 'Invalid token: "ABC"');
+		expect(() => calculator.convert(['191', '3', '&'])).to.throw(Error, 'Invalid token: "&"');
+		expect(() => calculator.convert(['33', '#', '-', '12'])).to.throw(Error, 'Invalid token: "#"');
+		expect(() => calculator.convert(['41', ',', '000'])).to.throw(Error, 'Invalid token: ","');
+		expect(() => calculator.convert(['19.12', '-', '2', '_', '11'])).to.throw(Error, 'Invalid token: "_"');
+		expect(() => calculator.convert(['2', '+', 'XYZ'])).to.throw(Error, 'Invalid token: "XYZ"');
 	});
 	it('throw error for invalid grouping', () => {
-		expect(() => Calculator.convert(['('])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert(['(', '('])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert([')', ')'])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert(['4', '+', '(', '3'])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert(['4', '+', '(', '3', ')', ')'])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert(['2', '*', '3', '('])).to.throw(Error, 'Invalid grouping');
-		expect(() => Calculator.convert(['(', '4', '-', '1', ')', ')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['('])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['(', '('])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert([')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert([')', ')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['4', '+', '(', '3'])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['4', '+', '(', '3', ')', ')'])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['2', '*', '3', '('])).to.throw(Error, 'Invalid grouping');
+		expect(() => calculator.convert(['(', '4', '-', '1', ')', ')'])).to.throw(Error, 'Invalid grouping');
 	});
 	it('process numbers', () => {
-		expect(Calculator.convert(['3'])).to.eql([3]);
-		expect(Calculator.convert(['42', '144.90', '8'])).to.eql([42, 144.9, 8]);
-		expect(Calculator.convert(['10', '1', '01', '001', '0.01', '0.001'])).to.eql([10, 1, 1, 1, 0.01, 0.001]);
-		expect(Calculator.convert(['01.', '0.2', '3.4', '.01', '.003', '0.01', '.223', '0001'])).to.eql([1, 0.2, 3.4, 0.01, 0.003, 0.01, 0.223, 1]);
-		expect(Calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
-		expect(Calculator.convert(['0', '00', '000', '1', '11', '111'])).to.eql([0, 0, 0, 1, 11, 111]);
-		expect(Calculator.convert(['.01', '.001', '.0001'])).to.eql([0.01, 0.001, 0.0001]);
-		expect(Calculator.convert(['1000', '10000'])).to.eql([1000, 10000]);
+		expect(calculator.convert(['3'])).to.eql([3]);
+		expect(calculator.convert(['42', '144.90', '8'])).to.eql([42, 144.9, 8]);
+		expect(calculator.convert(['10', '1', '01', '001', '0.01', '0.001'])).to.eql([10, 1, 1, 1, 0.01, 0.001]);
+		expect(calculator.convert(['01.', '0.2', '3.4', '.01', '.003', '0.01', '.223', '0001'])).to.eql([1, 0.2, 3.4, 0.01, 0.003, 0.01, 0.223, 1]);
+		expect(calculator.convert(['0', '12', '.3', '4.', '5.6', '7.89', '01.2', '34.56'])).to.eql([0, 12, 0.3, 4, 5.6, 7.89, 1.2, 34.56]);
+		expect(calculator.convert(['0', '00', '000', '1', '11', '111'])).to.eql([0, 0, 0, 1, 11, 111]);
+		expect(calculator.convert(['.01', '.001', '.0001'])).to.eql([0.01, 0.001, 0.0001]);
+		expect(calculator.convert(['1000', '10000'])).to.eql([1000, 10000]);
 	});
 	it('process constants', () => {
-		expect(Calculator.convert(['PI'])).to.eql(['PI']);
-		expect(Calculator.convert(['E'])).to.eql(['E']);
-		expect(Calculator.convert(['PI', 'E'])).to.eql(['PI', 'E']);
-		expect(Calculator.convert(['E', 'PI'])).to.eql(['E', 'PI']);
+		expect(calculator.convert(['PI'])).to.eql(['PI']);
+		expect(calculator.convert(['E'])).to.eql(['E']);
+		expect(calculator.convert(['PI', 'E'])).to.eql(['PI', 'E']);
+		expect(calculator.convert(['E', 'PI'])).to.eql(['E', 'PI']);
 	});
 	it('process infix operators', () => {
-		expect(Calculator.convert(['32', '^', '10'])).to.eql([32, 10, 'EXP']);
-		expect(Calculator.convert(['21', '*', '7'])).to.eql([21, 7, 'MUL']);
-		expect(Calculator.convert(['8', '/', '2'])).to.eql([8, 2, 'DIV']);
-		expect(Calculator.convert(['903', '%', '7'])).to.eql([903, 7, 'MOD']);
-		expect(Calculator.convert(['5', '+', '54'])).to.eql([5, 54, 'ADD']);
-		expect(Calculator.convert(['40', '-', '0'])).to.eql([40, 0, 'SUB']);
-		expect(Calculator.convert(['1', '+', '15', '/', '2'])).to.eql([1, 15, 2, 'DIV', 'ADD']);
-		expect(Calculator.convert(['23', '*', '3', '-', '212'])).to.eql([23, 3, 'MUL', 212, 'SUB']);
+		expect(calculator.convert(['32', '^', '10'])).to.eql([32, 10, 'EXP']);
+		expect(calculator.convert(['21', '*', '7'])).to.eql([21, 7, 'MUL']);
+		expect(calculator.convert(['8', '/', '2'])).to.eql([8, 2, 'DIV']);
+		expect(calculator.convert(['903', '%', '7'])).to.eql([903, 7, 'MOD']);
+		expect(calculator.convert(['5', '+', '54'])).to.eql([5, 54, 'ADD']);
+		expect(calculator.convert(['40', '-', '0'])).to.eql([40, 0, 'SUB']);
+		expect(calculator.convert(['1', '+', '15', '/', '2'])).to.eql([1, 15, 2, 'DIV', 'ADD']);
+		expect(calculator.convert(['23', '*', '3', '-', '212'])).to.eql([23, 3, 'MUL', 212, 'SUB']);
 	});
 	it('process prefix operators', () => {
-		expect(Calculator.convert(['+'])).to.eql(['POS']);
-		expect(Calculator.convert(['+', '2'])).to.eql([2, 'POS']);
-		expect(Calculator.convert(['3', '-', '+', '2'])).to.eql([3, 2, 'POS', 'SUB']);
-		expect(Calculator.convert(['2', '-', '+', '+', '2'])).to.eql([2, 2, 'POS', 'POS', 'SUB']);
-		expect(Calculator.convert(['-'])).to.eql(['NEG']);
-		expect(Calculator.convert(['-', '4'])).to.eql([4, 'NEG']);
-		expect(Calculator.convert(['1', '+', '-', '7'])).to.eql([1, 7, 'NEG', 'ADD']);
-		expect(Calculator.convert(['5', '+', '-', '-', '0'])).to.eql([5, 0, 'NEG', 'NEG', 'ADD']);
+		expect(calculator.convert(['+'])).to.eql(['POS']);
+		expect(calculator.convert(['+', '2'])).to.eql([2, 'POS']);
+		expect(calculator.convert(['3', '-', '+', '2'])).to.eql([3, 2, 'POS', 'SUB']);
+		expect(calculator.convert(['2', '-', '+', '+', '2'])).to.eql([2, 2, 'POS', 'POS', 'SUB']);
+		expect(calculator.convert(['-'])).to.eql(['NEG']);
+		expect(calculator.convert(['-', '4'])).to.eql([4, 'NEG']);
+		expect(calculator.convert(['1', '+', '-', '7'])).to.eql([1, 7, 'NEG', 'ADD']);
+		expect(calculator.convert(['5', '+', '-', '-', '0'])).to.eql([5, 0, 'NEG', 'NEG', 'ADD']);
 	});
 });
 
 describe('Calculator.resolve()', () => {
 	it('throw error for empty rpn array', () => {
-		expect(() => Calculator.resolve([])).to.throw(Error, 'No operations');
+		expect(() => calculator.resolve([])).to.throw(Error, 'No operations');
 	});
 	it('throw error for missing arguments', () => {
-		expect(() => Calculator.resolve([2, 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
-		expect(() => Calculator.resolve([41, 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
-		expect(() => Calculator.resolve([1.7, 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
-		expect(() => Calculator.resolve([7, 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
-		expect(() => Calculator.resolve([3, 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
-		expect(() => Calculator.resolve([13, 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
-		expect(() => Calculator.resolve([3, 4, 'SUB', 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
-		expect(() => Calculator.resolve([13, 76, 'EXP', 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
-		expect(() => Calculator.resolve([0, 215, 'ADD', 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
-		expect(() => Calculator.resolve([43, 4, 'ADD', 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
-		expect(() => Calculator.resolve([67, 1, 'MOD', 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
-		expect(() => Calculator.resolve([7, 79, 'MUL', 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
+		expect(() => calculator.resolve([2, 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
+		expect(() => calculator.resolve([41, 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
+		expect(() => calculator.resolve([1.7, 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
+		expect(() => calculator.resolve([7, 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
+		expect(() => calculator.resolve([3, 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
+		expect(() => calculator.resolve([13, 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
+		expect(() => calculator.resolve([3, 4, 'SUB', 'EXP'])).to.throw(Error, 'Missing argument(s) for: "EXP"');
+		expect(() => calculator.resolve([13, 76, 'EXP', 'MUL'])).to.throw(Error, 'Missing argument(s) for: "MUL"');
+		expect(() => calculator.resolve([0, 215, 'ADD', 'DIV'])).to.throw(Error, 'Missing argument(s) for: "DIV"');
+		expect(() => calculator.resolve([43, 4, 'ADD', 'MOD'])).to.throw(Error, 'Missing argument(s) for: "MOD"');
+		expect(() => calculator.resolve([67, 1, 'MOD', 'ADD'])).to.throw(Error, 'Missing argument(s) for: "ADD"');
+		expect(() => calculator.resolve([7, 79, 'MUL', 'SUB'])).to.throw(Error, 'Missing argument(s) for: "SUB"');
 	});
 	it('throw error for missing operation(s)', () => {
-		expect(() => Calculator.resolve([2, 4])).to.throw(Error, 'Missing operation(s)');
-		expect(() => Calculator.resolve([5, 87, 12])).to.throw(Error, 'Missing operation(s)');
-		expect(() => Calculator.resolve([1, 2, 2, 'DIV'])).to.throw(Error, 'Missing operation(s)');
-		expect(() => Calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
+		expect(() => calculator.resolve([2, 4])).to.throw(Error, 'Missing operation(s)');
+		expect(() => calculator.resolve([5, 87, 12])).to.throw(Error, 'Missing operation(s)');
+		expect(() => calculator.resolve([1, 2, 2, 'DIV'])).to.throw(Error, 'Missing operation(s)');
+		expect(() => calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
 	});
 	it('return result for rpn with single operation', () => {
-		expect(Calculator.resolve([2, 3, 'EXP'])).to.eql(8);
-		expect(Calculator.resolve([7, 6, 'MUL'])).to.eql(42);
-		expect(Calculator.resolve([16, 4, 'DIV'])).to.eql(4);
-		expect(Calculator.resolve([4, 5, 'ADD'])).to.eql(9);
-		expect(Calculator.resolve([1, 5, 'SUB'])).to.eql(-4);
-		expect(Calculator.resolve([7, 'NEG'])).to.eql(-7);
-		expect(Calculator.resolve([6, 'POS'])).to.eql(6);
+		expect(calculator.resolve([2, 3, 'EXP'])).to.eql(8);
+		expect(calculator.resolve([7, 6, 'MUL'])).to.eql(42);
+		expect(calculator.resolve([16, 4, 'DIV'])).to.eql(4);
+		expect(calculator.resolve([4, 5, 'ADD'])).to.eql(9);
+		expect(calculator.resolve([1, 5, 'SUB'])).to.eql(-4);
+		expect(calculator.resolve([7, 'NEG'])).to.eql(-7);
+		expect(calculator.resolve([6, 'POS'])).to.eql(6);
 	});
 	it('return result for rpn with multiple operations', () => {
-		expect(Calculator.resolve([7, 3, 2, 'ADD', 'MUL'])).to.eql(35);
-		expect(Calculator.resolve([3, 'NEG', 9, 'NEG', 'SUB'])).to.eql(6);
-		expect(Calculator.resolve([5, 8, 'MUL', 6, 'ADD'])).to.eql(46);
-		expect(Calculator.resolve([3, 3, 'EXP', 'NEG'])).to.eql(-27);
-		expect(Calculator.resolve([16, 'NEG', 9, 'POS', 'POS', 'POS', 'ADD'])).to.eql(-7);
-		expect(Calculator.resolve([2, 4, 5, 'EXP', 'MUL', 3, 'ADD'])).to.eql(2051);
-		expect(Calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
-		expect(Calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
+		expect(calculator.resolve([7, 3, 2, 'ADD', 'MUL'])).to.eql(35);
+		expect(calculator.resolve([3, 'NEG', 9, 'NEG', 'SUB'])).to.eql(6);
+		expect(calculator.resolve([5, 8, 'MUL', 6, 'ADD'])).to.eql(46);
+		expect(calculator.resolve([3, 3, 'EXP', 'NEG'])).to.eql(-27);
+		expect(calculator.resolve([16, 'NEG', 9, 'POS', 'POS', 'POS', 'ADD'])).to.eql(-7);
+		expect(calculator.resolve([2, 4, 5, 'EXP', 'MUL', 3, 'ADD'])).to.eql(2051);
+		expect(calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
+		expect(calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
 	});
 	it('return NaN for division by zero', () => {
-		expect(Calculator.resolve([1, 0, 'DIV'])).to.eql(NaN);
-		expect(Calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(NaN);
+		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(NaN);
+		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(NaN);
 	});
 });
 
@@ -259,7 +261,7 @@ describe('Calculator.evaluate()', () => {
 
 	tests.forEach((test) => {
 		it(`${test.expression} = ${test.result}`, () => {
-			expect(Calculator.evaluate(test.expression)).to.eql(test.result);
+			expect(calculator.evaluate(test.expression)).to.eql(test.result);
 		});
 	});
 });

@@ -1,7 +1,8 @@
 const Row = require('./Row.js');
 
-class Workspace {
-	constructor() {
+module.exports = class Workspace {
+	constructor(calculator) {
+		this.calculator = calculator;
 		this.el = document.querySelector('.workspace');
 		this.rows = [];
 		this.activeRow = this.addRow();
@@ -10,7 +11,7 @@ class Workspace {
 	}
 
 	addRow(index) {
-		const row = new Row();
+		const row = new Row(this.calculator);
 
 		const currentRow = index !== undefined && index < this.rows.length ? this.rows[index].el : null;
 		this.el.insertBefore(row.el, currentRow);
@@ -129,5 +130,3 @@ class Workspace {
 		row.output.focus();
 	}
 }
-
-module.exports = new Workspace();

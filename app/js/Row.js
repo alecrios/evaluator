@@ -1,5 +1,6 @@
-class Row {
-	constructor() {
+module.exports = class Row {
+	constructor(calculator) {
+		this.calculator = calculator;
 		this.el = this.createRow();
 		this.input = this.createInput();
 		this.output = this.createOutput();
@@ -58,7 +59,7 @@ class Row {
 	}
 
 	evaluate() {
-		const result = Calculator.evaluate(this.input.value);
+		const result = this.calculator.evaluate(this.input.value);
 
 		this.output.value = result === undefined ? '' : result;
 
@@ -140,5 +141,3 @@ class Row {
 		});
 	}
 }
-
-module.exports = Row;
