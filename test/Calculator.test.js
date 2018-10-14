@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Calculator = require('../lib/calculator');
+const Calculator = require('../lib/Calculator');
 
 const calculator = new Calculator();
 

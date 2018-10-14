@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const Store = require('./lib/Store.js');
+const Store = require('./lib/Store');
 let win = null;
 
 const windowSettings = new Store({

@@ -1,6 +1,6 @@
 const {ipcRenderer} = require('electron');
 const CommandBus = require('../lib/CommandBus');
-const Calculator = require('../lib/calculator');
+const Calculator = require('../lib/Calculator');
 const Workspace = require('./js/Workspace');
 
 const commandBus = new CommandBus();
