@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Calculator = require('../js/calculator/Calculator');
+const Calculator = require('../lib/calculator/Calculator');
 
 describe('Calculator.parse()', () => {
 	it('throw error for empty expression string', () => {
