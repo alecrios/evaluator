@@ -3,8 +3,9 @@ const CommandBus = require('../lib/CommandBus');
 const Calculator = require('../lib/calculator/Calculator');
 const Workspace = require('./js/Workspace');
 
+const commandBus = new CommandBus();
 const calculator = new Calculator();
-const workspace = new Workspace(calculator);
+const workspace = new Workspace();
 
 ipcRenderer.on('updateReady', function() {
 	const button = document.createElement('button');
