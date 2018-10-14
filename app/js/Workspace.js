@@ -1,3 +1,5 @@
+const Row = require('./Row.js');
+
 class Workspace {
 	constructor() {
 		this.el = document.querySelector('.workspace');
