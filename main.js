@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const Store = require('./js/Store.js');
+const Store = require('./lib/Store');
 let win = null;
 
 const windowSettings = new Store({
@@ -41,7 +41,7 @@ const createWindow = () => {
 
 	win.on('closed', () => win = null);
 
-	win.loadFile('index.html');
+	win.loadFile('app/index.html');
 
 	if (isDev) win.toggleDevTools();
 };

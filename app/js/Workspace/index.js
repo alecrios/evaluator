@@ -1,4 +1,6 @@
-class Workspace {
+const Row = require('./Row.js');
+
+module.exports = class Workspace {
 	constructor() {
 		this.el = document.querySelector('.workspace');
 		this.rows = [];
@@ -37,17 +39,17 @@ class Workspace {
 	}
 
 	subscribeToCommands() {
-		CommandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
-		CommandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
-		CommandBus.subscribe('deleteRow', this.deleteRow.bind(this));
-		CommandBus.subscribe('deleteAllRows', this.deleteAllRows.bind(this));
-		CommandBus.subscribe('goToFirstRow', this.goToFirstRow.bind(this));
-		CommandBus.subscribe('goToLastRow', this.goToLastRow.bind(this));
-		CommandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
-		CommandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
-		CommandBus.subscribe('activateRow', this.activateRow.bind(this));
-		CommandBus.subscribe('focusInput', this.focusInput.bind(this));
-		CommandBus.subscribe('focusOutput', this.focusOutput.bind(this));
+		commandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
+		commandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
+		commandBus.subscribe('deleteRow', this.deleteRow.bind(this));
+		commandBus.subscribe('deleteAllRows', this.deleteAllRows.bind(this));
+		commandBus.subscribe('goToFirstRow', this.goToFirstRow.bind(this));
+		commandBus.subscribe('goToLastRow', this.goToLastRow.bind(this));
+		commandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
+		commandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
+		commandBus.subscribe('activateRow', this.activateRow.bind(this));
+		commandBus.subscribe('focusInput', this.focusInput.bind(this));
+		commandBus.subscribe('focusOutput', this.focusOutput.bind(this));
 	}
 
 	insertRowAfter(row) {
@@ -127,5 +129,3 @@ class Workspace {
 		row.output.focus();
 	}
 }
-
-module.exports = new Workspace();
