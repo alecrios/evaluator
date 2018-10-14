@@ -1,7 +1,11 @@
 {
   "name": "evaluator",
   "version": "0.5.0",
-  "description": "Simple calculator app",
+  "author": "Alec Rios",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alecrios/evaluator.git"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,12 +13,6 @@
     "build": "build --win",
     "ship": "build --win -p always"
   },
-  "author": "Alec Rios",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/alecrios/evaluator.git"
-  },
-  "license": "MIT",
   "dependencies": {
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^3.1.2"
