@@ -1,6 +1,8 @@
 # Evaluator
 
-Evaluator is a calculator application built for a rapid and efficient workflow. Available for Mac and Windows.
+Evaluator is a calculator that is built to improve your workflow.
+
+Available for Mac and Windows.
 
 ## Features
 
