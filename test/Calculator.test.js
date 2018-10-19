@@ -163,9 +163,9 @@ describe('Calculator.resolve()', () => {
 		expect(calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
 		expect(calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
 	});
-	it('return NaN for division by zero', () => {
-		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(NaN);
-		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(NaN);
+	it('return Infinity for division by zero', () => {
+		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(Infinity);
+		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(Infinity);
 	});
 });
 
@@ -257,6 +257,9 @@ describe('Calculator.evaluate()', () => {
 		{string: '(9.121 - E) * 1.981', result: 12.6837847},
 		{string: 'pi * 4 / e + 2', result: 6.6229094},
 		{string: '41 * pi / (18 ^ 2) - 11.213', result: -10.81545278},
+		{string: '(pi) + (e) - (12)', result: -6.14012552},
+		{string: '(((pi + e)))', result: 5.85987448},
+		{string: '-pi-e--pi--e', result: 0},
 	];
 
 	tests.forEach((test) => {
