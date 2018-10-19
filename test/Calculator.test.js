@@ -257,6 +257,9 @@ describe('Calculator.evaluate()', () => {
 		{string: '(9.121 - E) * 1.981', result: 12.6837847},
 		{string: 'pi * 4 / e + 2', result: 6.6229094},
 		{string: '41 * pi / (18 ^ 2) - 11.213', result: -10.81545278},
+		{string: '(pi) + (e) - (12)', result: -6.14012552},
+		{string: '(((pi + e)))', result: 5.85987448},
+		{string: '-pi-e--pi--e', result: 0},
 	];
 
 	tests.forEach((test) => {
