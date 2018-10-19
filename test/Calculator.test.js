@@ -163,9 +163,9 @@ describe('Calculator.resolve()', () => {
 		expect(calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
 		expect(calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
 	});
-	it('return NaN for division by zero', () => {
-		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(NaN);
-		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(NaN);
+	it('return Infinity for division by zero', () => {
+		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(Infinity);
+		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(Infinity);
 	});
 });
 
