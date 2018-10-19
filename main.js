@@ -2,6 +2,7 @@ const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
+
 let win = null;
 
 const windowSettings = new Store({
@@ -28,18 +29,20 @@ const createWindow = () => {
 	});
 
 	win.on('resize', () => {
-		let bounds = win.getBounds();
+		const bounds = win.getBounds();
 		windowSettings.set('width', bounds.width);
 		windowSettings.set('height', bounds.height);
 	});
 
 	win.on('move', () => {
-		let position = win.getPosition();
+		const position = win.getPosition();
 		windowSettings.set('x', position[0]);
 		windowSettings.set('y', position[1]);
 	});
 
-	win.on('closed', () => win = null);
+	win.on('closed', () => {
+		win = null;
+	});
 
 	win.loadFile('app/index.html');
 

@@ -128,4 +128,4 @@ module.exports = class Workspace {
 	focusOutput(row) {
 		row.output.focus();
 	}
-}
+};
