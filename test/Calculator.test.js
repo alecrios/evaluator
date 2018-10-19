@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const {expect} = require('chai');
 const Calculator = require('../lib/Calculator');
 
 const calculator = new Calculator();
@@ -23,7 +23,7 @@ describe('Calculator.parse()', () => {
 		expect(calculator.parse('.0 0. 0.0 0.00 00.0 00.00')).to.eql(['.0', '0.', '0.0', '0.00', '00.0', '00.00']);
 	});
 	it('identify symbols', () => {
-		expect(calculator.parse('`~!@#$%^&*()-=_+[]{};\':\",.<>/?\\|')).to.eql(['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '_', '+', '[', ']', '{', '}', ';', '\'', ':', '\"', ',', '.', '<', '>', '/', '?', '\\', '|']);
+		expect(calculator.parse('`~!@#$%^&*()-=_+[]{};\':",.<>/?\\|')).to.eql(['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '_', '+', '[', ']', '{', '}', ';', '\'', ':', '"', ',', '.', '<', '>', '/', '?', '\\', '|']);
 	});
 	it('identify words', () => {
 		expect(calculator.parse('a A aa AA aA Aa')).to.eql(['A', 'A', 'AA', 'AA', 'AA', 'AA']);

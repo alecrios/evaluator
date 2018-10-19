@@ -7,7 +7,7 @@ const commandBus = new CommandBus();
 const calculator = new Calculator();
 const workspace = new Workspace();
 
-ipcRenderer.on('updateReady', function() {
+ipcRenderer.on('updateReady', () => {
 	const button = document.createElement('button');
 	const footer = document.querySelector('.footer');
 	button.innerHTML = 'Update ready';
