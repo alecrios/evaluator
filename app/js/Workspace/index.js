@@ -77,7 +77,7 @@ module.exports = class Workspace {
 	}
 
 	deleteAllRows() {
-		for (let index = this.rows.length - 1; index >= 0; index--) {
+		for (let index = this.rows.length - 1; index >= 0; index -= 1) {
 			this.removeRow(this.rows[index], index);
 		}
 
