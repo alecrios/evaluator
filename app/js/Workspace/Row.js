@@ -58,9 +58,11 @@ module.exports = class Row {
 	}
 
 	evaluate() {
-		const result = calculator.evaluate(this.input.value);
-
-		this.output.value = result === undefined ? '' : result;
+		try {
+			this.output.value = calculator.evaluate(this.input.value);
+		} catch (error) {
+			this.output.value = '';
+		}
 
 		this.updateHeight(this.input);
 		this.updateHeight(this.output);
