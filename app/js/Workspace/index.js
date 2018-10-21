@@ -50,8 +50,6 @@ module.exports = class Workspace {
 		this.commandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
 		this.commandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
 		this.commandBus.subscribe('activateRow', this.activateRow.bind(this));
-		this.commandBus.subscribe('focusInput', this.focusInput.bind(this));
-		this.commandBus.subscribe('focusOutput', this.focusOutput.bind(this));
 	}
 
 	insertRowAfter(row) {
@@ -70,9 +68,9 @@ module.exports = class Workspace {
 		if (this.isOnlyRow(index)) {
 			this.addRow();
 		} else if (this.isFirstRow(index)) {
-			this.rows[index + 1].focus();
+			this.rows[index + 1].focusInput();
 		} else {
-			this.rows[index - 1].focus();
+			this.rows[index - 1].focusInput();
 		}
 
 		this.removeRow(row, index);
@@ -87,11 +85,11 @@ module.exports = class Workspace {
 	}
 
 	goToFirstRow() {
-		this.rows[0].focus();
+		this.rows[0].focusInput();
 	}
 
 	goToLastRow() {
-		this.rows[this.rows.length - 1].focus();
+		this.rows[this.rows.length - 1].focusInput();
 	}
 
 	goToPreviousRow(row) {
@@ -99,7 +97,7 @@ module.exports = class Workspace {
 
 		if (this.isFirstRow(index)) return;
 
-		this.rows[index - 1].focus();
+		this.rows[index - 1].focusInput();
 	}
 
 	goToNextRow(row) {
@@ -112,7 +110,7 @@ module.exports = class Workspace {
 			return;
 		}
 
-		this.rows[index + 1].focus();
+		this.rows[index + 1].focusInput();
 	}
 
 	activateRow(row) {
@@ -121,13 +119,5 @@ module.exports = class Workspace {
 
 		this.activeRow = row;
 		this.activeRow.activate();
-	}
-
-	focusInput(row) {
-		row.input.focus();
-	}
-
-	focusOutput(row) {
-		row.output.focus();
 	}
 };

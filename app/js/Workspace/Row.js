@@ -4,7 +4,6 @@ module.exports = class Row {
 		this.calculator = calculator;
 		this.createRow();
 		this.addEventListeners();
-		this.focus();
 	}
 
 	createRow() {
@@ -19,10 +18,16 @@ module.exports = class Row {
 		this.output.classList.add('textarea', 'output');
 		this.output.setAttribute('readonly', '');
 		this.el.appendChild(this.output);
+
+		window.requestAnimationFrame(() => this.focusInput());
 	}
 
-	focus() {
-		window.requestAnimationFrame(() => this.input.focus());
+	focusInput() {
+		this.input.focus();
+	}
+
+	focusOutput() {
+		this.output.focus();
 	}
 
 	inputFocused() {
@@ -65,7 +70,7 @@ module.exports = class Row {
 
 	addEventListeners() {
 		this.el.addEventListener('click', () => {
-			this.commandBus.publish('focusInput', this);
+			this.focusInput();
 		});
 
 		this.output.addEventListener('click', (event) => {
@@ -115,7 +120,7 @@ module.exports = class Row {
 				event.preventDefault();
 
 				if (this.outputFocused() && event.shiftKey) {
-					this.commandBus.publish('focusInput', this);
+					this.focusInput();
 				} else {
 					this.commandBus.publish(event.shiftKey ? 'goToPreviousRow' : 'goToNextRow', this);
 				}
@@ -127,7 +132,7 @@ module.exports = class Row {
 				if (!this.output.value) break;
 
 				if (this.inputFocused()) {
-					this.commandBus.publish('focusOutput', this);
+					this.focusOutput();
 				} else {
 					this.commandBus.publish('goToNextRow', this);
 				}
