@@ -23,21 +23,29 @@ module.exports = class Workspace {
 		return row;
 	}
 
-	removeRow(row, index) {
+	removeRow(row) {
 		this.el.removeChild(row.el);
-		this.rows.splice(index, 1);
+		this.rows.splice(this.rows.indexOf(row), 1);
 	}
 
-	isFirstRow(index) {
-		return index === 0;
+	isFirstRow(row) {
+		return this.rows.indexOf(row) === 0;
 	}
 
-	isLastRow(index) {
-		return index === this.rows.length - 1;
+	isLastRow(row) {
+		return this.rows.indexOf(row) === this.rows.length - 1;
 	}
 
-	isOnlyRow(index) {
-		return index === 0 && this.rows.length === 1;
+	isOnlyRow(row) {
+		return this.rows.indexOf(row) === 0 && this.rows.length === 1;
+	}
+
+	getPreviousRow(row) {
+		return this.rows[this.rows.indexOf(row) - 1];
+	}
+
+	getNextRow(row) {
+		return this.rows[this.rows.indexOf(row) + 1];
 	}
 
 	subscribeToCommands() {
@@ -53,32 +61,28 @@ module.exports = class Workspace {
 	}
 
 	insertRowAfter(row) {
-		const index = this.rows.indexOf(row);
-		this.addRow(index + 1);
+		this.addRow(this.rows.indexOf(row) + 1);
 	}
 
 	insertRowBefore(row) {
-		const index = this.rows.indexOf(row);
-		this.addRow(index);
+		this.addRow(this.rows.indexOf(row));
 	}
 
 	deleteRow(row) {
-		const index = this.rows.indexOf(row);
-
-		if (this.isOnlyRow(index)) {
+		if (this.isOnlyRow(row)) {
 			this.addRow();
-		} else if (this.isFirstRow(index)) {
-			this.rows[index + 1].focusInput();
+		} else if (this.isFirstRow(row)) {
+			this.getNextRow(row).focusInput();
 		} else {
-			this.rows[index - 1].focusInput();
+			this.getPreviousRow(row).focusInput();
 		}
 
-		this.removeRow(row, index);
+		this.removeRow(row);
 	}
 
 	deleteAllRows() {
 		for (let index = this.rows.length - 1; index >= 0; index -= 1) {
-			this.removeRow(this.rows[index], index);
+			this.removeRow(this.rows[index]);
 		}
 
 		this.addRow();
@@ -93,24 +97,20 @@ module.exports = class Workspace {
 	}
 
 	goToPreviousRow(row) {
-		const index = this.rows.indexOf(row);
+		if (this.isFirstRow(row)) return;
 
-		if (this.isFirstRow(index)) return;
-
-		this.rows[index - 1].focusInput();
+		this.getPreviousRow(row).focusInput();
 	}
 
 	goToNextRow(row) {
-		const index = this.rows.indexOf(row);
-
-		if (this.isLastRow(index)) {
+		if (this.isLastRow(row)) {
 			if (!row.hasValue()) return;
 
 			this.addRow();
 			return;
 		}
 
-		this.rows[index + 1].focusInput();
+		this.getNextRow(row).focusInput();
 	}
 
 	activateRow(row) {
