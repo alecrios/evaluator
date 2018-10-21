@@ -2,32 +2,23 @@ module.exports = class Row {
 	constructor(commandBus, calculator) {
 		this.commandBus = commandBus;
 		this.calculator = calculator;
-		this.el = this.createRow();
-		this.input = this.createInput();
-		this.output = this.createOutput();
+		this.createRow();
 		this.addEventListeners();
 		this.focus();
 	}
 
 	createRow() {
-		const row = document.createElement('div');
-		row.classList.add('row');
-		return row;
-	}
+		this.el = document.createElement('div');
+		this.el.classList.add('row');
 
-	createInput() {
-		const input = document.createElement('textarea');
-		input.classList.add('textarea', 'input');
-		this.el.appendChild(input);
-		return input;
-	}
+		this.input = document.createElement('textarea');
+		this.input.classList.add('textarea', 'input');
+		this.el.appendChild(this.input);
 
-	createOutput() {
-		const output = document.createElement('textarea');
-		output.classList.add('textarea', 'output');
-		output.setAttribute('readonly', '');
-		this.el.appendChild(output);
-		return output;
+		this.output = document.createElement('textarea');
+		this.output.classList.add('textarea', 'output');
+		this.output.setAttribute('readonly', '');
+		this.el.appendChild(this.output);
 	}
 
 	focus() {
