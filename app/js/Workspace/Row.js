@@ -1,5 +1,7 @@
 module.exports = class Row {
-	constructor() {
+	constructor(commandBus, calculator) {
+		this.commandBus = commandBus;
+		this.calculator = calculator;
 		this.el = this.createRow();
 		this.input = this.createInput();
 		this.output = this.createOutput();
@@ -62,7 +64,7 @@ module.exports = class Row {
 
 	evaluate() {
 		try {
-			this.output.value = calculator.evaluate(this.input.value);
+			this.output.value = this.calculator.evaluate(this.input.value);
 		} catch (error) {
 			this.output.value = '';
 		}
@@ -72,7 +74,7 @@ module.exports = class Row {
 
 	addEventListeners() {
 		this.el.addEventListener('click', () => {
-			commandBus.publish('focusInput', this);
+			this.commandBus.publish('focusInput', this);
 		});
 
 		this.output.addEventListener('click', (event) => {
@@ -84,11 +86,11 @@ module.exports = class Row {
 		});
 
 		this.input.addEventListener('focus', () => {
-			commandBus.publish('activateRow', this);
+			this.commandBus.publish('activateRow', this);
 		});
 
 		this.output.addEventListener('focus', () => {
-			commandBus.publish('activateRow', this);
+			this.commandBus.publish('activateRow', this);
 			this.output.select();
 		});
 
@@ -96,35 +98,35 @@ module.exports = class Row {
 			switch (event.key) {
 			case 'Insert':
 				event.preventDefault();
-				commandBus.publish(event.shiftKey ? 'insertRowBefore' : 'insertRowAfter', this);
+				this.commandBus.publish(event.shiftKey ? 'insertRowBefore' : 'insertRowAfter', this);
 				break;
 			case 'Delete':
 				event.preventDefault();
-				commandBus.publish(event.shiftKey ? 'deleteAllRows' : 'deleteRow', this);
+				this.commandBus.publish(event.shiftKey ? 'deleteAllRows' : 'deleteRow', this);
 				break;
 			case 'Home':
 				event.preventDefault();
-				commandBus.publish('goToFirstRow', this);
+				this.commandBus.publish('goToFirstRow', this);
 				break;
 			case 'End':
 				event.preventDefault();
-				commandBus.publish('goToLastRow', this);
+				this.commandBus.publish('goToLastRow', this);
 				break;
 			case 'PageUp':
 				event.preventDefault();
-				commandBus.publish('goToPreviousRow', this);
+				this.commandBus.publish('goToPreviousRow', this);
 				break;
 			case 'PageDown':
 				event.preventDefault();
-				commandBus.publish('goToNextRow', this);
+				this.commandBus.publish('goToNextRow', this);
 				break;
 			case 'Tab':
 				event.preventDefault();
 
 				if (this.outputFocused() && event.shiftKey) {
-					commandBus.publish('focusInput', this);
+					this.commandBus.publish('focusInput', this);
 				} else {
-					commandBus.publish(event.shiftKey ? 'goToPreviousRow' : 'goToNextRow', this);
+					this.commandBus.publish(event.shiftKey ? 'goToPreviousRow' : 'goToNextRow', this);
 				}
 
 				break;
@@ -134,9 +136,9 @@ module.exports = class Row {
 				if (!this.output.value) break;
 
 				if (this.inputFocused()) {
-					commandBus.publish('focusOutput', this);
+					this.commandBus.publish('focusOutput', this);
 				} else {
-					commandBus.publish('goToNextRow', this);
+					this.commandBus.publish('goToNextRow', this);
 				}
 
 				break;

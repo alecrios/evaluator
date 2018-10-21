@@ -1,7 +1,9 @@
 const Row = require('./Row.js');
 
 module.exports = class Workspace {
-	constructor() {
+	constructor(commandBus, calculator) {
+		this.commandBus = commandBus;
+		this.calculator = calculator;
 		this.el = document.querySelector('.workspace');
 		this.rows = [];
 		this.activeRow = this.addRow();
@@ -10,7 +12,7 @@ module.exports = class Workspace {
 	}
 
 	addRow(index) {
-		const row = new Row();
+		const row = new Row(this.commandBus, this.calculator);
 
 		const currentRow = index !== undefined && index < this.rows.length ? this.rows[index].el : null;
 		this.el.insertBefore(row.el, currentRow);
@@ -39,17 +41,17 @@ module.exports = class Workspace {
 	}
 
 	subscribeToCommands() {
-		commandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
-		commandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
-		commandBus.subscribe('deleteRow', this.deleteRow.bind(this));
-		commandBus.subscribe('deleteAllRows', this.deleteAllRows.bind(this));
-		commandBus.subscribe('goToFirstRow', this.goToFirstRow.bind(this));
-		commandBus.subscribe('goToLastRow', this.goToLastRow.bind(this));
-		commandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
-		commandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
-		commandBus.subscribe('activateRow', this.activateRow.bind(this));
-		commandBus.subscribe('focusInput', this.focusInput.bind(this));
-		commandBus.subscribe('focusOutput', this.focusOutput.bind(this));
+		this.commandBus.subscribe('insertRowAfter', this.insertRowAfter.bind(this));
+		this.commandBus.subscribe('insertRowBefore', this.insertRowBefore.bind(this));
+		this.commandBus.subscribe('deleteRow', this.deleteRow.bind(this));
+		this.commandBus.subscribe('deleteAllRows', this.deleteAllRows.bind(this));
+		this.commandBus.subscribe('goToFirstRow', this.goToFirstRow.bind(this));
+		this.commandBus.subscribe('goToLastRow', this.goToLastRow.bind(this));
+		this.commandBus.subscribe('goToPreviousRow', this.goToPreviousRow.bind(this));
+		this.commandBus.subscribe('goToNextRow', this.goToNextRow.bind(this));
+		this.commandBus.subscribe('activateRow', this.activateRow.bind(this));
+		this.commandBus.subscribe('focusInput', this.focusInput.bind(this));
+		this.commandBus.subscribe('focusOutput', this.focusOutput.bind(this));
 	}
 
 	insertRowAfter(row) {
