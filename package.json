@@ -14,13 +14,16 @@
     "ship": "build --win -p always"
   },
   "dependencies": {
+    "electron": "^2.0.12",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^3.1.2"
   },
   "devDependencies": {
-    "electron": "^2.0.7",
-    "electron-builder": "^20.28.4",
     "chai": "^4.1.2",
+    "electron-builder": "^20.28.4",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0"
   }
 }
