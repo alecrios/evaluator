@@ -48,6 +48,25 @@ body {
 	min-height: 100vh;
 }
 
+/* Header
+============================================================= */
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 37px;
+	font-size: 14px;
+	line-height: 14px;
+	color: rgb(135, 135, 135);
+	background-color: rgb(36, 37, 38);
+	-webkit-app-region: drag;
+}
+
+.win32 .header {
+	display: none
+}
+
 /* Workspace
 ============================================================= */
 

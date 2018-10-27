@@ -18,7 +18,17 @@ const windowSettings = new Store({
 const createWindow = () => {
 	const {width, height, x, y} = windowSettings.get();
 
-	win = new BrowserWindow({show: false, width, height, x, y});
+	win = new BrowserWindow({
+		show: false,
+		title: 'Evaluator',
+		titleBarStyle: 'hiddenInset',
+		minWidth: 218,
+		minHeight: 109,
+		width,
+		height,
+		x,
+		y,
+	});
 
 	win.setMenu(null);
 
