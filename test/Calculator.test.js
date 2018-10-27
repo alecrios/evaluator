@@ -144,6 +144,10 @@ describe('Calculator.resolve()', () => {
 		expect(() => calculator.resolve([1, 2, 2, 'DIV'])).to.throw(Error, 'Missing operation(s)');
 		expect(() => calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
 	});
+	it('throw error for division by zero', () => {
+		expect(() => calculator.resolve([1, 0, 'DIV'])).to.throw(Error, 'Cannot divide by zero');
+		expect(() => calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.throw(Error, 'Cannot divide by zero');
+	});
 	it('return result for rpn with single operation', () => {
 		expect(calculator.resolve([2, 3, 'EXP'])).to.eql(8);
 		expect(calculator.resolve([7, 6, 'MUL'])).to.eql(42);
@@ -162,10 +166,6 @@ describe('Calculator.resolve()', () => {
 		expect(calculator.resolve([2, 4, 5, 'EXP', 'MUL', 3, 'ADD'])).to.eql(2051);
 		expect(calculator.resolve([3, 12, 4, 'DIV', 'DIV', 5, 'MUL', 1, 'DIV'])).to.eql(5);
 		expect(calculator.resolve([10, 4, 'MOD', 8, 'ADD'])).to.eql(10);
-	});
-	it('return Infinity for division by zero', () => {
-		expect(calculator.resolve([1, 0, 'DIV'])).to.eql(Infinity);
-		expect(calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.eql(Infinity);
 	});
 });
 
