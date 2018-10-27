@@ -145,8 +145,8 @@ describe('Calculator.resolve()', () => {
 		expect(() => calculator.resolve([7, 1, 2, 'EXP'])).to.throw(Error, 'Missing operation(s)');
 	});
 	it('throw error for division by zero', () => {
-		expect(() => calculator.resolve([1, 0, 'DIV'])).to.throw(Error, 'Cannot divide by zero');
-		expect(() => calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.throw(Error, 'Cannot divide by zero');
+		expect(() => calculator.resolve([1, 0, 'DIV'])).to.throw(Error, 'Invalid operation: division by zero');
+		expect(() => calculator.resolve([3, 7, 'ADD', 0, 'DIV'])).to.throw(Error, 'Invalid operation: division by zero');
 	});
 	it('return result for rpn with single operation', () => {
 		expect(calculator.resolve([2, 3, 'EXP'])).to.eql(8);
