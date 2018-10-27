@@ -8,6 +8,8 @@ const calculator = new Calculator();
 
 workspace(commandBus, calculator);
 
+document.documentElement.classList.add(process.platform);
+
 ipcRenderer.on('updateReady', () => {
 	const button = document.createElement('button');
 	const footer = document.querySelector('.footer');
