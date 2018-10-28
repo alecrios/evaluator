@@ -3,6 +3,58 @@ const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
 
+let modal = null;
+
+const modalSettings = new Store({
+	fileName: 'modalSettings',
+	defaults: {
+		width: 320,
+		height: 160,
+		x: null,
+		y: null,
+	},
+});
+
+const createModal = () => {
+	const {width, height, x, y} = modalSettings.get();
+
+	modal = new BrowserWindow({
+		show: false,
+		frame: false,
+		backgroundColor: 'rgb(30, 31, 32)',
+		minWidth: 200,
+		minHeight: 160,
+		width,
+		height,
+		x,
+		y,
+	});
+
+	globalShortcut.register('CommandOrControl+Space', () => {
+		modal.isVisible() ? modal.hide() : modal.show();
+	});
+
+	modal.on('resize', () => {
+		const bounds = modal.getBounds();
+		modalSettings.set('width', bounds.width);
+		modalSettings.set('height', bounds.height);
+	});
+
+	modal.on('move', () => {
+		const position = modal.getPosition();
+		modalSettings.set('x', position[0]);
+		modalSettings.set('y', position[1]);
+	});
+
+	modal.on('closed', () => {
+		modal = null;
+	});
+
+	modal.loadFile('app/modal.html');
+
+	if (isDev) modal.toggleDevTools();
+};
+
 let win = null;
 
 const windowSettings = new Store({
@@ -34,10 +86,6 @@ const createWindow = () => {
 
 	win.once('ready-to-show', () => win.show());
 
-	globalShortcut.register('CommandOrControl+Space', () => {
-		win.isFocused() ? win.blur() : win.focus();
-	});
-
 	win.on('resize', () => {
 		const bounds = win.getBounds();
 		windowSettings.set('width', bounds.width);
@@ -60,9 +108,9 @@ const createWindow = () => {
 };
 
 app.on('ready', () => {
-	createWindow();
+	createModal();
 
-	if (!isDev) autoUpdater.checkForUpdates();
+	// if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {
