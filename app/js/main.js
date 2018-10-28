@@ -11,6 +11,7 @@ workspace(commandBus, calculator);
 document.documentElement.classList.add(process.platform);
 
 ipcRenderer.on('updateReady', () => {
+	document.documentElement.classList.add('update-ready');
 	const button = document.createElement('button');
 	const footer = document.querySelector('.footer');
 	button.innerHTML = 'Update ready';
