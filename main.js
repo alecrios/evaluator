@@ -22,6 +22,8 @@ const createModal = () => {
 		show: false,
 		frame: false,
 		backgroundColor: 'rgb(30, 31, 32)',
+		skipTaskbar: true,
+		alwaysOnTop: true,
 		minWidth: 200,
 		minHeight: 160,
 		width,
@@ -30,8 +32,22 @@ const createModal = () => {
 		y,
 	});
 
+	const showModal = () => {
+		modal.show();
+		modal.setOpacity(1);
+	};
+
+	const hideModal = () => {
+		modal.setOpacity(0);
+		modal.webContents.send('willHideModal');
+	};
+
+	ipcMain.on('readyToHideModal', () => {
+		modal.hide();
+	});
+
 	globalShortcut.register('CommandOrControl+Space', () => {
-		modal.isVisible() ? modal.hide() : modal.show();
+		!modal.isVisible() ? showModal() : hideModal();
 	});
 
 	modal.on('resize', () => {
@@ -73,7 +89,6 @@ const createWindow = () => {
 	win = new BrowserWindow({
 		show: false,
 		title: 'Evaluator',
-		skipTaskbar: true,
 		titleBarStyle: 'hiddenInset',
 		minWidth: 218,
 		minHeight: 109,
