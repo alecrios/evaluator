@@ -73,6 +73,7 @@ const createWindow = () => {
 	win = new BrowserWindow({
 		show: false,
 		title: 'Evaluator',
+		skipTaskbar: true,
 		titleBarStyle: 'hiddenInset',
 		minWidth: 218,
 		minHeight: 109,
@@ -109,6 +110,8 @@ const createWindow = () => {
 
 app.on('ready', () => {
 	createModal();
+
+	if (process.platform === 'darwin') app.dock.hide();
 
 	// if (!isDev) autoUpdater.checkForUpdates();
 });
