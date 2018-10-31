@@ -15,7 +15,6 @@
     "ship": "build --win -p always"
   },
   "dependencies": {
-    "active-win": "^4.0.0",
     "electron": "^2.0.12",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^3.1.2",
@@ -24,7 +23,6 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "electron-builder": "^20.28.4",
-    "electron-rebuild": "^1.8.2",
     "eslint": "^5.8.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
