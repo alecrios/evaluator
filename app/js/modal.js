@@ -1,4 +1,4 @@
-const {ipcRenderer} = require('electron');
+const {clipboard, ipcRenderer} = require('electron');
 const Calculator = require('../lib/Calculator');
 
 const calculator = new Calculator();
@@ -6,7 +6,7 @@ const main = document.querySelector('.main');
 const input = main.querySelector('.input');
 const output = main.querySelector('.output');
 
-const evaluate = () => {
+const evaluateExpression = () => {
 	try {
 		output.value = calculator.evaluate(input.value);
 	} catch (error) {
@@ -29,8 +29,25 @@ const prepareForHide = () => {
 	});
 };
 
+const acceptResult = () => {
+	clipboard.writeText(output.value);
+	ipcRenderer.send('hideModal');
+};
+
+const keydownHandler = (event) => {
+	switch (event.key) {
+	case 'Enter':
+		acceptResult();
+		break;
+	default:
+		break;
+	}
+};
+
 input.focus();
 
-input.addEventListener('input', evaluate);
+input.addEventListener('input', evaluateExpression);
+
+input.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);

@@ -42,6 +42,10 @@ const createModal = () => {
 		modal.webContents.send('willHideModal');
 	};
 
+	ipcMain.on('hideModal', () => {
+		hideModal();
+	});
+
 	ipcMain.on('readyToHideModal', () => {
 		modal.hide();
 	});
