@@ -4,6 +4,7 @@ const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
 
 let modal = null;
+let modalIsActive = false;
 
 const modalSettings = new Store({
 	fileName: 'modalSettings',
@@ -35,9 +36,11 @@ const createModal = () => {
 	const showModal = () => {
 		modal.show();
 		modal.setOpacity(1);
+		modalIsActive = true;
 	};
 
 	const hideModal = () => {
+		modalIsActive = null;
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
 	};
@@ -48,10 +51,15 @@ const createModal = () => {
 
 	ipcMain.on('readyToHideModal', () => {
 		modal.hide();
+		modalIsActive = false;
 	});
 
 	globalShortcut.register('CommandOrControl+Space', () => {
-		!modal.isVisible() ? showModal() : hideModal();
+		if (modalIsActive === false) {
+			showModal();
+		} else if (modalIsActive === true) {
+			hideModal();
+		}
 	});
 
 	modal.on('resize', () => {
@@ -64,6 +72,12 @@ const createModal = () => {
 		const position = modal.getPosition();
 		modalSettings.set('x', position[0]);
 		modalSettings.set('y', position[1]);
+	});
+
+	modal.on('blur', () => {
+		if (modalIsActive !== true) return;
+
+		hideModal();
 	});
 
 	modal.on('closed', () => {

@@ -34,13 +34,15 @@ const acceptResult = () => {
 	ipcRenderer.send('hideModal');
 };
 
+const cancelEvaluation = () => {
+	ipcRenderer.send('hideModal');
+};
+
 const keydownHandler = (event) => {
-	switch (event.key) {
-	case 'Enter':
+	if (event.key === 'Enter') {
 		acceptResult();
-		break;
-	default:
-		break;
+	} else if (event.key === 'Escape') {
+		cancelEvaluation();
 	}
 };
 
