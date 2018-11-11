@@ -3,70 +3,102 @@ const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
 
-let win = null;
+let modal = null;
+let modalIsActive = false;
 
-const windowSettings = new Store({
-	fileName: 'windowSettings',
+const modalSettings = new Store({
+	fileName: 'modalSettings',
 	defaults: {
 		width: 320,
-		height: 640,
+		height: 160,
 		x: null,
 		y: null,
 	},
 });
 
-const createWindow = () => {
-	const {width, height, x, y} = windowSettings.get();
+const createModal = () => {
+	const {width, height, x, y} = modalSettings.get();
 
-	win = new BrowserWindow({
+	modal = new BrowserWindow({
 		show: false,
-		title: 'Evaluator',
-		titleBarStyle: 'hiddenInset',
-		minWidth: 218,
-		minHeight: 109,
+		frame: false,
+		backgroundColor: 'rgb(30, 31, 32)',
+		skipTaskbar: true,
+		alwaysOnTop: true,
+		minWidth: 200,
+		minHeight: 160,
 		width,
 		height,
 		x,
 		y,
 	});
 
-	win.setMenu(null);
+	const showModal = () => {
+		modal.show();
+		modal.setOpacity(1);
+		modalIsActive = true;
+	};
 
-	win.once('ready-to-show', () => win.show());
+	const hideModal = () => {
+		modalIsActive = null;
+		modal.setOpacity(0);
+		modal.webContents.send('willHideModal');
+	};
+
+	ipcMain.on('hideModal', () => {
+		hideModal();
+	});
+
+	ipcMain.on('readyToHideModal', () => {
+		modal.hide();
+		modalIsActive = false;
+	});
 
 	globalShortcut.register('CommandOrControl+Space', () => {
-		win.isFocused() ? win.blur() : win.focus();
+		if (modalIsActive === false) {
+			showModal();
+		} else if (modalIsActive === true) {
+			hideModal();
+		}
 	});
 
-	win.on('resize', () => {
-		const bounds = win.getBounds();
-		windowSettings.set('width', bounds.width);
-		windowSettings.set('height', bounds.height);
+	modal.on('resize', () => {
+		const bounds = modal.getBounds();
+		modalSettings.set('width', bounds.width);
+		modalSettings.set('height', bounds.height);
 	});
 
-	win.on('move', () => {
-		const position = win.getPosition();
-		windowSettings.set('x', position[0]);
-		windowSettings.set('y', position[1]);
+	modal.on('move', () => {
+		const position = modal.getPosition();
+		modalSettings.set('x', position[0]);
+		modalSettings.set('y', position[1]);
 	});
 
-	win.on('closed', () => {
-		win = null;
+	modal.on('blur', () => {
+		if (modalIsActive !== true) return;
+
+		hideModal();
 	});
 
-	win.loadFile('app/index.html');
+	modal.on('closed', () => {
+		modal = null;
+	});
 
-	if (isDev) win.toggleDevTools();
+	modal.loadFile('app/modal.html');
+
+	if (isDev) modal.toggleDevTools();
 };
 
 app.on('ready', () => {
-	createWindow();
+	createModal();
 
-	if (!isDev) autoUpdater.checkForUpdates();
+	if (process.platform === 'darwin') app.dock.hide();
+
+	// if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {
-	win.webContents.send('updateReady');
+	modal.webContents.send('updateReady');
 });
 
 ipcMain.on('quitAndInstall', () => {
