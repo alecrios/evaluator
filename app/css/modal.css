@@ -22,7 +22,7 @@ body {
 
 .title {
 	font-size: 14px;
-	color: rgb(127, 127, 127);
+	color: rgb(159, 159, 159);
 }
 
 .main {
@@ -31,9 +31,9 @@ body {
 
 input {
 	width: 100%;
-	height: calc(50vh - 16px);
-	font-size: 16px;
-	padding: 24px;
+	height: 64px;
+	font-size: 18px;
+	padding: 0 18px;
 }
 
 input:focus {
