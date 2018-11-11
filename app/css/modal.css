@@ -39,6 +39,7 @@ html {
 	background-color: rgb(38, 39, 40);
 	-webkit-app-region: drag;
 	-webkit-user-select: none;
+	cursor: default;
 }
 
 .title {
