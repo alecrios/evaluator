@@ -75,11 +75,11 @@ const createModal = () => {
 		modalSettings.set('y', position[1]);
 	});
 
-	// modal.on('blur', () => {
-	// 	if (modalIsActive !== true) return;
+	modal.on('blur', () => {
+		if (modalIsActive !== true) return;
 
-	// 	hideModal();
-	// });
+		hideModal();
+	});
 
 	modal.on('closed', () => {
 		modal = null;
