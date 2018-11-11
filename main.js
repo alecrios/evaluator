@@ -25,6 +25,8 @@ const createModal = () => {
 		backgroundColor: 'rgb(30, 31, 32)',
 		skipTaskbar: true,
 		alwaysOnTop: true,
+		fullscreenable: false,
+		maximizable: false,
 		minWidth: 320,
 		minHeight: 160,
 		maxHeight: 160,
@@ -95,7 +97,7 @@ app.on('ready', () => {
 
 	if (process.platform === 'darwin') app.dock.hide();
 
-	// if (!isDev) autoUpdater.checkForUpdates();
+	if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {

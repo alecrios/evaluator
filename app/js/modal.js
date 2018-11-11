@@ -53,3 +53,16 @@ expression.addEventListener('input', evaluateExpression);
 expression.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);
+
+const createUpdateButton = () => {
+	const titleBar = document.querySelector('.title-bar');
+	const button = document.createElement('button');
+
+	button.innerHTML = 'Update';
+	button.classList.add('update');
+	button.addEventListener('click', () => ipcRenderer.send('quitAndInstall'));
+
+	titleBar.appendChild(button);
+};
+
+ipcRenderer.on('updateReady', createUpdateButton);
