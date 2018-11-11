@@ -3,20 +3,20 @@ const Calculator = require('../lib/Calculator');
 
 const calculator = new Calculator();
 const main = document.querySelector('.main');
-const input = main.querySelector('.input');
-const output = main.querySelector('.output');
+const expression = main.querySelector('.expression');
+const result = main.querySelector('.result');
 
 const evaluateExpression = () => {
 	try {
-		output.value = calculator.evaluate(input.value);
+		result.value = calculator.evaluate(expression.value);
 	} catch (error) {
-		output.value = '';
+		result.value = '';
 	}
 };
 
 const clear = () => {
-	input.value = '';
-	output.value = '';
+	expression.value = '';
+	result.value = '';
 };
 
 const prepareForHide = () => {
@@ -30,7 +30,7 @@ const prepareForHide = () => {
 };
 
 const acceptResult = () => {
-	clipboard.writeText(output.value);
+	clipboard.writeText(result.value);
 	ipcRenderer.send('hideModal');
 };
 
@@ -46,10 +46,10 @@ const keydownHandler = (event) => {
 	}
 };
 
-input.focus();
+expression.focus();
 
-input.addEventListener('input', evaluateExpression);
+expression.addEventListener('input', evaluateExpression);
 
-input.addEventListener('keydown', keydownHandler);
+expression.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);

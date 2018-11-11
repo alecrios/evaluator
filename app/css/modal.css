@@ -40,13 +40,13 @@ input:focus {
 	outline: none;
 }
 
-.input {
+.expression {
 	text-align: left;
 	color: rgb(223, 223, 223);
 	background-color: rgb(30, 31, 32);
 }
 
-.output {
+.result {
 	text-align: right;
 	color: rgb(55, 175, 95);
 	background-color: rgb(22, 23, 24);
