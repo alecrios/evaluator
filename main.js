@@ -50,7 +50,7 @@ const createModal = () => {
 	});
 
 	ipcMain.on('readyToHideModal', () => {
-		modal.hide();
+		process.platform === 'darwin' ? app.hide() : modal.hide();
 		modalIsActive = false;
 	});
 
