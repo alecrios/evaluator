@@ -8,7 +8,7 @@ const result = main.querySelector('.result');
 
 let currentResult;
 
-const evaluateExpression = () => {
+function evaluateExpression() {
 	try {
 		currentResult = calculator.evaluate(expression.value);
 		result.value = currentResult;
@@ -16,14 +16,14 @@ const evaluateExpression = () => {
 		currentResult = error;
 		result.value = '';
 	}
-};
+}
 
-const clear = () => {
+function clear() {
 	expression.value = '';
 	result.value = '';
-};
+}
 
-const prepareForHide = () => {
+function prepareForHide() {
 	clear();
 
 	window.requestAnimationFrame(() => {
@@ -31,22 +31,22 @@ const prepareForHide = () => {
 			ipcRenderer.send('readyToHideModal');
 		});
 	});
-};
+}
 
-const acceptResult = () => {
+function acceptResult() {
 	clipboard.writeText(result.value);
 	ipcRenderer.send('hideModal');
-};
+}
 
-const showError = () => {
+function showError() {
 	result.value = currentResult.message;
-};
+}
 
-const cancelEvaluation = () => {
+function cancelEvaluation() {
 	ipcRenderer.send('hideModal');
-};
+}
 
-const keydownHandler = (event) => {
+function keydownHandler(event) {
 	if (event.key === 'Enter') {
 		if (currentResult instanceof Error) {
 			showError();
@@ -57,7 +57,7 @@ const keydownHandler = (event) => {
 	} else if (event.key === 'Escape') {
 		cancelEvaluation();
 	}
-};
+}
 
 expression.focus();
 
@@ -67,7 +67,7 @@ expression.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);
 
-const createUpdateButton = () => {
+function createUpdateButton() {
 	const titleBar = document.querySelector('.title-bar');
 	const button = document.createElement('button');
 
@@ -76,6 +76,6 @@ const createUpdateButton = () => {
 	button.addEventListener('click', () => ipcRenderer.send('quitAndInstall'));
 
 	titleBar.appendChild(button);
-};
+}
 
 ipcRenderer.on('updateReady', createUpdateButton);
