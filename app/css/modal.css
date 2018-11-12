@@ -73,6 +73,7 @@ input {
 	height: 64px;
 	font-size: 18px;
 	padding: 0 18px;
+	cursor: text;
 }
 
 .expression {

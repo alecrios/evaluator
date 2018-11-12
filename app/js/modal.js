@@ -6,10 +6,14 @@ const main = document.querySelector('.main');
 const expression = main.querySelector('.expression');
 const result = main.querySelector('.result');
 
+let currentResult;
+
 const evaluateExpression = () => {
 	try {
-		result.value = calculator.evaluate(expression.value);
+		currentResult = calculator.evaluate(expression.value);
+		result.value = currentResult;
 	} catch (error) {
+		currentResult = error;
 		result.value = '';
 	}
 };
@@ -34,12 +38,21 @@ const acceptResult = () => {
 	ipcRenderer.send('hideModal');
 };
 
+const showError = () => {
+	result.value = currentResult.message;
+};
+
 const cancelEvaluation = () => {
 	ipcRenderer.send('hideModal');
 };
 
 const keydownHandler = (event) => {
 	if (event.key === 'Enter') {
+		if (currentResult instanceof Error) {
+			showError();
+			return;
+		}
+
 		acceptResult();
 	} else if (event.key === 'Escape') {
 		cancelEvaluation();
