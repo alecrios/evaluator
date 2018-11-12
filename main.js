@@ -27,6 +27,8 @@ function createModal() {
 		alwaysOnTop: true,
 		fullscreenable: false,
 		maximizable: false,
+		minimizable: false,
+		closeable: false,
 		minWidth: 320,
 		minHeight: 160,
 		maxHeight: 160,
