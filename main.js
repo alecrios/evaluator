@@ -16,7 +16,7 @@ const modalSettings = new Store({
 	},
 });
 
-const createModal = () => {
+function createModal() {
 	const {width, height, x, y} = modalSettings.get();
 
 	modal = new BrowserWindow({
@@ -36,17 +36,17 @@ const createModal = () => {
 		y,
 	});
 
-	const showModal = () => {
+	function showModal() {
 		modal.show();
 		modal.setOpacity(1);
 		modalIsActive = true;
-	};
+	}
 
-	const hideModal = () => {
+	function hideModal() {
 		modalIsActive = null;
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
-	};
+	}
 
 	ipcMain.on('hideModal', () => {
 		hideModal();
@@ -90,7 +90,7 @@ const createModal = () => {
 	modal.loadFile('app/modal.html');
 
 	if (isDev) modal.toggleDevTools();
-};
+}
 
 app.on('ready', () => {
 	createModal();
