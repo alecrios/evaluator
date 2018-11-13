@@ -4,7 +4,7 @@ const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
 
 let modal = null;
-let modalIsActive = false;
+let modalStatus = 'hidden';
 
 const modalSettings = new Store({
 	fileName: 'modalSettings',
@@ -40,31 +40,31 @@ function createModal() {
 	});
 
 	function showModal() {
-		modalIsActive = 'inTransition';
+		modalStatus = 'transitioning';
 		modal.setOpacity(1);
 		modal.webContents.send('willShowModal');
 	}
 
 	function hideModal() {
-		modalIsActive = 'inTransition';
+		modalStatus = 'transitioning';
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
 	}
 
 	ipcMain.on('readyToHideModal', () => {
 		process.platform === 'darwin' ? app.hide() : modal.hide();
-		modalIsActive = false;
+		modalStatus = 'hidden';
 	});
 
 	ipcMain.on('readyToShowModal', () => {
 		process.platform === 'darwin' ? app.show() : modal.show();
-		modalIsActive = true;
+		modalStatus = 'visible';
 	});
 
 	globalShortcut.register('CommandOrControl+Space', () => {
-		if (modalIsActive === false) {
+		if (modalStatus === 'hidden') {
 			showModal();
-		} else if (modalIsActive === true) {
+		} else if (modalStatus === 'visible') {
 			hideModal();
 		}
 	});
