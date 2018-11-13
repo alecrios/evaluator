@@ -23,6 +23,10 @@ function clear() {
 	result.value = '';
 }
 
+function startNewExpressionWithResult() {
+	expression.value = result.value;
+}
+
 function prepareForHide() {
 	clear();
 
@@ -56,6 +60,11 @@ function keydownHandler(event) {
 	if (event.key === 'Enter') {
 		if (currentResult instanceof Error) {
 			showError();
+			return;
+		}
+
+		if (event.shiftKey) {
+			startNewExpressionWithResult();
 			return;
 		}
 
