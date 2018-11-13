@@ -40,42 +40,48 @@ function createModal() {
 	});
 
 	function showModal() {
-		modal.show();
 		modalStatus = 'visible';
+		modal.show();
 	}
 
 	function hideModal() {
-		process.platform === 'darwin' ? app.hide() : modal.hide();
 		modalStatus = 'hidden';
+		process.platform === 'darwin' ? app.hide() : modal.hide();
 	}
 
-	function sendShowModalCommand() {
+	function initiateShowModal() {
+		if (modalStatus !== 'hidden') return;
+
 		modalStatus = 'transitioning';
 		modal.setOpacity(1);
 		modal.webContents.send('willShowModal');
 	}
 
-	function sendhideModalCommand() {
+	function initiateHideModal() {
+		if (modalStatus !== 'visible') return;
+
 		modalStatus = 'transitioning';
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
+	}
+
+	function toggleModal() {
+		if (modalStatus === 'hidden') {
+			initiateShowModal();
+		} else if (modalStatus === 'visible') {
+			initiateHideModal();
+		}
 	}
 
 	ipcMain.on('readyToShowModal', showModal);
 
 	ipcMain.on('readyToHideModal', hideModal);
 
-	globalShortcut.register('CommandOrControl+Space', () => {
-		if (modalStatus === 'hidden') {
-			sendShowModalCommand();
-		} else if (modalStatus === 'visible') {
-			sendhideModalCommand();
-		}
-	});
+	ipcMain.on('hideModal', initiateHideModal);
 
-	ipcMain.on('hideModal', sendhideModalCommand);
+	modal.on('blur', initiateHideModal);
 
-	modal.on('blur', sendhideModalCommand);
+	globalShortcut.register('CommandOrControl+Space', toggleModal);
 
 	modal.on('resize', () => {
 		const bounds = modal.getBounds();
