@@ -29,6 +29,7 @@ function createModal() {
 		maximizable: false,
 		minimizable: false,
 		closeable: false,
+		opacity: 0,
 		minWidth: 320,
 		minHeight: 160,
 		maxHeight: 160,
@@ -39,24 +40,25 @@ function createModal() {
 	});
 
 	function showModal() {
-		modal.show();
+		modalIsActive = 'inTransition';
 		modal.setOpacity(1);
-		modalIsActive = true;
+		modal.webContents.send('willShowModal');
 	}
 
 	function hideModal() {
-		modalIsActive = null;
+		modalIsActive = 'inTransition';
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
 	}
 
-	ipcMain.on('hideModal', () => {
-		hideModal();
-	});
-
 	ipcMain.on('readyToHideModal', () => {
 		process.platform === 'darwin' ? app.hide() : modal.hide();
 		modalIsActive = false;
+	});
+
+	ipcMain.on('readyToShowModal', () => {
+		process.platform === 'darwin' ? app.show() : modal.show();
+		modalIsActive = true;
 	});
 
 	globalShortcut.register('CommandOrControl+Space', () => {
@@ -65,6 +67,14 @@ function createModal() {
 		} else if (modalIsActive === true) {
 			hideModal();
 		}
+	});
+
+	ipcMain.on('hideModal', () => {
+		hideModal();
+	});
+
+	modal.on('blur', () => {
+		hideModal();
 	});
 
 	modal.on('resize', () => {
@@ -77,12 +87,6 @@ function createModal() {
 		const position = modal.getPosition();
 		modalSettings.set('x', position[0]);
 		modalSettings.set('y', position[1]);
-	});
-
-	modal.on('blur', () => {
-		if (modalIsActive !== true) return;
-
-		hideModal();
 	});
 
 	modal.on('closed', () => {

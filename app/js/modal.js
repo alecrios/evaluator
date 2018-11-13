@@ -18,6 +18,10 @@ function evaluateExpression() {
 	}
 }
 
+function focus() {
+	expression.focus();
+}
+
 function clear() {
 	expression.value = '';
 	result.value = '';
@@ -31,6 +35,12 @@ function prepareForHide() {
 			ipcRenderer.send('readyToHideModal');
 		});
 	});
+}
+
+function prepareForShow() {
+	focus();
+
+	ipcRenderer.send('readyToShowModal');
 }
 
 function acceptResult() {
@@ -59,13 +69,13 @@ function keydownHandler(event) {
 	}
 }
 
-expression.focus();
-
 expression.addEventListener('input', evaluateExpression);
 
 expression.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);
+
+ipcRenderer.on('willShowModal', prepareForShow);
 
 function createUpdateButton() {
 	const titleBar = document.querySelector('.title-bar');
