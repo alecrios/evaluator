@@ -33,6 +33,12 @@ function prepareForHide() {
 	});
 }
 
+function prepareForShow() {
+	expression.focus();
+
+	ipcRenderer.send('readyToShowModal');
+}
+
 function acceptResult() {
 	clipboard.writeText(result.value);
 	ipcRenderer.send('hideModal');
@@ -59,13 +65,13 @@ function keydownHandler(event) {
 	}
 }
 
-expression.focus();
-
 expression.addEventListener('input', evaluateExpression);
 
 expression.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);
+
+ipcRenderer.on('willShowModal', prepareForShow);
 
 function createUpdateButton() {
 	const titleBar = document.querySelector('.title-bar');

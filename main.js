@@ -4,7 +4,7 @@ const isDev = require('electron-is-dev');
 const Store = require('./lib/Store');
 
 let modal = null;
-let modalIsActive = false;
+let modalStatus = 'hidden';
 
 const modalSettings = new Store({
 	fileName: 'modalSettings',
@@ -29,6 +29,7 @@ function createModal() {
 		maximizable: false,
 		minimizable: false,
 		closeable: false,
+		opacity: 0,
 		minWidth: 320,
 		minHeight: 160,
 		maxHeight: 160,
@@ -39,33 +40,42 @@ function createModal() {
 	});
 
 	function showModal() {
-		modal.show();
-		modal.setOpacity(1);
-		modalIsActive = true;
+		process.platform === 'darwin' ? app.show() : modal.show();
+		modalStatus = 'visible';
 	}
 
 	function hideModal() {
-		modalIsActive = null;
+		process.platform === 'darwin' ? app.hide() : modal.hide();
+		modalStatus = 'hidden';
+	}
+
+	function sendShowModalCommand() {
+		modalStatus = 'transitioning';
+		modal.setOpacity(1);
+		modal.webContents.send('willShowModal');
+	}
+
+	function sendhideModalCommand() {
+		modalStatus = 'transitioning';
 		modal.setOpacity(0);
 		modal.webContents.send('willHideModal');
 	}
 
-	ipcMain.on('hideModal', () => {
-		hideModal();
-	});
+	ipcMain.on('readyToShowModal', showModal);
 
-	ipcMain.on('readyToHideModal', () => {
-		process.platform === 'darwin' ? app.hide() : modal.hide();
-		modalIsActive = false;
-	});
+	ipcMain.on('readyToHideModal', hideModal);
 
 	globalShortcut.register('CommandOrControl+Space', () => {
-		if (modalIsActive === false) {
-			showModal();
-		} else if (modalIsActive === true) {
-			hideModal();
+		if (modalStatus === 'hidden') {
+			sendShowModalCommand();
+		} else if (modalStatus === 'visible') {
+			sendhideModalCommand();
 		}
 	});
+
+	ipcMain.on('hideModal', sendhideModalCommand);
+
+	modal.on('blur', sendhideModalCommand);
 
 	modal.on('resize', () => {
 		const bounds = modal.getBounds();
@@ -77,12 +87,6 @@ function createModal() {
 		const position = modal.getPosition();
 		modalSettings.set('x', position[0]);
 		modalSettings.set('y', position[1]);
-	});
-
-	modal.on('blur', () => {
-		if (modalIsActive !== true) return;
-
-		hideModal();
 	});
 
 	modal.on('closed', () => {
