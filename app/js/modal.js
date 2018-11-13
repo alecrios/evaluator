@@ -67,7 +67,7 @@ function keydownHandler(event) {
 
 expression.addEventListener('input', evaluateExpression);
 
-expression.addEventListener('keydown', keydownHandler);
+document.addEventListener('keydown', keydownHandler);
 
 ipcRenderer.on('willHideModal', prepareForHide);
 
