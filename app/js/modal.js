@@ -18,10 +18,6 @@ function evaluateExpression() {
 	}
 }
 
-function focus() {
-	expression.focus();
-}
-
 function clear() {
 	expression.value = '';
 	result.value = '';
@@ -38,7 +34,7 @@ function prepareForHide() {
 }
 
 function prepareForShow() {
-	focus();
+	expression.focus();
 
 	ipcRenderer.send('readyToShowModal');
 }
