@@ -40,7 +40,7 @@ function createModal() {
 	});
 
 	function showModal() {
-		process.platform === 'darwin' ? app.show() : modal.show();
+		modal.show();
 		modalStatus = 'visible';
 	}
 
