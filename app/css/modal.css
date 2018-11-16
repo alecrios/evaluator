@@ -50,7 +50,7 @@ html {
 }
 
 .modal__field {
-	width: 512px;
+	width: 100%;
 	height: 64px;
 	font-size: 18px;
 	cursor: text;
