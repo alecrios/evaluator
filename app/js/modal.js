@@ -83,14 +83,13 @@ ipcRenderer.on('willHideModal', prepareForHide);
 ipcRenderer.on('willShowModal', prepareForShow);
 
 function createUpdateButton() {
-	const titleBar = document.querySelector('.title-bar');
 	const button = document.createElement('button');
 
 	button.innerHTML = 'Update';
-	button.classList.add('update');
+	button.classList.add('update-button');
 	button.addEventListener('click', () => ipcRenderer.send('quitAndInstall'));
 
-	titleBar.appendChild(button);
+	document.body.appendChild(button);
 }
 
 ipcRenderer.on('updateReady', createUpdateButton);
