@@ -1,10 +1,10 @@
 const {clipboard, ipcRenderer} = require('electron');
 const Calculator = require('../lib/Calculator');
 
+const expression = document.getElementById('expression');
+const result = document.getElementById('result');
+
 const calculator = new Calculator();
-const main = document.querySelector('.main');
-const expression = main.querySelector('.expression');
-const result = main.querySelector('.result');
 
 let currentResult;
 
