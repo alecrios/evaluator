@@ -61,3 +61,23 @@ html {
 	color: rgb(55, 175, 95);
 	background-color: rgb(18, 19, 20);
 }
+
+.update-button {
+	position: fixed;
+	top: 0;
+	right: 0;
+	background-color: rgb(44, 46, 48);
+	color: rgb(18, 19, 20);
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	padding: 3px 5px;
+	border-radius: 0 0 0 5px;
+	cursor: pointer;
+}
+
+
+.update-button:hover {
+	background-color: rgb(191, 191, 191);
+}
