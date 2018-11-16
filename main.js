@@ -6,37 +6,21 @@ const Store = require('./lib/Store');
 let modal = null;
 let modalStatus = 'hidden';
 
-const modalSettings = new Store({
-	fileName: 'modalSettings',
-	defaults: {
-		width: 320,
-		height: 160,
-		x: null,
-		y: null,
-	},
-});
-
 function createModal() {
-	const {width, height, x, y} = modalSettings.get();
-
 	modal = new BrowserWindow({
 		show: false,
 		frame: false,
-		backgroundColor: 'rgb(30, 31, 32)',
+		backgroundColor: 'rgb(21, 22, 23)',
 		skipTaskbar: true,
 		alwaysOnTop: true,
 		fullscreenable: false,
 		maximizable: false,
 		minimizable: false,
 		closeable: false,
+		resizable: false,
 		opacity: 0,
-		minWidth: 320,
-		minHeight: 160,
-		maxHeight: 160,
-		width,
-		height,
-		x,
-		y,
+		width: 512,
+		height: 128,
 	});
 
 	function showModal() {
@@ -83,21 +67,11 @@ function createModal() {
 
 	globalShortcut.register('CommandOrControl+Space', toggleModal);
 
-	modal.on('resize', () => {
-		const bounds = modal.getBounds();
-		modalSettings.set('width', bounds.width);
-		modalSettings.set('height', bounds.height);
-	});
-
-	modal.on('move', () => {
-		const position = modal.getPosition();
-		modalSettings.set('x', position[0]);
-		modalSettings.set('y', position[1]);
-	});
-
-	modal.on('closed', () => {
+	function destroyModal() {
 		modal = null;
-	});
+	}
+
+	modal.on('closed', destroyModal);
 
 	modal.loadFile('app/modal.html');
 

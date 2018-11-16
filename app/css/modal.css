@@ -4,7 +4,6 @@ html {
 	font-size: 100%;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
-	background-color: rgb(30, 31, 32);
 }
 
 *,
@@ -27,63 +26,38 @@ html {
 	outline: none;
 }
 
-.title-bar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 32px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: rgb(38, 39, 40);
-	-webkit-app-region: drag;
-	-webkit-user-select: none;
-	cursor: default;
+.modal {}
+
+.modal__box {
+	position: relative;
 }
 
-.title {
-	font-size: 14px;
-	color: rgb(159, 159, 159);
-}
-
-.update {
+.modal__icon {
 	position: absolute;
-	top: 8px;
-	right: 8px;
-	background-color: rgb(159,159,159);
-	color: rgb(22, 23, 24);
-	border-radius: 4px;
-	font-size: 12px;
-	font-weight: 500;
-	padding: 2px 4px;
-	-webkit-app-region: no-drag;
+	width: 26px;
+	height: 26px;
+	top: 19px;
+	left: 19px;
+	fill: rgb(44, 46, 48);
 }
 
-.update:hover {
-	background-color: rgb(191, 191, 191);
-}
-
-.main {
-	margin-top: 32px;
-}
-
-input {
-	width: 100%;
+.modal__field {
+	width: 512px;
 	height: 64px;
 	font-size: 18px;
-	padding: 0 18px;
 	cursor: text;
 }
 
-.expression {
+.modal__field--expression {
 	text-align: left;
-	color: rgb(223, 223, 223);
-	background-color: rgb(30, 31, 32);
+	padding: 0 19px 0 64px;
+	color: rgb(191, 191, 191);
+	background-color: rgb(21, 22, 23);
 }
 
-.result {
+.modal__field--result {
 	text-align: right;
+	padding: 0 19px 0 19px;
 	color: rgb(55, 175, 95);
-	background-color: rgb(22, 23, 24);
+	background-color: rgb(18, 19, 20);
 }
