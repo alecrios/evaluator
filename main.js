@@ -19,7 +19,7 @@ function createModal() {
 		closeable: false,
 		resizable: false,
 		opacity: 0,
-		width: 512,
+		width: 384,
 		height: 128,
 	});
 
