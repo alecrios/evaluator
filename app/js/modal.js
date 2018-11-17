@@ -1,7 +1,6 @@
 const {clipboard, ipcRenderer} = require('electron');
 const Calculator = require('../lib/Calculator');
 
-const icon = document.getElementById('icon');
 const expression = document.getElementById('expression');
 const result = document.getElementById('result');
 
