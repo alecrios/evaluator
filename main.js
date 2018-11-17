@@ -7,6 +7,8 @@ let modal = null;
 let modalStatus = 'hidden';
 
 function createModal() {
+	const size = {width: 384, height: 128};
+
 	modal = new BrowserWindow({
 		show: false,
 		frame: false,
@@ -19,8 +21,8 @@ function createModal() {
 		closeable: false,
 		resizable: false,
 		opacity: 0,
-		width: 384,
-		height: 128,
+		width: size.width,
+		height: size.height,
 	});
 
 	function showModal() {
@@ -62,6 +64,13 @@ function createModal() {
 	ipcMain.on('readyToHideModal', hideModal);
 
 	ipcMain.on('hideModal', initiateHideModal);
+
+	function centerModal() {
+		modal.setSize(size.width, size.height);
+		modal.center();
+	}
+
+	ipcMain.on('resetPosition', centerModal);
 
 	modal.on('blur', initiateHideModal);
 
