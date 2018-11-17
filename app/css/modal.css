@@ -42,12 +42,20 @@ html {
 
 .modal__icon {
 	position: absolute;
+	top: 0;
+	left: 0;
+	width: 64px;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	-webkit-app-region: drag;
+}
+
+.modal__svg {
+	fill: var(--color-stone);
 	width: 26px;
 	height: 26px;
-	top: 19px;
-	left: 19px;
-	fill: var(--color-stone);
-	-webkit-app-region: drag;
 }
 
 .modal__field {
