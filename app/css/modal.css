@@ -12,6 +12,7 @@ html {
 	font-size: 100%;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
+	background-color: var(--color-raven);
 }
 
 *,
