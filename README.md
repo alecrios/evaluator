@@ -25,5 +25,6 @@
 |:--- |:--- |
 | `CommandOrControl+Space` | Show/hide the modal |
 | `Esc` | Close the modal |
+| `Shift+Esc` | Center the modal |
 | `Enter` | Copy result to the clipboard |
 | `Shift+Enter` | Start new expression with result |
