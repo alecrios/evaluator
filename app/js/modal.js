@@ -62,6 +62,11 @@ function resetPosition() {
 
 function keydownHandler(event) {
 	if (event.key === 'Enter') {
+		if (!expression.value.length) {
+			cancelEvaluation();
+			return;
+		}
+
 		if (currentResult instanceof Error) {
 			showError();
 			return;
