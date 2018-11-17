@@ -81,7 +81,7 @@ html {
 	background-color: var(--color-jet);
 }
 
-.modal__result[data-valid="false"] {
+.modal__result[data-is-error="true"] {
 	color: var(--color-red);
 	font-style: italic;
 }

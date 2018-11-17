@@ -17,7 +17,7 @@ function evaluateExpression() {
 		result.value = '';
 	}
 
-	result.setAttribute('data-valid', !(currentResult instanceof Error));
+	result.setAttribute('data-is-error', currentResult instanceof Error);
 }
 
 function clear() {
