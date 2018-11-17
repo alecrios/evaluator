@@ -56,6 +56,10 @@ function cancelEvaluation() {
 	ipcRenderer.send('hideModal');
 }
 
+function resetPosition() {
+	ipcRenderer.send('resetPosition');
+}
+
 function keydownHandler(event) {
 	if (event.key === 'Enter') {
 		if (currentResult instanceof Error) {
@@ -71,6 +75,8 @@ function keydownHandler(event) {
 		acceptResult();
 	} else if (event.key === 'Escape') {
 		cancelEvaluation();
+	} else if (event.key === 'Home') {
+		resetPosition();
 	}
 }
 
