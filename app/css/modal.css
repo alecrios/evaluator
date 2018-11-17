@@ -1,7 +1,7 @@
 :root {
 	--color-pearl: rgb(191, 191, 191);
 	--color-jade: rgb(55, 175, 95);
-	--color-red: rgb(175, 55, 95);
+	--color-ruby: rgb(175, 55, 95);
 	--color-stone: rgb(44, 46, 48);
 	--color-raven: rgb(21, 22, 23);
 	--color-jet: rgb(18, 19, 20);
@@ -82,7 +82,7 @@ html {
 }
 
 .modal__result[data-is-error="true"] {
-	color: var(--color-red);
+	color: var(--color-ruby);
 	font-style: italic;
 }
 

@@ -64,12 +64,12 @@ function createModal() {
 
 	ipcMain.on('hideModal', initiateHideModal);
 
-	function centerModal() {
+	function recenterModal() {
 		modal.setSize(size.width, size.height);
 		modal.center();
 	}
 
-	ipcMain.on('resetPosition', centerModal);
+	ipcMain.on('recenterModal', recenterModal);
 
 	modal.on('blur', initiateHideModal);
 

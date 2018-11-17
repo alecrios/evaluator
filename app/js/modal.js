@@ -58,8 +58,8 @@ function cancelEvaluation() {
 	ipcRenderer.send('hideModal');
 }
 
-function resetPosition() {
-	ipcRenderer.send('resetPosition');
+function recenterModal() {
+	ipcRenderer.send('recenterModal');
 }
 
 function keydownHandler(event) {
@@ -82,7 +82,7 @@ function keydownHandler(event) {
 		acceptResult();
 	} else if (event.key === 'Escape') {
 		if (event.shiftKey) {
-			resetPosition();
+			recenterModal();
 			return;
 		}
 
