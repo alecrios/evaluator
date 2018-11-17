@@ -16,6 +16,8 @@ function evaluateExpression() {
 		currentResult = error;
 		result.value = '';
 	}
+
+	result.setAttribute('data-is-error', currentResult instanceof Error);
 }
 
 function clear() {
@@ -49,7 +51,7 @@ function acceptResult() {
 }
 
 function showError() {
-	result.value = currentResult.message;
+	result.value = currentResult;
 }
 
 function cancelEvaluation() {

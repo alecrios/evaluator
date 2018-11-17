@@ -1,6 +1,7 @@
 :root {
 	--color-pearl: rgb(191, 191, 191);
 	--color-jade: rgb(55, 175, 95);
+	--color-red: rgb(175, 55, 95);
 	--color-stone: rgb(44, 46, 48);
 	--color-raven: rgb(21, 22, 23);
 	--color-jet: rgb(18, 19, 20);
@@ -66,18 +67,23 @@ html {
 	cursor: text;
 }
 
-.modal__field--expression {
+.modal__expression {
 	text-align: left;
 	padding: 0 19px 0 64px;
 	color: var(--color-pearl);
 	background-color: var(--color-raven);
 }
 
-.modal__field--result {
+.modal__result {
 	text-align: right;
 	padding: 0 19px 0 19px;
 	color: var(--color-jade);
 	background-color: var(--color-jet);
+}
+
+.modal__result[data-is-error="true"] {
+	color: var(--color-red);
+	font-style: italic;
 }
 
 .update-button {
