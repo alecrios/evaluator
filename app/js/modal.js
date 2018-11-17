@@ -1,6 +1,7 @@
 const {clipboard, ipcRenderer} = require('electron');
 const Calculator = require('../lib/Calculator');
 
+const icon = document.getElementById('icon');
 const expression = document.getElementById('expression');
 const result = document.getElementById('result');
 
@@ -74,9 +75,12 @@ function keydownHandler(event) {
 
 		acceptResult();
 	} else if (event.key === 'Escape') {
+		if (event.shiftKey) {
+			resetPosition();
+			return;
+		}
+
 		cancelEvaluation();
-	} else if (event.key === 'Home') {
-		resetPosition();
 	}
 }
 
