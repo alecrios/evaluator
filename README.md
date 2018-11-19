@@ -28,3 +28,4 @@
 | `Shift+Esc` | Recenter the modal |
 | `Enter` | Copy result to clipboard |
 | `Shift+Enter` | Start new expression with result |
+| `Shift+Backspace` | Clear the expression |
