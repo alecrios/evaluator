@@ -22,6 +22,7 @@ function createModal() {
 		opacity: 0,
 		width: size.width,
 		height: size.height,
+		center: true,
 	});
 
 	function showModal() {

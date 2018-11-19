@@ -23,8 +23,9 @@
 
 | Shortcut | Function |
 |:--- |:--- |
-| `CommandOrControl+Space` | Show/hide the modal |
+| `CommandOrControl+Space` | Toggle the modal |
 | `Esc` | Close the modal |
 | `Shift+Esc` | Recenter the modal |
-| `Enter` | Copy result to clipboard |
-| `Shift+Enter` | Start new expression with result |
+| `Enter` | Copy the result and close the modal |
+| `Shift+Enter` | Start a new expression with the result |
+| `Shift+Backspace` | Clear the expression |
