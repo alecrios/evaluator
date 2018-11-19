@@ -93,6 +93,8 @@ function keydownHandler(event) {
 		}
 
 		clear();
+	} else if (event.key === 'Tab') {
+		event.preventDefault();
 	}
 }
 
