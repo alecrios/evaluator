@@ -22,7 +22,7 @@ function evaluateExpression() {
 
 function clear() {
 	expression.value = '';
-	result.value = '';
+	evaluateExpression();
 }
 
 function startNewExpressionWithResult() {
@@ -87,6 +87,12 @@ function keydownHandler(event) {
 		}
 
 		cancelEvaluation();
+	} else if (event.key === 'Backspace') {
+		if (!event.shiftKey) {
+			return;
+		}
+
+		clear();
 	}
 }
 
