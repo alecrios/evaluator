@@ -36,6 +36,11 @@ html {
 	outline: none;
 }
 
+::selection {
+	background-color: var(--color-jade);
+	color: var(--color-pearl);
+}
+
 .modal {}
 
 .modal__box {
