@@ -1,8 +1,8 @@
 # Evaluator
 
-## Operations
+## Operators
 
-| Symbol | Operation |
+| Operator | Operation |
 |:--- |:--- |
 | `+` | Addition |
 | `-` | Subtraction |
@@ -23,9 +23,10 @@
 
 | Shortcut | Function |
 |:--- |:--- |
-| `CommandOrControl+Space` | Toggle the modal |
-| `Esc` | Close the modal |
-| `Shift+Esc` | Recenter the modal |
-| `Enter` | Copy the result and close the modal |
-| `Shift+Enter` | Start a new expression with the result |
-| `Shift+Backspace` | Clear the expression |
+| `Command+Space` | Toggle modal (macOS) |
+| `Control+Space` | Toggle modal (Windows) |
+| `Esc` | Close modal |
+| `Shift+Esc` | Recenter modal |
+| `Enter` | Copy result and close modal |
+| `Shift+Enter` | Create expression with result |
+| `Shift+Backspace` | Clear expression |
