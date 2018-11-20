@@ -1,8 +1,8 @@
 # Evaluator
 
-## Operations
+## Operators
 
-| Symbol | Operation |
+| Operator | Operation |
 |:--- |:--- |
 | `+` | Addition |
 | `-` | Subtraction |
