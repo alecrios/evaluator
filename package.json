@@ -2,6 +2,7 @@
   "name": "evaluator",
   "version": "0.6.0",
   "author": "Alec Rios",
+  "description": "A powerful calculator on standby.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,17 +12,28 @@
   "scripts": {
     "start": "electron .",
     "test": "mocha",
-    "build": "build --win",
-    "ship": "build --win -p always"
+    "build": "build"
+  },
+  "build": {
+    "appId": "com.electron.evaluator",
+    "productName": "Evaluator",
+    "copyright": "Copyright © 2018 Alec Rios",
+    "win": {
+      "icon": "app/assets/icon.ico"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "app/assets/icon.icns"
+    }
   },
   "dependencies": {
-    "electron": "^2.0.12",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^3.1.2",
     "lodash.round": "^4.0.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "electron": "^2.0.14",
     "electron-builder": "^20.28.4",
     "eslint": "^5.8.0",
     "eslint-config-airbnb-base": "^13.1.0",
