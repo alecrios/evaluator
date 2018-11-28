@@ -15,13 +15,13 @@
     "ship": "build --win -p always"
   },
   "dependencies": {
-    "electron": "^2.0.12",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^3.1.2",
     "lodash.round": "^4.0.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "electron": "^2.0.14",
     "electron-builder": "^20.28.4",
     "eslint": "^5.8.0",
     "eslint-config-airbnb-base": "^13.1.0",
