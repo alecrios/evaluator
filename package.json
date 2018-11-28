@@ -11,8 +11,19 @@
   "scripts": {
     "start": "electron .",
     "test": "mocha",
-    "build": "build --win",
-    "ship": "build --win -p always"
+    "build": "build"
+  },
+  "build": {
+    "appId": "com.electron.evaluator",
+    "productName": "Evaluator",
+    "copyright": "Copyright © 2018 Alec Rios",
+    "win": {
+      "icon": "app/assets/icon.ico"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "app/assets/icon.icns"
+    }
   },
   "dependencies": {
     "electron-is-dev": "^1.0.1",
