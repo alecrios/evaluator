@@ -41,7 +41,9 @@ html {
 	color: var(--color-pearl);
 }
 
-.modal {}
+.modal {
+	background-color: var(--color-jet);
+}
 
 .modal__box {
 	position: relative;
@@ -76,14 +78,12 @@ html {
 	text-align: left;
 	padding: 0 19px 0 64px;
 	color: var(--color-pearl);
-	background-color: var(--color-jet);
 }
 
 .modal__result {
 	text-align: right;
 	padding: 0 19px 0 19px;
 	color: var(--color-jade);
-	background-color: var(--color-jet);
 }
 
 .modal__result[data-is-error="true"] {

@@ -11,7 +11,9 @@ function createModal() {
 	modal = new BrowserWindow({
 		show: false,
 		frame: false,
-		backgroundColor: 'rgb(18, 19, 20)',
+		width: size.width,
+		height: size.height,
+		center: true,
 		skipTaskbar: true,
 		alwaysOnTop: true,
 		fullscreenable: false,
@@ -19,10 +21,8 @@ function createModal() {
 		minimizable: false,
 		closeable: false,
 		resizable: false,
+		backgroundColor: 'rgb(18, 19, 20)',
 		opacity: 0,
-		width: size.width,
-		height: size.height,
-		center: true,
 	});
 
 	function showModal() {
