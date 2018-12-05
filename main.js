@@ -11,7 +11,7 @@ function createModal() {
 	modal = new BrowserWindow({
 		show: false,
 		frame: false,
-		backgroundColor: 'rgb(21, 22, 23)',
+		backgroundColor: 'rgb(18, 19, 20)',
 		skipTaskbar: true,
 		alwaysOnTop: true,
 		fullscreenable: false,
