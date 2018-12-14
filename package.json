@@ -19,11 +19,10 @@
     "productName": "Evaluator",
     "copyright": "Copyright © 2018 Alec Rios",
     "win": {
-      "icon": "app/assets/icon.ico"
+      "target": "portable"
     },
     "mac": {
-      "category": "public.app-category.utilities",
-      "icon": "app/assets/icon.icns"
+      "category": "public.app-category.utilities"
     }
   },
   "dependencies": {
