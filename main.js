@@ -1,9 +1,12 @@
-const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
+const {app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray} = require('electron');
 const {autoUpdater} = require('electron-updater');
+const path = require('path');
 const isDev = require('electron-is-dev');
 
 let modal = null;
 let modalStatus = 'hidden';
+
+let tray = null;
 
 function createModal() {
 	const size = {width: 384, height: 128};
@@ -74,7 +77,11 @@ function createModal() {
 
 	modal.on('blur', initiateHideModal);
 
-	globalShortcut.register('CommandOrControl+Space', toggleModal);
+	globalShortcut.register('CmdOrCtrl+Space', toggleModal);
+
+	app.on('activate', () => {
+		initiateShowModal();
+	});
 
 	function destroyModal() {
 		modal = null;
@@ -84,15 +91,34 @@ function createModal() {
 
 	modal.loadFile('app/modal.html');
 
-	if (isDev) modal.toggleDevTools();
+	if (!isDev) autoUpdater.checkForUpdates();
+
+	if (app.dock) app.dock.hide();
+
+	tray = new Tray(path.join(app.getAppPath(), 'build', 'icon.png'));
+
+	tray.setContextMenu(Menu.buildFromTemplate([
+		{
+			label: 'Show Evaluator',
+			accelerator: 'CmdOrCtrl+Space',
+			click: () => {
+				initiateShowModal();
+			},
+		},
+		{
+			label: 'Quit',
+			accelerator: 'CmdOrCtrl+Q',
+			click: () => {
+				app.quit();
+			},
+		},
+	]));
+
+	tray.on('click', initiateShowModal);
 }
 
 app.on('ready', () => {
 	createModal();
-
-	if (process.platform === 'darwin') app.dock.hide();
-
-	if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {
