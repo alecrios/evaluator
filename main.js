@@ -95,7 +95,7 @@ function createModal() {
 
 	if (app.dock) app.dock.hide();
 
-	const icon = process.platform === 'darwin' ? 'tray-icon-mac.png' : 'tray-icon-win.ico';
+	const icon = process.platform === 'darwin' ? 'iconTemplate.png' : 'iconTemplate.ico';
 	tray = new Tray(path.join(app.getAppPath(), 'build', icon));
 
 	tray.setContextMenu(Menu.buildFromTemplate([
