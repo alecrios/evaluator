@@ -14,7 +14,6 @@ function createModal() {
 		width: size.width,
 		height: size.height,
 		center: true,
-		skipTaskbar: true,
 		alwaysOnTop: true,
 		fullscreenable: false,
 		maximizable: false,
@@ -76,6 +75,10 @@ function createModal() {
 
 	globalShortcut.register('CommandOrControl+Space', toggleModal);
 
+	app.on('activate', () => {
+		initiateShowModal();
+	});
+
 	function destroyModal() {
 		modal = null;
 	}
@@ -84,15 +87,11 @@ function createModal() {
 
 	modal.loadFile('app/modal.html');
 
-	if (isDev) modal.toggleDevTools();
+	if (!isDev) autoUpdater.checkForUpdates();
 }
 
 app.on('ready', () => {
 	createModal();
-
-	if (process.platform === 'darwin') app.dock.hide();
-
-	if (!isDev) autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on('update-downloaded', () => {
