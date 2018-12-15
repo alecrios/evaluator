@@ -12,7 +12,8 @@
   "scripts": {
     "start": "electron .",
     "test": "mocha",
-    "build": "build"
+    "build": "build",
+    "ship": "build -p always"
   },
   "build": {
     "appId": "com.electron.evaluator",
