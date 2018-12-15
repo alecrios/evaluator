@@ -19,11 +19,11 @@
     "appId": "com.electron.evaluator",
     "productName": "Evaluator",
     "copyright": "Copyright © 2018 Alec Rios",
-    "win": {
-      "target": "portable"
-    },
     "mac": {
       "category": "public.app-category.utilities"
+    },
+    "publish": {
+      "provider": "github"
     }
   },
   "dependencies": {
