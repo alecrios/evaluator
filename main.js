@@ -99,6 +99,8 @@ function createModal() {
 	const iconPath = path.join(app.getAppPath(), 'assets', iconFile);
 	tray = new Tray(iconPath);
 
+	tray.setToolTip('Evaluator');
+
 	tray.setContextMenu(Menu.buildFromTemplate([
 		{
 			label: 'Show Evaluator',
