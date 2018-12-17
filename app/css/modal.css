@@ -2,7 +2,7 @@
 	--color-pearl: rgb(191, 191, 191);
 	--color-jade: rgb(55, 175, 95);
 	--color-ruby: rgb(175, 55, 95);
-	--color-stone: rgb(54, 55, 56);
+	--color-stone: rgb(94, 95, 96);
 	--color-jet: rgb(18, 19, 20);
 }
 
@@ -98,7 +98,7 @@ html {
 	background-color: var(--color-stone);
 	color: var(--color-jet);
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: .5px;
 	padding: 3px 5px;
