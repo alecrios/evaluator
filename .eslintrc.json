@@ -1,5 +1,5 @@
 {
-	"env": {"browser": true, "mocha": true},
+	"env": {"browser": true},
 	"extends": "airbnb-base",
 	"rules": {
 		"indent": ["error", "tab"],
