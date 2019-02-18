@@ -24,7 +24,7 @@ function createModal() {
 		minimizable: false,
 		closeable: false,
 		resizable: false,
-		backgroundColor: 'rgb(18, 19, 20)',
+		backgroundColor: '#1d1e21',
 		opacity: 0,
 	});
 

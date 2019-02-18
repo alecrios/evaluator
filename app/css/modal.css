@@ -1,18 +1,32 @@
 :root {
-	--color-pearl: rgb(191, 191, 191);
-	--color-jade: rgb(55, 175, 95);
-	--color-ruby: rgb(175, 55, 95);
-	--color-stone: rgb(94, 95, 96);
-	--color-jet: rgb(18, 19, 20);
+	--color-gray-15: hsla(225, 6.25%, 100%, 1);
+	--color-gray-14: hsla(225, 6.25%, 93.75%, 1);
+	--color-gray-13: hsla(225, 6.25%, 87.5%, 1);
+	--color-gray-12: hsla(225, 6.25%, 81.25%, 1);
+	--color-gray-11: hsla(225, 6.25%, 75%, 1);
+	--color-gray-10: hsla(225, 6.25%, 62.5%, 1);
+	--color-gray-09: hsla(225, 6.25%, 56.25%, 1);
+	--color-gray-08: hsla(225, 6.25%, 50%, 1);
+	--color-gray-07: hsla(225, 6.25%, 43.75%, 1);
+	--color-gray-06: hsla(225, 6.25%, 37.5%, 1);
+	--color-gray-05: hsla(225, 6.25%, 31.25%, 1);
+	--color-gray-04: hsla(225, 6.25%, 25%, 1);
+	--color-gray-03: hsla(225, 6.25%, 18.75%, 1);
+	--color-gray-02: hsla(225, 6.25%, 12.5%, 1);
+	--color-gray-01: hsla(225, 6.25%, 6.25%, 1);
+	--color-gray-00: hsla(225, 6.25%, 0%, 1);
+
+	--color-jade: hsla(135, 50%, 50%, 1);
+	--color-ruby: hsla(360, 50%, 50%, 1);
 }
 
 html {
 	box-sizing: border-box;
-	font-family: BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family: BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	font-size: 100%;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
-	background-color: var(--color-jet);
+	background-color: var(--color-gray-02);
 	overflow: hidden;
 }
 
@@ -38,11 +52,16 @@ html {
 
 ::selection {
 	background-color: var(--color-jade);
-	color: var(--color-pearl);
+	color: var(--color-gray-11);
+}
+
+::placeholder {
+	color: var(--color-gray-06);
+	opacity: 1;
 }
 
 .modal {
-	background-color: var(--color-jet);
+	background-color: var(--color-gray-02);
 }
 
 .modal__box {
@@ -62,7 +81,7 @@ html {
 }
 
 .modal__svg {
-	fill: var(--color-stone);
+	fill: var(--color-gray-06);
 	width: 26px;
 	height: 26px;
 }
@@ -77,7 +96,7 @@ html {
 .modal__expression {
 	text-align: left;
 	padding: 0 19px 0 64px;
-	color: var(--color-pearl);
+	color: var(--color-gray-11);
 }
 
 .modal__result {
@@ -86,7 +105,7 @@ html {
 	color: var(--color-jade);
 }
 
-.modal__result[data-is-error="true"] {
+.modal__result[data-is-error='true'] {
 	color: var(--color-ruby);
 	font-style: italic;
 }
@@ -95,8 +114,8 @@ html {
 	position: fixed;
 	top: 0;
 	right: 0;
-	background-color: var(--color-stone);
-	color: var(--color-jet);
+	background-color: var(--color-gray-06);
+	color: var(--color-gray-02);
 	font-size: 12px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -106,5 +125,5 @@ html {
 }
 
 .update-button:hover {
-	background-color: var(--color-pearl);
+	background-color: var(--color-gray-11);
 }
