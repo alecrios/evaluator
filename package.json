@@ -19,7 +19,8 @@
     "productName": "Evaluator",
     "copyright": "Copyright © 2019 Alec Rios",
     "mac": {
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "darkModeSupport": true
     },
     "win": {
       "target": "portable"
