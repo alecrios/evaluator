@@ -1,7 +1,5 @@
 const {app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray} = require('electron');
-const {autoUpdater} = require('electron-updater');
 const path = require('path');
-const isDev = require('electron-is-dev');
 
 let modal = null;
 let modalStatus = 'hidden';
@@ -91,8 +89,6 @@ function createModal() {
 
 	modal.loadFile('app/modal.html');
 
-	if (!isDev) autoUpdater.checkForUpdates();
-
 	if (app.dock) app.dock.hide();
 
 	const iconFile = process.platform === 'darwin' ? 'iconTemplate.png' : 'iconTemplate.ico';
@@ -178,14 +174,6 @@ function createModal() {
 
 app.on('ready', () => {
 	createModal();
-});
-
-autoUpdater.on('update-downloaded', () => {
-	modal.webContents.send('updateReady');
-});
-
-ipcMain.on('quitAndInstall', () => {
-	autoUpdater.quitAndInstall();
 });
 
 app.on('will-quit', () => {

@@ -109,21 +109,3 @@ html {
 	color: var(--color-ruby);
 	font-style: italic;
 }
-
-.update-button {
-	position: fixed;
-	top: 0;
-	right: 0;
-	background-color: var(--color-gray-06);
-	color: var(--color-gray-02);
-	font-size: 12px;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: .5px;
-	padding: 3px 5px;
-	border-radius: 0 0 0 5px;
-}
-
-.update-button:hover {
-	background-color: var(--color-gray-11);
-}
