@@ -1,13 +1,12 @@
-const {app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray} = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray } = require('electron');
 const path = require('path');
 
 let modal = null;
 let modalStatus = 'hidden';
-
 let tray = null;
 
 function createModal() {
-	const size = {width: 384, height: 128};
+	const size = { width: 384, height: 128 };
 
 	modal = new BrowserWindow({
 		show: false,

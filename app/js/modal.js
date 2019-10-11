@@ -1,4 +1,4 @@
-const {clipboard, ipcRenderer} = require('electron');
+const { clipboard, ipcRenderer } = require('electron');
 const evaluate = require('evaluator.js');
 
 const expression = document.getElementById('expression');
