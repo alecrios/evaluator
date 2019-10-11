@@ -1,44 +1,44 @@
 {
-  "name": "evaluator",
-  "version": "0.9.3",
-  "author": "Alec Rios",
-  "description": "A powerful calculator on standby.",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/alecrios/evaluator.git"
-  },
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "build",
-    "ship": "build -p always"
-  },
-  "build": {
-    "appId": "com.electron.evaluator",
-    "productName": "Evaluator",
-    "copyright": "Copyright © 2019 Alec Rios",
-    "mac": {
-      "category": "public.app-category.utilities",
-      "darkModeSupport": true
-    },
-    "win": {
-      "target": "portable"
-    },
-    "publish": {
-      "provider": "github"
-    }
-  },
-  "dependencies": {
-    "electron-is-dev": "^1.0.1",
-    "electron-updater": "^4.0.7",
-    "evaluator.js": "^2.0.0"
-  },
-  "devDependencies": {
-    "electron": "^4.0.5",
-    "electron-builder": "^20.38.5",
-    "eslint": "^5.14.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
-  }
+	"name": "evaluator",
+	"version": "0.9.3",
+	"author": "Alec Rios",
+	"description": "A powerful calculator on standby.",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/alecrios/evaluator.git"
+	},
+	"main": "main.js",
+	"scripts": {
+		"start": "electron .",
+		"build": "build",
+		"ship": "build -p always"
+	},
+	"build": {
+		"appId": "com.electron.evaluator",
+		"productName": "Evaluator",
+		"copyright": "Copyright © 2019 Alec Rios",
+		"mac": {
+			"category": "public.app-category.utilities",
+			"darkModeSupport": true
+		},
+		"win": {
+			"target": "portable"
+		},
+		"publish": {
+			"provider": "github"
+		}
+	},
+	"dependencies": {
+		"electron-is-dev": "^1.1.0",
+		"electron-updater": "^4.1.2",
+		"evaluator.js": "^3.0.1"
+	},
+	"devDependencies": {
+		"electron": "^4.0.5",
+		"electron-builder": "^20.44.4",
+		"eslint": "^5.16.0",
+		"eslint-config-airbnb-base": "^13.2.0",
+		"eslint-plugin-import": "^2.18.2"
+	}
 }

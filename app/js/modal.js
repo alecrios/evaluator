@@ -1,16 +1,14 @@
 const {clipboard, ipcRenderer} = require('electron');
-const Evaluator = require('evaluator.js');
+const evaluate = require('evaluator.js');
 
 const expression = document.getElementById('expression');
 const result = document.getElementById('result');
-
-const evaluator = new Evaluator();
 
 let currentResult;
 
 function evaluateExpression() {
 	try {
-		currentResult = evaluator.evaluate(expression.value);
+		currentResult = evaluate(expression.value);
 		result.value = currentResult;
 	} catch (error) {
 		currentResult = error;
