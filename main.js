@@ -23,6 +23,7 @@ function createModal() {
 		resizable: false,
 		backgroundColor: '#1d1e21',
 		opacity: 0,
+		webPreferences: { nodeIntegration: true },
 	});
 
 	function showModal() {

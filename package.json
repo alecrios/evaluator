@@ -11,8 +11,8 @@
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
-		"build": "build",
-		"ship": "build -p always"
+		"build": "electron-builder build",
+		"ship": "electron-builder build -p always"
 	},
 	"build": {
 		"appId": "com.electron.evaluator",
@@ -33,8 +33,8 @@
 		"evaluator.js": "^3.0.1"
 	},
 	"devDependencies": {
-		"electron": "^4.0.5",
-		"electron-builder": "^20.44.4",
+		"electron": "^6.0.12",
+		"electron-builder": "^21.2.0",
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb-base": "^13.2.0",
 		"eslint-plugin-import": "^2.18.2"
