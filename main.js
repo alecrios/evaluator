@@ -75,7 +75,7 @@ function createModal() {
 
 	modal.on('blur', initiateHideModal);
 
-	globalShortcut.register('CmdOrCtrl+Space', toggleModal);
+	globalShortcut.register('Alt+Space', toggleModal);
 
 	app.on('activate', () => {
 		initiateShowModal();
