@@ -100,7 +100,7 @@ function createModal() {
 	tray.setContextMenu(Menu.buildFromTemplate([
 		{
 			label: 'Show Evaluator',
-			accelerator: 'CmdOrCtrl+Space',
+			accelerator: 'Alt+Space',
 			click: () => {
 				initiateShowModal();
 			},
