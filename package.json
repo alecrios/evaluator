@@ -17,7 +17,7 @@
 	"build": {
 		"appId": "com.electron.evaluator",
 		"productName": "Evaluator",
-		"copyright": "Copyright © 2019 Alec Rios",
+		"copyright": "Copyright © 2020 Alec Rios",
 		"mac": {
 			"category": "public.app-category.utilities",
 			"darkModeSupport": true
