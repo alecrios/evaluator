@@ -30,7 +30,7 @@
 		}
 	},
 	"dependencies": {
-		"evaluator.js": "^3.2.1"
+		"evaluator.js": "^3.2.2"
 	},
 	"devDependencies": {
 		"electron": "^6.0.12",
